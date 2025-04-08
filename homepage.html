@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Beautya - Skincare & Makeup</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #a10550;
+        --dark-bg: #3d021e;
+        --light-bg: #faf9f5;
+        --text-dark: #0c0c0c;
+        --text-light: #ffffff;
+        --accent-color: #fa58a6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1440px;
+        margin: 0 auto; 
+        background: var(--light-bg);
+        position: relative;
+      }
+
+      .section-header {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: capitalize;
+        margin: 2rem 0;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 0 1rem;
+      }
+
+      .product-card {
+        background: white;
+        border: 1px solid #dfdfdf;
+        padding-bottom: 24px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 384px;
+        object-fit: cover;
+      }
+
+      .product-info {
+        padding: 0 16px;
+      }
+
+      .product-title {
+        color: var(--primary-color);
+        font-size: 16px;
+        font-weight: 700;
+        margin: 8px 0;
+      }
+
+      .product-price {
+        color: var(--text-dark);
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .add-to-cart {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 8px 16px;
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background 0.3s ease;
+      }
+      
+      .add-to-cart:hover {
+        background: var(--dark-bg);
+      }
+
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        padding: 0 1rem;
+      }
+
+      .blog-card {
+        background: white;
+        border: 1px solid #dfdfdf;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .blog-card img {
+        width: 100%;
+        height: 294px;
+        object-fit: cover;
+      }
+
+      .blog-content {
+        padding: 24px;
+      }
+
+      .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #606060;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .blog-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .blog-excerpt {
+        color: var(--text-dark);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+      }
+
+      .button:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .button-filled {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .button-filled:hover {
+        background: var(--dark-bg);
+        border-color: var(--dark-bg);
+      }
+
+      .button-outline {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+      }
+
+      .button-outline:hover {
+        background: white;
+        color: var(--primary-color);
+      }
+
+      .slider-arrow {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: 1px solid #cbcbcb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .slider-arrow:hover {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .slider-arrow i {
+        font-size: 16px;
+      }
+
+      .hero-slider {
+        position: relative;
+        height: 629px;
+        background: #cbcbcb;
+      }
+
+      .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+      }
+
+      .hero-title {
+        font-size: 44px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        text-transform: capitalize;
+      }
+
+      .category-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .category-card img {
+        width: 256px;
+        height: 342px;
+        object-fit: cover;
+      }
+
+      .category-name {
+        font-size: 18px;
+        text-transform: capitalize;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .newsletter-input {
+        flex: 1;
+        padding: 12px 16px;
+        border: none;
+        border-bottom: 1px solid #cbcbcb;
+        background: transparent;
+        color: white;
+        font-size: 16px;
+      }
+
+      .newsletter-input::placeholder {
+        color: #cbcbcb;
+      }
+
+      .newsletter-submit {
+        padding: 12px 24px;
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-submit:hover {
+        background: white;
+        color: var(--primary-color);
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 16px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .social-icon:hover {
+        transform: translateY(-3px);
+      }
+
+      .nav-link {
+        color: #202020;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--primary-color);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 108px;
+        background: white;
+        border-bottom: 1px solid #dfdfdf;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 40px;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .cart-icon,
+      .user-icon {
+        font-size: 20px;
+        color: #202020;
+        cursor: pointer;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--primary-color);
+        color: white;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+      }
+
+      .cart-wrapper {
+        position: relative;
+      }
+
+      .language-selector {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .footer-top {
+        background: #fbeff2;
+        padding: 24px 108px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .benefit-icon {
+        color: #79043c;
+        font-size: 24px;
+      }
+
+      .benefit-text {
+        color: #79043c;
+        font-size: 16px;
+      }
+
+      .footer-main {
+        background: var(--dark-bg);
+        padding: 80px 108px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+      }
+
+      .footer-column h3 {
+        color: white;
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column li {
+        margin-bottom: 12px;
+      }
+
+      .footer-column a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-column a:hover {
+        color: var(--accent-color);
+      }
+
+      .footer-bottom {
+        background: #14010a;
+        padding: 16px 108px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .copyright {
+        color: #cbcbcb;
+        font-size: 12px;
+      }
+
+      .legal-links {
+        display: flex;
+        gap: 24px;
+      }
+
+      .legal-links a {
+        color: #cbcbcb;
+        text-decoration: none;
+        font-size: 12px;
+      }
+
+      .contact-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: white;
+      }
+
+      .contact-icon {
+        color: var(--accent-color);
+        margin-right: 8px;
+      }
+
+      @media (max-width: 768px) {
+        .product-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .section-header {
+          font-size: 20px;
+        }
+
+        .header {
+          padding: 16px;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .nav-menu {
+          gap: 20px;
+        }
+
+        .footer-main {
+          grid-template-columns: 1fr;
+          padding: 40px 24px;
+        }
+
+        .footer-top {
+          flex-direction: column;
+          gap: 24px;
+          padding: 24px;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          gap: 16px;
+          padding: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-menu {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .header-actions {
+          flex-direction: column;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">BEAUTYA</div>
+        <nav class="nav-menu">
+          <a href="#" class="nav-link">Women Make UP</a>
+          <a href="#" class="nav-link">Women Skincare</a>
+          <a href="#" class="nav-link">Gifts & Sets</a>
+          <a href="#" class="nav-link">Branches</a>
+          <a href="#" class="nav-link">Our Brand</a>
+        </nav>
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <i class="fas fa-shopping-cart cart-icon"></i>
+            <span class="cart-count">3</span>
+          </div>
+          <i class="fas fa-user user-icon"></i>
+          <div class="language-selector">
+            <span>US (EN)</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Slider -->
+      <section class="hero-slider">
+        <div class="hero-content">
+          <h1 class="hero-title">Unlock your natural glow</h1>
+          <a href="#" class="button button-outline">Know More</a>
+        </div>
+        <div class="slider-arrow" style="left: 20px; top: 50%">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="slider-arrow" style="right: 20px; top: 50%">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <section style="padding: 80px 108px">
+        <h2 class="section-header">Products' categories</h2>
+        <div style="display: flex; justify-content: center; gap: 20px">
+          <div class="category-card">
+            <img src="https://placehold.co/256x342" alt="Women Make Up" />
+            <div class="category-name">Women Make Up</div>
+          </div>
+          <div class="category-card">
+            <img src="https://placehold.co/256x342" alt="Women Skincare" />
+            <div class="category-name">Women Skincare</div>
+          </div>
+          <div class="category-card">
+            <img src="https://placehold.co/256x342" alt="Gifts & Sets" />
+            <div class="category-name">Gifts & Sets</div>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 24px;
+          "
+        >
+          <div
+            style="width: 24px; height: 4px; background: var(--primary-color)"
+          ></div>
+          <div style="width: 24px; height: 4px; background: #cbcbcb"></div>
+          <div style="width: 24px; height: 4px; background: #cbcbcb"></div>
+        </div>
+      </section>
+
+      <!-- Virtual Skincare Analysis -->
+      <section
+        style="
+          width: 1224px;
+          height: 281px;
+          margin: 0 auto;
+          background: var(--dark-bg);
+          display: flex;
+        "
+      >
+        <div style="flex: 1; padding: 40px">
+          <h3 style="color: white; font-size: 24px; margin-bottom: 16px">
+            NEW Virtual Skincare Analysis
+          </h3>
+          <p style="color: white; font-size: 14px; margin-bottom: 24px">
+            Looking for a full skincare routine? Our NEW Virtual Skincare
+            Analysis Tool evaluates your skin and provides the most personalized
+            recommendations.
+          </p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 16px;
+              margin-bottom: 16px;
+            "
+          >
+            <div style="color: white; font-weight: 700">
+              Scan with your phone to get started
+            </div>
+            <div style="color: white">or</div>
+          </div>
+          <a href="#" class="button button-outline">answer a few questions</a>
+        </div>
+        <div style="flex: 1; position: relative">
+          <img
+            src="https://placehold.co/600x281"
+            alt="Virtual Skincare"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+          <img
+            src="https://placehold.co/100x100"
+            alt="QR Code"
+            style="
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            "
+          />
+        </div>
+      </section>
+
+      <!-- Best Sellers -->
+      <section style="padding: 80px 108px">
+        <h2 class="section-header">Our Best Sellers</h2>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://placehold.co/288x384" alt="Product" />
+            <div class="product-info">
+              <h3 class="product-title">
+                Beautya Capture Total Dreamskin Care & Perfect
+              </h3>
+              <p>
+                Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                Hydration
+              </p>
+              <div class="product-price">$76.00</div>
+              <a href="#" class="add-to-cart">Add to Cart</a>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://placehold.co/288x384" alt="Product" />
+            <div class="product-info">
+              <h3 class="product-title">
+                Beautya Capture Total Dreamskin Care & Perfect
+              </h3>
+              <p>
+                Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                Hydration
+              </p>
+              <div class="product-price">$76.00</div>
+              <a href="#" class="add-to-cart">Add to Cart</a>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://placehold.co/288x384" alt="Product" />
+            <div class="product-info">
+              <h3 class="product-title">
+                Beautya Capture Total Dreamskin Care & Perfect
+              </h3>
+              <p>
+                Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                Hydration
+              </p>
+              <div class="product-price">$76.00</div>
+              <a href="#" class="add-to-cart">Add to Cart</a>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="https://placehold.co/288x384" alt="Product" />
+            <div class="product-info">
+              <h3 class="product-title">
+                Beautya Capture Total Dreamskin Care & Perfect
+              </h3>
+              <p>
+                Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                Hydration
+              </p>
+              <div class="product-price">$76.00</div>
+              <a href="#" class="add-to-cart">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 24px">
+          <div class="slider-arrow">
+            <i class="fas fa-chevron-left"></i>
+          </div>
+          <div class="slider-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- New In -->
+      <section style="background: var(--dark-bg); padding: 80px 108px">
+        <h2 class="section-header" style="color: white">New in</h2>
+        <div style="display: flex; gap: 24px; margin-top: 40px">
+          <div style="flex: 2">
+            <img
+              src="https://placehold.co/600x436"
+              alt="New Product"
+              style="width: 100%; margin-bottom: 24px"
+            />
+            <h3
+              style="
+                color: var(--accent-color);
+                font-size: 24px;
+                margin-bottom: 8px;
+              "
+            >
+              Beautya La Mousse Off/On Foaming Cleaner
+            </h3>
+            <p style="color: white">
+              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+              amet sint. Velit officia consequat duis en im velit mollit.
+            </p>
+          </div>
+          <div style="flex: 1">
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>Anti-Aging Face Serum, with Purifying French Water Lily</p>
+                <div class="product-price">$76.00</div>
+                <a href="#" class="add-to-cart">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          <div style="flex: 1">
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>Anti-Aging Face Serum, with Purifying French Water Lily</p>
+                <div class="product-price">$76.00</div>
+                <a href="#" class="add-to-cart">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 24px">
+          <div class="slider-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Special Offers -->
+      <section style="padding: 80px 108px; background: white">
+        <div style="display: flex; justify-content: flex-end">
+          <div style="max-width: 600px; text-align: right">
+            <h3 style="font-size: 24px; margin-bottom: 16px">Special offers</h3>
+            <h2
+              style="
+                color: var(--primary-color);
+                font-size: 32px;
+                margin-bottom: 16px;
+              "
+            >
+              Save up to 50%
+            </h2>
+            <p style="margin-bottom: 16px">
+              Mother's Day is coming! <br />For everything she's given you, it's
+              time to give back. Shower her with love, happiness, and the best
+              of Beautya.
+            </p>
+            <p
+              style="
+                color: var(--primary-color);
+                font-weight: 700;
+                margin-bottom: 24px;
+              "
+            >
+              visit your local beautya branches to find out more about our
+              special offers in make up and skincare products.
+            </p>
+            <a href="#" class="button button-filled">find branches</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Brand -->
+      <section
+        style="
+          width: 1224px;
+          height: 269px;
+          margin: 0 auto;
+          background: var(--dark-bg);
+          display: flex;
+        "
+      >
+        <div style="flex: 1; padding: 40px">
+          <h3 style="color: white; font-size: 24px; margin-bottom: 16px">
+            our brand
+          </h3>
+          <p style="color: white; font-size: 16px; margin-bottom: 24px">
+            We believe that beauty thrives in diversity and discovery. Our
+            purpose is to expand the way the world sees beauty by empowering the
+            Extraordinary in each of us.
+          </p>
+          <a href="#" class="button button-outline">Discover More</a>
+        </div>
+        <div style="flex: 1">
+          <img
+            src="https://placehold.co/496x269"
+            alt="Our Brand"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+        </div>
+      </section>
+
+      <!-- Blog -->
+      <section style="padding: 80px 108px">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+          "
+        >
+          <h2 class="section-header">Our Blog</h2>
+          <a href="#" class="button">view all</a>
+        </div>
+        <div class="blog-grid">
+          <div class="blog-card">
+            <img src="https://placehold.co/392x294" alt="Blog Post" />
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span>Skincare</span>
+                <span>•</span>
+                <span>Dr. Wade Warren</span>
+                <span>•</span>
+                <span>Jan 20, 2021</span>
+              </div>
+              <h3 class="blog-title">How to get clear skin fast</h3>
+              <p class="blog-excerpt">
+                Many people find it difficult to get clear skin. The methods for
+                getting clear skin will vary, depending on the person's skin
+                type. In general, people struggling with acne or blemishes have
+                skin that is dry, oily, or a combination of the two.
+              </p>
+            </div>
+          </div>
+          <div class="blog-card">
+            <img src="https://placehold.co/392x294" alt="Blog Post" />
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span>Skincare</span>
+                <span>•</span>
+                <span>Dr. Wade Warren</span>
+                <span>•</span>
+                <span>Jan 20, 2021</span>
+              </div>
+              <h3 class="blog-title">How to get clear skin fast</h3>
+              <p class="blog-excerpt">
+                Many people find it difficult to get clear skin. The methods for
+                getting clear skin will vary, depending on the person's skin
+                type. In general, people struggling with acne or blemishes have
+                skin that is dry, oily, or a combination of the two.
+              </p>
+            </div>
+          </div>
+          <div class="blog-card">
+            <img src="https://placehold.co/392x294" alt="Blog Post" />
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span>Skincare</span>
+                <span>•</span>
+                <span>Dr. Wade Warren</span>
+                <span>•</span>
+                <span>Jan 20, 2021</span>
+              </div>
+              <h3 class="blog-title">How to get clear skin fast</h3>
+              <p class="blog-excerpt">
+                Many people find it difficult to get clear skin. The methods for
+                getting clear skin will vary, depending on the person's skin
+                type. In general, people struggling with acne or blemishes have
+                skin that is dry, oily, or a combination of the two.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <!-- Footer Top -->
+        <div class="footer-top">
+          <div class="benefit-item">
+            <i class="fas fa-paw benefit-icon"></i>
+            <span class="benefit-text">No tests on animals</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-leaf benefit-icon"></i>
+            <span class="benefit-text">No animal-derived ingredients</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-bread-slice benefit-icon"></i>
+            <span class="benefit-text">No gluten, or gluten byproducts</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-recycle benefit-icon"></i>
+            <span class="benefit-text">Recyclable packaging</span>
+          </div>
+        </div>
+
+        <!-- Footer Main -->
+        <div class="footer-main">
+          <div class="footer-column">
+            <h3>How can we Help?</h3>
+            <ul>
+              <li><a href="#">beautya branches</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Our Brand</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Products</h3>
+            <ul>
+              <li><a href="#">Women Make up</a></li>
+              <li><a href="#">Women Skincare</a></li>
+              <li><a href="#">Gifts & Sets</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>keep in touch with beautya</h3>
+            <p style="color: white; margin-bottom: 24px">
+              Join the Beautya newsletter and be first to hear about news,
+              offers and skincare advice
+            </p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                placeholder="email address"
+                class="newsletter-input"
+              />
+              <button type="submit" class="newsletter-submit">subscribe</button>
+            </form>
+            <div style="margin-top: 24px">
+              <div class="contact-info">
+                <i class="fas fa-phone-alt contact-icon"></i>
+                <span>1-802-526-2463</span>
+              </div>
+              <div class="contact-info" style="margin-top: 12px">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Dr. Richardson, California</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-pinterest"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="copyright">© 2023 Beautya. All Rights Reserved.</div>
+          <div class="legal-links">
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Simple JavaScript for interactive elements
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add to cart functionality
+        const addToCartButtons = document.querySelectorAll(".add-to-cart");
+        addToCartButtons.forEach((button) => {
+          button.addEventListener("click", function (e) {
+            e.preventDefault();
+            const countElement = document.querySelector(".cart-count");
+            let count = parseInt(countElement.textContent);
+            countElement.textContent = count + 1;
+
+            // Add animation
+            button.textContent = "Added!";
+            setTimeout(() => {
+              button.textContent = "Add to Cart";
+            }, 2000);
+          });
+        });
+
+        // Slider arrows functionality
+        const leftArrow =
+          document.querySelector(".fa-chevron-left").parentElement;
+        const rightArrow =
+          document.querySelector(".fa-chevron-right").parentElement;
+
+        leftArrow.addEventListener("click", function () {
+          // Add slider functionality here
+          console.log("Previous slide");
+        });
+
+        rightArrow.addEventListener("click", function () {
+          // Add slider functionality here
+          console.log("Next slide");
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector(".newsletter-form");
+        newsletterForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('input[type="email"]');
+          alert(`Thank you for subscribing with ${emailInput.value}!`);
+          emailInput.value = "";
+        });
+      });
+    </script>
+  </body>
+</html>
