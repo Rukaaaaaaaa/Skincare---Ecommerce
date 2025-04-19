@@ -377,6 +377,7 @@ top: 6.67px;
   gap: 16px;
   cursor: pointer;
   transition: transform 0.3s ease;
+  padding-bottom: 50px;
 }
 
 .category-card:hover {
@@ -387,6 +388,7 @@ top: 6.67px;
   width: 256px;
   height: 342px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .category-name {
