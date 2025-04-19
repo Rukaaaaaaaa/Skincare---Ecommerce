@@ -18,12 +18,6 @@ body {
   overflow-x: hidden;
 }
 
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-  background: var(--light-bg);
-  position: relative;
-}
 
 .section-header {
   text-align: center;
