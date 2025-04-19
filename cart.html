@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Beautya - Skincare & Makeup</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="styles.css">
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <style>
+            
+/* === Cart Page Styles === */
+.cart-page {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cart-page h1 {
+  font-size: 28px;
+  color: #c80064;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* Table Styles */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+
+.cart-table thead {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.cart-table th,
+.cart-table td {
+  text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Ảnh sản phẩm to hơn và căn chỉnh đẹp hơn */
+.cart-table td img {
+  width: 80px;
+  height: 80px;
+  vertical-align: middle;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+
+/* Cart Actions */
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.cart-actions button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-actions button:hover {
+  background-color: #f2f2f2;
+}
+
+/* Coupon and Checkout Area */
+.coupon-checkout {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.coupon {
+  flex: 1;
+}
+
+.coupon input {
+  padding: 10px;
+  width: 60%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.coupon button {
+  padding: 10px 20px;
+  background-color: #c80064;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.coupon button:hover {
+  background-color: #a0004f;
+}
+
+/* Summary Box */
+.cart-summary {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 20px;
+  min-width: 280px;
+}
+
+.cart-summary h3 {
+  margin-bottom: 15px;
+}
+
+.qty-btn {
+  padding: 5px 10px;
+  background-color: #eee;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.qty {
+  min-width: 20px;
+  display: inline-block;
+  text-align: center;
+}
+.qty-input {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Căn phải phần giá */
+.cart-summary p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.cart-summary p .price {
+  text-align: right;
+  font-weight: 600;
+}
+
+
+.cart-summary button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background-color: #c80064;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.cart-summary button:hover {
+  background-color: #a0004f;
+}
+
+/* Dropdown (quantity) styling */
+select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+        </style>
+      </head>
+<body>
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO">
+          <span class="shop-name">BEAUTYA</span>
+        </div>
+        
+        <nav class="nav-menu">
+          <a href="homepage.html" class="nav-link">Home</a>
+          <a href="#" class="nav-link">Products</a>
+          <a href="#" class="nav-link">About Us</a>
+          <a href="contact.html" class="nav-link">Contacts</a>
+          <a href="#" class="nav-link">Sign in</a>
+        </nav>
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+            <span class="cart-count">0</span>
+          </div>
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+       </div>
+      </header>
+
+  <!-- Cart Page Content -->
+  <main class="cart-page">
+    <h1>Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td>$650</td>
+          <td>
+            <input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)">
+          </td>
+          <td class="item-subtotal">$650</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td>$550</td>
+          <td>
+            <input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)">
+          </td>
+          <td class="item-subtotal">$1100</td>
+        </tr>
+      </tbody>
+      
+    </table>
+
+    <div class="cart-actions">
+        <label><input type="checkbox" id="select-all"> Chọn tất cả</label>
+        <button onclick="updateCart()">Xóa</button>
+      </div>
+      
+
+    <div class="coupon-checkout">
+      <div class="coupon">
+        <input type="text" placeholder="Coupon Code">
+        <button>Apply Coupon</button>
+      </div>
+      <div class="cart-summary">
+        <h3>Cart Total</h3>
+        <p><span>Subtotal:</span> <span class="price">$1750</span></p>
+        <p><span>Shipping:</span> <span class="price">Free</span></p>
+        <p><span><strong>Total:</strong></span> <span class="price"><strong>$1750</strong></span></p>
+        <button>Proceed to checkout</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    // update số lượng
+  function updateQty(input) {
+  if (parseInt(input.value) < 1) input.value = 1; // không cho nhỏ hơn 1
+  updateSubtotal(input.closest('tr'));
+}
+
+    // Cập nhật tổng tiền của từng hàng
+    function updateSubtotal(row) {
+      const price = parseInt(row.cells[1].textContent.replace('$', ''));
+      const qty = parseInt(row.querySelector('.qty-input').value);
+      const subtotal = price * qty;
+      row.querySelector('.item-subtotal').textContent = `$${subtotal}`;
+      updateTotal();
+    }
+  
+    // Tính lại tổng tiền
+    function updateTotal() {
+      let total = 0;
+      document.querySelectorAll('.item-subtotal').forEach(cell => {
+        total += parseInt(cell.textContent.replace('$', ''));
+      });
+      document.querySelector('.cart-summary p:nth-child(2)').innerHTML = `<span>Subtotal:</span> <span class="price">$${total}</span>`;
+      document.querySelector('.cart-summary p:nth-child(3)').innerHTML = `<span>Shipping:</span> <span class="price">Free</span>`;
+      document.querySelector('.cart-summary p:nth-child(4)').innerHTML = `<span><strong>Total:</strong></span> <span class="price"><strong>$${total}</strong></span>`;
+    }
+  
+    // Chức năng chọn tất cả
+    document.getElementById('select-all').addEventListener('change', function () {
+      document.querySelectorAll('.select-item').forEach(cb => cb.checked = this.checked);
+    });
+  
+    // Xóa sản phẩm đã chọn
+    function updateCart() {
+      document.querySelectorAll('.select-item:checked').forEach(cb => {
+        cb.closest('tr').remove();
+      });
+      updateTotal();
+    }
+  
+    // Tính tổng ban đầu khi vào trang
+    window.onload = updateTotal;
+  </script>
+  
+</body>
+</html>
