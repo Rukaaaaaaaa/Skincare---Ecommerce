@@ -15,25 +15,28 @@
     />
   </head>
   <body>
-    <div class="container">
       <!-- Header -->
       <header class="header">
-        <div class="logo">BEAUTYA</div>
+        <div class="logo">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO">
+          <span class="shop-name">BEAUTYA</span>
+        </div>
+        
         <nav class="nav-menu">
-          <a href="#" class="nav-link">Women Make UP</a>
-          <a href="#" class="nav-link">Women Skincare</a>
-          <a href="#" class="nav-link">Gifts & Sets</a>
-          <a href="#" class="nav-link">Branches</a>
-          <a href="#" class="nav-link">Our Brand</a>
+          <a href="#" class="nav-link">Home</a>
+          <a href="#" class="nav-link">Products</a>
+          <a href="#" class="nav-link">About Us</a>
+          <a href="contact.html" class="nav-link">Contacts</a>
+          <a href="#" class="nav-link">Sign in</a>
         </nav>
         <div class="header-actions">
           <div class="cart-wrapper">
-            <i class="fas fa-shopping-cart cart-icon"></i>
+            <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
             <span class="cart-count">0</span>
           </div>
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
           </div>
-        </div>
+       </div>
       </header>
 
       <!-- Hero Slider -->
@@ -55,7 +58,7 @@
 
   <div class="hero-content">
     <h1 class="hero-title">Unlock your natural glow</h1>
-    <a href="#" class="button button-outline">Know More</a>
+    <a href="#" class="button button-outline">Xem Thêm</a>
   </div>
 
   <!-- Custom navigation arrows -->
@@ -78,23 +81,35 @@
   <span class="dot" onclick="currentSlide(2)"></span>
 </div>
 
-
       <!-- Categories -->
-      <section style="padding: 80px 108px">
+      <section>
         <h2 class="section-header">Products' categories</h2>
         <div style="display: flex; justify-content: center; gap: 20px">
           <div class="category-card">
-            <img src="https://placehold.co/256x342" alt="Women Make Up" />
-            <div class="category-name">Women Make Up</div>
+            <img src="img/unsplash_HvkDYluePqw.png" alt="Women Make Up" />
+            <div class="category-name">Sữa rửa mặt</div>
           </div>
           <div class="category-card">
-            <img src="https://placehold.co/256x342" alt="Women Skincare" />
-            <div class="category-name">Women Skincare</div>
+            <img src="img/unsplash_HvkDYluePqw.png" alt="Women Skincare" />
+            <div class="category-name">Toner/Nước hoa hồng</div>
           </div>
           <div class="category-card">
-            <img src="https://placehold.co/256x342" alt="Gifts & Sets" />
-            <div class="category-name">Gifts & Sets</div>
+            <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+            <div class="category-name">Kem chống nắng</div>
           </div>
+          <div class="category-card">
+            <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+            <div class="category-name">Mặt nạ</div>
+          </div>
+          <div class="category-card">
+            <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+            <div class="category-name">Tẩy trang</div>
+          </div>
+
+<!-- 3. Serum/Essence/Ampoule (Tùy chọn)
+4. Kem dưỡng ẩm (Moisturizer) (Tùy chọn)
+7. Tẩy tế bào chết (Exfoliator)(Tùy chọn)
+11. Dụng cụ hỗ trợ skincare (Tùy chọn) -->
         </div>
         <div
           style="
@@ -106,58 +121,37 @@
         >
       </section>
 
-      <!-- Virtual Skincare Analysis -->
-      <section
-        style="
-          width: 1224px;
-          height: 281px;
-          margin: 0 auto;
-          background: var(--dark-bg);
-          display: flex;
-        "
-      >
-        <div style="flex: 1; padding: 60px">
-          <h3 style="color: white; font-size: 24px; margin-bottom: 16px">
-            NEW Virtual Skincare Analysis
-          </h3>
-          <p style="color: white; font-size: 14px; margin-bottom: 24px">
-            Looking for a full skincare routine? Our NEW Virtual Skincare
-            Analysis Tool evaluates your skin and provides the most personalized
-            recommendations.
-          </p>
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              gap: 16px;
-              margin-bottom: 16px;
-            "
-          >
-            <div style="color: white; font-weight: 700">
-              Scan with your phone to get started
-            </div>
-            <div style="color: white">or</div>
-          </div>
-          <a href="#" class="button button-outline">answer a few questions</a>
-        </div>
-        <div style="flex: 1; position: relative">
-          <img
-            src="https://placehold.co/600x281"
-            alt="Virtual Skincare"
-            style="width: 100%; height: 100%; object-fit: cover"
-          />
-          <img
-            src="https://placehold.co/100x100"
-            alt="QR Code"
-            style="
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -50%);
-            "
-          />
-        </div>
-      </section>
+<!-- Virtual Skincare Analysis -->
+<section class="virtual-analysis-section">
+  <div class="analysis-content">
+    <h3>NEW Virtual Skincare Analysis</h3><br>
+    <p>
+      Looking for a full skincare routine? Our NEW Virtual Skincare Analysis Tool<br> 
+      Evaluates your skin and provides the most personalized<br> 
+      Recommendations.</p><br>
+    
+    <div class="scan-options">
+      <div class="scan-text">Scan with your phone to get started or</div>
+    </div>
+    
+    <a href="#" class="button button-outline">answer a few questions</a>
+    
+    <!-- QR Code positioned at bottom right of content area -->
+    <img 
+      src="img/unsplash_HvkDYluePqw.png" 
+      alt="QR Code" 
+      class="qr-code"
+    />
+  </div>
+
+  <div class="analysis-image-wrapper">
+    <img 
+      src="img/unsplash_HvkDYluePqw.png" 
+      alt="Virtual Skincare" 
+      class="main-image"
+    />
+  </div>
+</section>
 
        <!-- Best Sellers -->
        <section style="padding: 80px 108px">
@@ -256,7 +250,7 @@
 </section>
       
 
-      <!-- New In -->
+<!-- New In -->
 <section style="background: var(--dark-bg); padding: 80px 108px">
   <h2 class="section-header" style="color: white">New In</h2>
 
@@ -294,72 +288,29 @@
           </div>
         </div>
         <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
+          <img src="https://placehold.co/288x384" alt="New Product 4" />
           <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
+            <h3 class="product-title">Beautya Hydration Boost Cream</h3>
+            <p>24-hour moisture lock with hyaluronic acid</p>
+            <div class="product-price">$72.00</div>
           </div>
         </div>
         <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
+          <img src="https://placehold.co/288x384" alt="New Product 5" />
           <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
+            <h3 class="product-title">Beautya Eye Revitalizer</h3>
+            <p>Reduces dark circles and puffiness</p>
+            <div class="product-price">$65.00</div>
           </div>
         </div>
         <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
+          <img src="https://placehold.co/288x384" alt="New Product 6" />
           <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
+            <h3 class="product-title">Beautya Sun Shield SPF 50</h3>
+            <p>Lightweight broad spectrum protection</p>
+            <div class="product-price">$58.00</div>
           </div>
         </div>
-        <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
-          <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
-          <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
-          <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
-          <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <img src="https://placehold.co/288x384" alt="New Product 3" />
-          <div class="product-info">
-            <h3 class="product-title">Beautya Glow Rejuvenator</h3>
-            <p>Boosts radiance with vitamin C complex</p>
-            <div class="product-price">$89.00</div>
-          </div>
-        </div>
-        
-        
-        <!-- Add more product-card divs if needed -->
       </div>
     </div>
 
@@ -370,70 +321,34 @@
   </div>
 </section>
 
+<!-- Special Offers -->
+<section class="special-offers-section">
+  <div class="special-offers-container">
+        <!-- BÊN PHẢI: Ảnh -->
+        <div class="special-offers-image">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Special Offer" />
+        </div>
+        
+    <!-- BÊN TRÁI: Text -->
+    <div class="special-offers-content">
+      <h3 class="special-offers-subtitle">Special Offers</h3>
+      <h2 class="special-offers-title">Save Up To 50%</h2>
 
-      <!-- Special Offers -->
-      <section style="padding: 80px 108px; background: white">
-        <div style="display: flex; justify-content: flex-end">
-          <div style="max-width: 600px; text-align: right">
-            <h3 style="font-size: 24px; margin-bottom: 16px">Special offers</h3>
-            <h2
-              style="
-                color: var(--primary-color);
-                font-size: 32px;
-                margin-bottom: 16px;
-              "
-            >
-              Save up to 50%
-            </h2>
-            <p style="margin-bottom: 16px">
-              Mother's Day is coming! <br />For everything she's given you, it's
-              time to give back. Shower her with love, happiness, and the best
-              of Beautya.
-            </p>
-            <p
-              style="
-                color: var(--primary-color);
-                font-weight: 700;
-                margin-bottom: 24px;
-              "
-            >
-              visit your local beautya branches to find out more about our
-              special offers in make up and skincare products.
-            </p>
-            <a href="#" class="button button-filled">find branches</a>
-          </div>
-        </div>
-      </section>
+      <p class="special-offers-text">
+        Mother's Day Is Coming!<br>
+        For Everything She's Given You, It's Time To Give Back. Shower Her With Love, Happiness, And The Best Of Beautya.
+      </p>
 
-      <!-- Our Brand -->
-      <section
-        style="
-          width: 1224px;
-          height: 269px;
-          margin: 0 auto;
-          background: var(--dark-bg);
-          display: flex;
-        "
-      >
-        <div style="flex: 1; padding: 40px">
-          <h3 style="color: white; font-size: 24px; margin-bottom: 16px">
-            our brand
-          </h3>
-          <p style="color: white; font-size: 16px; margin-bottom: 24px">
-            We believe that beauty thrives in diversity and discovery. Our
-            purpose is to expand the way the world sees beauty by empowering the
-            Extraordinary in each of us.
-          </p>
-          <a href="#" class="button button-outline">Discover More</a>
-        </div>
-        <div style="flex: 1">
-          <img
-            src="https://placehold.co/496x269"
-            alt="Our Brand"
-            style="width: 100%; height: 100%; object-fit: cover"
-          />
-        </div>
-      </section>
+      <p class="special-offers-highlight">
+        Visit Your Local Beautya Branches To Find Out More About Our Special Offers In Make Up And Skincare Products.
+      </p><br>
+
+      <a href="#" class="special-offers-button">Find Branches</a>
+    </div>
+
+
+  </div>
+</section>
 
       <!-- Blog -->
       <section style="padding: 80px 108px">
