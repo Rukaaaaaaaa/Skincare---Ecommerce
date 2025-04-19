@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Beautya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        .form-section { background: #f9f9f9; padding: 30px; border-radius: 10px; }
+        h2 { color: #c80064; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .row { display: flex; gap: 20px; }
+        .row > div { flex: 1; }
+.checkbox {
+    display: flex;
+    align-items: flex-start; /* Hoặc baseline */
+    margin-bottom: 20px;
+    gap: 8px; /* Thay thế margin-right */
+}
+
+.checkbox input {
+    width: auto;
+    margin-top: 3px; /* Điều chỉnh căn dọc thủ công */
+    transform: scale(1.2); /* Tùy chọn - phóng to checkbox */
+}
+
+.checkbox span {
+    line-height: 1.5; /* Đảm bảo dòng chữ cân đối */
+}
+.submit-btn {
+    background: #c80064;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Thêm phần này */
+.form-section .submit-btn {
+    width: auto;
+    padding: 12px 30px;
+    margin: 10px auto;
+    display: block;
+    font-size: 14px;
+}        .cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 20px; /* Thêm khoảng cách giữa các card */
+}
+/* Thêm hiệu ứng hover cho card */
+.card {
+    transition: all 0.3s ease; /* Tạo hiệu ứng mượt */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Nâng card lên 5px */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng đậm hơn */
+    background: #ffe5f2; /* Đổi màu nền khi hover */
+}
+
+/* Thêm hiệu ứng hover cho nút */
+.submit-btn {
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #a0004a; /* Màu đậm hơn */
+    transform: scale(1.05); /* Phóng nhẹ nút */
+}
+
+.card {
+    background: #fff0f8;
+    padding: 25px;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px; /* Chiều cao tối thiểu bằng nhau */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+}
+
+.card h3 {
+    color: #c80064;
+    margin: 10px 0;
+}
+
+.card p {
+    flex-grow: 1; /* Căn đều chiều cao đoạn văn */
+    
+}
+
+.submit-btn {
+    width: 80%; /* Làm nút rộng hơn */
+    margin-top: auto; /* Đẩy nút xuống dưới cùng */
+}
+        .footer-section { display: flex; justify-content: space-around; flex-wrap: wrap; padding: 40px 0; }
+        .footer-section div { flex: 1; padding: 20px; }
+        .footer-bottom { background: #1a001f; color: #ccc; padding: 10px; font-size: 14px; display: flex; justify-content: space-between; }
+        .social-icons a { color: #fff; margin-left: 10px; }
+        .footer-list a { display: block; color: white; text-decoration: none; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO">
+          <span class="shop-name">BEAUTYA</span>
+        </div>
+        
+        <nav class="nav-menu">
+          <a href="homepage.html" class="nav-link">Home</a>
+          <a href="#" class="nav-link">Products</a>
+          <a href="#" class="nav-link">About Us</a>
+          <a href="#" class="nav-link">Contacts</a>
+          <a href="#" class="nav-link">Sign in</a>
+        </nav>
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <i class="fas fa-shopping-cart cart-icon"></i>
+            <span class="cart-count">0</span>
+          </div>
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+      </header>
+
+    <div class="contact-container">
+        <p>Home > Contact Us</p><br>
+        <h2>Contact Us</h2>
+        <p>Beautya Client Service Center Is Happy to Help You With Any Questions You May Have Regarding Our Products And Corporate Information. <br><br>
+            Contact Us by Phone:  0-123-456-789  Monday to Friday, 9am to 9pm, and Saturday-Sunday, 9am to 6pm Or <br>
+            Fill in The Form Below to Send Us An Email. <br>
+            <br>
+            <small>Please fill in this form to send us your inquiry. We'll be more than happy to help and will reply to you as soon as possible.</small>
+        </p>
+
+        <div class="form-section">
+            <h3> Write Us</h3><br>
+            <form>
+                <div class="row">
+                    <div>
+                        <label>First Name</label>
+                        <input type="text" name="firstName">
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input type="text" name="lastName">
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <label>Email Address</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div>
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone">
+                    </div>
+                </div>
+                <div>
+                    <label>Subject</label>
+                    <select>
+                        <option>Order</option>
+                        <option>Skin Type</option>
+                        <option>Promo Info</option>
+                        <option>Returns</option>
+                        <option>Product Stock</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Your Text</label>
+                    <textarea rows="4"></textarea>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox"> <span>I have read and understood the contact us privacy and policy.</span>
+                </div>
+                <button type="submit" class="submit-btn">Send</button>
+            </form>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>💬 Chat Online</h3>
+                <p>Looking for personalized advice?</p>
+                <button class="submit-btn">Ask Your Question</button>
+            </div>
+            <div class="card">
+                <h3>📞 Call Us</h3>
+                <p>Our advisors are here for you: 0124-542-9876</p>
+                <button class="submit-btn">Ask Your Question</button>
+            </div>
+            <div class="card">
+                <h3>📢 Instant Message</h3>
+                <p>Would you like to contact us on WhatsApp or Telegram?</p>
+                <button class="submit-btn">Ask Your Question</button>
+            </div>
+        </div>
+    </div>
+
+      <!-- Footer -->
+      <footer>
+        <!-- Footer Top -->
+        <div class="footer-top">
+          <div class="benefit-item">
+            <i class="fas fa-paw benefit-icon"></i>
+            <span class="benefit-text">No tests on animals</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-leaf benefit-icon"></i>
+            <span class="benefit-text">No animal-derived ingredients</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-bread-slice benefit-icon"></i>
+            <span class="benefit-text">No gluten, or gluten byproducts</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-recycle benefit-icon"></i>
+            <span class="benefit-text">Recyclable packaging</span>
+          </div>
+        </div>
+
+        <!-- Footer Main -->
+        <div class="footer-main">
+          <div class="footer-column">
+            <h3>How can we Help?</h3>
+            <ul>
+              <li><a href="#">beautya branches</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Our Brand</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Products</h3>
+            <ul>
+              <li><a href="#">Women Make up</a></li>
+              <li><a href="#">Women Skincare</a></li>
+              <li><a href="#">Gifts & Sets</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>keep in touch with beautya</h3>
+            <p style="color: white; margin-bottom: 24px">
+              Join the Beautya newsletter and be first to hear about news,
+              offers and skincare advice
+            </p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                placeholder="email address"
+                class="newsletter-input"
+              />
+              <button type="submit" class="newsletter-submit">subscribe</button>
+            </form>
+            <div style="margin-top: 24px">
+              <div class="contact-info">
+                <i class="fas fa-phone-alt contact-icon"></i>
+                <span>1-802-526-2463</span>
+              </div>
+              <div class="contact-info" style="margin-top: 12px">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Dr. Richardson, California</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-pinterest"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="copyright">© 2023 Beautya. All Rights Reserved.</div>
+          <div class="legal-links">
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+      </footer>
+</body>
+</html>
