@@ -469,12 +469,27 @@ top: 6.67px;
   border-bottom: 1px solid #dfdfdf;
 }
 
-.logo {
-  font-size: 24px;
+.shop-name {
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--primary-color);
 }
-
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  }
+  .logo img {
+  width: 70px; /* Tăng kích thước */
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ff6f61; /* Thêm viền màu chủ đạo */
+  transition: transform 0.3s ease;
+  }
+  .logo:hover img {
+  transform: rotate(15deg); /* Hiệu ứng xoay khi hover */
+  }
 .nav-menu {
   display: flex;
   gap: 40px;
