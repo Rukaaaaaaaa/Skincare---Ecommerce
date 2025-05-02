@@ -690,7 +690,7 @@ body {
   padding: 80px 108px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 50px;
+  gap: 40px;
 }
 
 .footer-column h3 {
@@ -1132,7 +1132,7 @@ body {
 
 .footer-social-group {
   display: flex;
-  gap: 16px;
+  gap: 22px;
 }
 
 .footer-social-group a {
