@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="static/css/check_style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO">
+      <span class="shop-name">BEAUTYA</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="homepage.html" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Products</a>
+      <a href="#" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contacts</a>
+      <a href="#" class="nav-link">Sign in</a>
+    </nav>
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+    </div>
+  </header>
+  <div class="checkout-container">
+    <h1>Thanh Toán</h1>
+
+    <div class="address-input">
+      <label for="fullname">Họ và Tên</label>
+      <input type="text" id="fullname" placeholder="Nhập họ và tên người nhận" required>
+
+      <label for="phone">Số điện thoại</label>
+      <input type="tel" id="phone" placeholder="Nhập số điện thoại" required>
+
+      <label for="province">Tỉnh / Thành phố</label>
+      <select id="province" required></select>
+
+      <label for="district">Quận / Huyện</label>
+      <select id="district" required>
+        <option value="">-- Chọn Quận / Huyện --</option>
+      </select>
+
+      <label for="ward">Xã / Phường / Thị trấn</label>
+      <select id="ward" required>
+        <option value="">-- Chọn Xã / Phường / Thị trấn --</option>
+      </select>
+
+      <label for="detail-address">Địa chỉ cụ thể</label>
+      <input type="text" id="detail-address" placeholder="Số nhà, tên đường..." required>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td>$650</td>
+          <td><input type="number" class="qty-input" value="1" min="1"></td>
+          <td class="item-subtotal">$650</td>
+        </tr>
+        <tr>
+          <td><img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td>$550</td>
+          <td><input type="number" class="qty-input" value="2" min="1"></td>
+          <td class="item-subtotal">$1100</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="shipping-method">
+      <h3>Phương thức vận chuyển</h3>
+      <label class="shipping-option">
+        <input type="radio" name="shipping-method" value="100000" data-method="Nhanh" checked>
+        Giao nhanh 100000đ (16 - 19 tháng 4)
+      </label>
+      <label class="shipping-option">
+        <input type="radio" name="shipping-method" value="100000" data-method="Hỏa Tốc">
+        Giao hỏa tốc 100000đ (trong ngày mai)
+      </label>
+    </div>
+
+    <div class="coupon-section">
+      <input type="text" placeholder="Coupon Code">
+      <button>Apply Coupon</button>
+    </div>
+
+    <div class="cart-summary">
+      <h3>Tổng Tiền</h3>
+      <p><span>Tổng tiền hàng:</span><span class="summary-subtotal">0đ</span></p>
+      <p><span>Phí vận chuyển:</span><span class="summary-shipping">0đ</span></p>
+      <p><span><strong>Tổng cộng:</strong></span><span class="summary-total"><strong>0đ</strong></span></p>
+      <button onclick="return validateOrder()">Đặt hàng</button>
+    </div>
+  </div>
+
+  <script>
+    async function loadProvinces() {
+      const res = await fetch('https://provinces.open-api.vn/api/?depth=1');
+      const data = await res.json();
+      const select = document.getElementById('province');
+      select.innerHTML = '<option value="">-- Chọn Tỉnh / Thành phố --</option>';
+      data.forEach(p => {
+        const option = document.createElement('option');
+        option.value = p.code;
+        option.textContent = p.name;
+        option.dataset.name = p.name;
+        select.appendChild(option);
+      });
+    }
+
+    async function loadDistricts(provinceCode) {
+      const res = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+      const data = await res.json();
+      const select = document.getElementById('district');
+      select.innerHTML = '<option value="">-- Chọn Quận / Huyện --</option>';
+      document.getElementById('ward').innerHTML = '<option value="">-- Chọn Phường / Xã --</option>';
+      data.districts.forEach(d => {
+        const option = document.createElement('option');
+        option.value = d.code;
+        option.textContent = d.name;
+        select.appendChild(option);
+      });
+    }
+
+    async function loadWards(districtCode) {
+      const res = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+      const data = await res.json();
+      const select = document.getElementById('ward');
+      select.innerHTML = '<option value="">-- Chọn Phường / Xã --</option>';
+      data.wards.forEach(w => {
+        const option = document.createElement('option');
+        option.value = w.code;
+        option.textContent = w.name;
+        select.appendChild(option);
+      });
+    }
+
+    function updateTotal() {
+      let subtotal = 0;
+      document.querySelectorAll('tbody tr').forEach(row => {
+        const price = parseInt(row.cells[1].textContent.replace('$', ''));
+        const qty = parseInt(row.querySelector('.qty-input').value);
+        const itemSubtotal = price * qty;
+        row.querySelector('.item-subtotal').textContent = '$' + itemSubtotal;
+        subtotal += itemSubtotal;
+      });
+
+      const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
+      let shipping = selectedShipping ? parseInt(selectedShipping.value) : 0;
+
+      const provinceSelect = document.querySelector('#province');
+      const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
+      const provinceName = selectedOption?.dataset.name || '';
+
+      if (selectedShipping?.dataset.method === 'Hỏa Tốc' && provinceName !== 'Thành phố Hà Nội') {
+        alert('Phương thức giao hàng Hỏa Tốc chỉ áp dụng tại Hà Nội.');
+        selectedShipping.checked = false;
+        document.querySelector('input[name="shipping-method"][data-method="Nhanh"]').checked = true;
+        shipping = 100000;
+      }
+
+      document.querySelector('.summary-subtotal').textContent = subtotal + 'đ';
+      document.querySelector('.summary-shipping').textContent = shipping + 'đ';
+      document.querySelector('.summary-total').textContent = (subtotal + shipping) + 'đ';
+    }
+
+    function validateOrder() {
+      const name = document.getElementById('fullname').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const province = document.getElementById('province').value;
+      const district = document.getElementById('district').value;
+      const ward = document.getElementById('ward').value;
+      const detailAddress = document.getElementById('detail-address').value.trim();
+
+      if (!name || !phone || !province || !district || !ward || !detailAddress) {
+        alert("Vui lòng điền đầy đủ thông tin giao hàng.");
+        return false;
+      }
+
+      const phonePattern = /^0\d{9}$/;
+      if (!phonePattern.test(phone)) {
+        alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 chữ số bắt đầu bằng 0.");
+        return false;
+      }
+
+      alert("Đặt hàng thành công!");
+      return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProvinces();
+
+      document.getElementById('province').addEventListener('change', function () {
+        loadDistricts(this.value);
+        updateTotal();
+      });
+
+      document.getElementById('district').addEventListener('change', function () {
+        loadWards(this.value);
+      });
+
+      document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('input', updateTotal);
+      });
+
+      document.querySelectorAll('input[name="shipping-method"]').forEach(input => {
+        input.addEventListener('change', updateTotal);
+      });
+
+      updateTotal();
+    });
+  </script>
+</body>
+
+</html>

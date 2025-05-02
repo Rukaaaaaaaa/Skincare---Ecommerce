@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautya - Skincare & Makeup Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/blog_style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="static/img/beautya logo.svg" alt="Beautya Logo" style="height: 40px;">
+            </div>
+            
+            <nav class="navbar">
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-bar">
+                <button class="search-btn" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="#">Home</a></li>
+                    <li><span aria-current="page">Blog</span></li>
+                </ol>
+            </nav>
+            
+            <h1 class="page-title">Blog</h1>
+            
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="/static/images/blog-image0.png" alt="Clear skin routine">
+                    </div>
+                    <div class="blog-content">
+                        <span class="category">Skincare</span>
+                        <h2 class="blog-title">How to Get Clear Skin Fast</h2>
+                        <div class="blog-meta">
+                            <span class="author">Dr. Wade Warren</span>
+                            <span class="date">Jan 20, 2021</span>
+                        </div>
+                        <p class="blog-excerpt">Many people find it difficult to get clear skin. The methods for getting clear skin will vary, depending on the person's skin type...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="/static/images/blog-image1.png" alt="Winter skincare tips">
+                    </div>
+                    <div class="blog-content">
+                        <span class="category">Skincare</span>
+                        <h2 class="blog-title">Winter Skincare Essentials</h2>
+                        <div class="blog-meta">
+                            <span class="author">Dr. Sarah Johnson</span>
+                            <span class="date">Nov 15, 2021</span>
+                        </div>
+                        <p class="blog-excerpt">Protecting your skin during winter requires special care. Learn which products can help combat dryness and maintain healthy skin...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+                
+                <!-- Additional blog posts (3-9) would follow same structure -->
+                
+                <!-- Blog Post 9 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="/static/images/blog-image8.png" alt="Makeup trends">
+                    </div>
+                    <div class="blog-content">
+                        <span class="category">Makeup</span>
+                        <h2 class="blog-title">2023 Makeup Trends to Try</h2>
+                        <div class="blog-meta">
+                            <span class="author">Mia Chen</span>
+                            <span class="date">Feb 3, 2023</span>
+                        </div>
+                        <p class="blog-excerpt">Discover the hottest makeup trends of the year and how to incorporate them into your daily routine for a fresh, modern look...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link next">Next <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="beautya logo.svg" alt="Beautya Logo" style="height: 40px;">
+                </div>
+                <div class="footer-links">
+                    <div class="links-column">
+                        <h3>Shop</h3>
+                        <ul>
+                            <li><a href="#">Skincare</a></li>
+                            <li><a href="#">Makeup</a></li>
+                            <li><a href="#">Haircare</a></li>
+                            <li><a href="#">Fragrance</a></li>
+                        </ul>
+                    </div>
+                    <div class="links-column">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Our Story</a></li>
+                            <li><a href="#">Ingredients</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="links-column">
+                        <h3>Help</h3>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Shipping</a></li>
+                            <li><a href="#">Returns</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="newsletter">
+                    <h3>Join Our Newsletter</h3>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Beautya. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/js/blog_script.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="static/css/cart_style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO">
+      <span class="shop-name">BEAUTYA</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="homepage.html" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Products</a>
+      <a href="#" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contacts</a>
+      <a href="#" class="nav-link">Sign in</a>
+    </nav>
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+    </div>
+  </header>
+
+  <!-- Cart Page Content -->
+  <main class="cart-page">
+    <h1>Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume">
+            Rose Perfume</td>
+          <td>$650</td>
+          <td>
+            <input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)">
+          </td>
+          <td class="item-subtotal">$650</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume">
+            Rose Perfume</td>
+          <td>$550</td>
+          <td>
+            <input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)">
+          </td>
+          <td class="item-subtotal">$1100</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+    <div class="cart-actions">
+      <label><input type="checkbox" id="select-all"> Chọn tất cả</label>
+      <button onclick="updateCart()">Xóa</button>
+    </div>
+
+
+    <div class="coupon-checkout">
+      <div class="coupon">
+        <input type="text" placeholder="Coupon Code">
+        <button>Apply Coupon</button>
+      </div>
+      <div class="cart-summary">
+        <h3>Cart Total</h3>
+        <p><span>Subtotal:</span> <span class="price">$1750</span></p>
+        <p><span>Shipping:</span> <span class="price">Free</span></p>
+        <p><span><strong>Total:</strong></span> <span class="price"><strong>$1750</strong></span></p>
+        <button onclick="window.location.href='checkout.html'">Proceed to checkout</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    // update số lượng
+    function updateQty(input) {
+      if (parseInt(input.value) < 1) input.value = 1; // không cho nhỏ hơn 1
+      updateSubtotal(input.closest('tr'));
+    }
+
+    // Cập nhật tổng tiền của từng hàng
+    function updateSubtotal(row) {
+      const price = parseInt(row.cells[1].textContent.replace('$', ''));
+      const qty = parseInt(row.querySelector('.qty-input').value);
+      const subtotal = price * qty;
+      row.querySelector('.item-subtotal').textContent = `$${subtotal}`;
+      updateTotal();
+    }
+
+    // Tính lại tổng tiền
+    function updateTotal() {
+      let total = 0;
+      document.querySelectorAll('.item-subtotal').forEach(cell => {
+        total += parseInt(cell.textContent.replace('$', ''));
+      });
+      document.querySelector('.cart-summary p:nth-child(2)').innerHTML = `<span>Subtotal:</span> <span class="price">$${total}</span>`;
+      document.querySelector('.cart-summary p:nth-child(3)').innerHTML = `<span>Shipping:</span> <span class="price">Free</span>`;
+      document.querySelector('.cart-summary p:nth-child(4)').innerHTML = `<span><strong>Total:</strong></span> <span class="price"><strong>$${total}</strong></span>`;
+    }
+
+    // Chức năng chọn tất cả
+    document.getElementById('select-all').addEventListener('change', function () {
+      document.querySelectorAll('.select-item').forEach(cb => cb.checked = this.checked);
+    });
+
+    // Xóa sản phẩm đã chọn
+    function updateCart() {
+      document.querySelectorAll('.select-item:checked').forEach(cb => {
+        cb.closest('tr').remove();
+      });
+      updateTotal();
+    }
+
+    // Tính tổng ban đầu khi vào trang
+    window.onload = updateTotal;
+  </script>
+
+</body>
+
+</html>

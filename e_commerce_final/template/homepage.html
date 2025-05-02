@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Beautya - Skincare & Makeup</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="static/js/Scrip.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="homepage.html" class="nav-link">Home</a>
+        <a href="product.html" class="nav-link">Products</a>
+        <a href="#" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contacts</a>
+        <a href="#" class="nav-link">Sign in</a>
+      </nav>
+      <div class="header-actions">
+        <div class="cart-wrapper">
+          <i
+            class="fas fa-shopping-cart cart-icon"
+            onclick="window.location.href='cart.html'"
+          ></i>
+          <span class="cart-count">0</span>
+        </div>
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+      <div class="slideshow-wrapper">
+        <!-- Slide 1 -->
+        <div class="slide">
+          <img
+            src="https://payload.cargocollective.com/1/15/487303/7747205/beauty-03_2949.jpg"
+            alt="Slide 1 Description"
+          />
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/041/154/793/small_2x/ai-generated-femininity-female-natural-beauty-cosmetics-and-skin-care-concept-portrait-of-pretty-caucasian-model-young-blonde-woman-with-clean-skin-with-towel-on-head-looking-at-camera-photo.jpg"
+            alt="Slide 2 Description"
+          />
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+          <img
+            src="https://cdn.pixabay.com/photo/2023/08/16/13/51/ai-generated-8194211_1280.jpg"
+            alt="Slide 3 Description"
+          />
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Unlock your natural glow</h1>
+        <a href="#" class="button button-outline">Xem Thêm</a>
+      </div>
+
+      <!-- Navigation arrows -->
+      <div class="slide-nav-prev" onclick="moveSlide(-1)">
+        <div class="nav-arrow-container">
+          <div class="nav-arrow-icon"></div>
+        </div>
+      </div>
+      <div class="slide-nav-next" onclick="moveSlide(1)">
+        <div class="nav-arrow-container">
+          <div class="nav-arrow-icon"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dots navigation -->
+    <div class="slider-dots-outside">
+      <span class="dot active" onclick="currentSlide(0)"></span>
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+    </div>
+
+    <!-- Categories -->
+    <section>
+      <h2 class="section-header">Products' categories</h2>
+      <div style="display: flex; justify-content: center; gap: 20px">
+        <div class="category-card">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Women Make Up" />
+          <div class="category-name">Sữa rửa mặt</div>
+        </div>
+        <div class="category-card">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Women Skincare" />
+          <div class="category-name">Toner/Nước hoa hồng</div>
+        </div>
+        <div class="category-card">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+          <div class="category-name">Kem chống nắng</div>
+        </div>
+        <div class="category-card">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+          <div class="category-name">Mặt nạ</div>
+        </div>
+        <div class="category-card">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Gifts & Sets" />
+          <div class="category-name">Tẩy trang</div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 4px;
+          margin-top: 24px;
+        "
+      >
+    </section>
+
+    <!-- Virtual Skincare Analysis -->
+    <section class="virtual-analysis-section">
+      <div class="analysis-content">
+        <h3>NEW Virtual Skincare Analysis</h3>
+        <br />
+        <p>
+          Looking for a full skincare routine? Our NEW Virtual Skincare Analysis
+          Tool<br />
+          Evaluates your skin and provides the most personalized<br />
+          Recommendations.
+        </p>
+        <br />
+
+        <div class="scan-options">
+          <div class="scan-text">Scan with your phone to get started or</div>
+        </div>
+
+        <a href="#" class="button button-outline">answer a few questions</a>
+
+        <!-- QR Code -->
+        <img src="img/unsplash_HvkDYluePqw.png" alt="QR Code" class="qr-code" />
+      </div>
+
+      <div class="analysis-image-wrapper">
+        <img
+          src="img/unsplash_HvkDYluePqw.png"
+          alt="Virtual Skincare"
+          class="main-image"
+        />
+      </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="product-section">
+      <h2 class="section-header">Our Best Sellers</h2>
+
+      <div class="product-slider-container">
+        <!-- Left Arrow -->
+        <button class="product-slider-nav left" onclick="scrollProducts(-1)">
+          <span class="nav-arrow-icon"></span>
+        </button>
+
+        <!-- Product Slider -->
+        <div class="product-slider" id="productSlider">
+          <div class="product-grid">
+            <!-- Product Cards -->
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$76.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$70.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$7.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$2.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$73.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$76.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$76.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="Product" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care & Perfect
+                </h3>
+                <p>
+                  Plumping Gloss - Instant and Long-Term Volume Effect - 24h
+                  Hydration
+                </p>
+                <div class="product-price">$76.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Arrow -->
+        <button class="product-slider-nav right" onclick="scrollProducts(1)">
+          <span class="nav-arrow-icon"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- New In -->
+    <section class="product-section dark-bg">
+      <h2 class="section-header" style="color: white">New In</h2>
+
+      <div class="product-slider-container">
+        <!-- Left Arrow -->
+        <button class="product-slider-nav left" onclick="scrollNewProducts(-1)">
+          <span class="nav-arrow-icon"></span>
+        </button>
+
+        <!-- Product Slider -->
+        <div class="product-slider" id="newProductSlider">
+          <div class="product-grid">
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 1" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya La Mousse Off/On Foaming Cleaner
+                </h3>
+                <p>
+                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                  amet sint.
+                </p>
+                <div class="product-price">$64.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 2" />
+              <div class="product-info">
+                <h3 class="product-title">
+                  Beautya Capture Total Dreamskin Care
+                </h3>
+                <p>Anti-Aging Face Serum with French Water Lily</p>
+                <div class="product-price">$76.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 3" />
+              <div class="product-info">
+                <h3 class="product-title">Beautya Glow Rejuvenator</h3>
+                <p>Boosts radiance with vitamin C complex</p>
+                <div class="product-price">$89.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 4" />
+              <div class="product-info">
+                <h3 class="product-title">Beautya Hydration Boost Cream</h3>
+                <p>24-hour moisture lock with hyaluronic acid</p>
+                <div class="product-price">$72.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 5" />
+              <div class="product-info">
+                <h3 class="product-title">Beautya Eye Revitalizer</h3>
+                <p>Reduces dark circles and puffiness</p>
+                <div class="product-price">$65.00</div>
+              </div>
+            </div>
+            <div class="product-card">
+              <img src="https://placehold.co/288x384" alt="New Product 6" />
+              <div class="product-info">
+                <h3 class="product-title">Beautya Sun Shield SPF 50</h3>
+                <p>Lightweight broad spectrum protection</p>
+                <div class="product-price">$58.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Arrow -->
+        <button class="product-slider-nav right" onclick="scrollNewProducts(1)">
+          <span class="nav-arrow-icon"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="special-offers-section">
+      <div class="special-offers-container">
+        <!-- Right: Image -->
+        <div class="special-offers-image">
+          <img src="img/unsplash_HvkDYluePqw.png" alt="Special Offer" />
+        </div>
+
+        <!-- Left: Text -->
+        <div class="special-offers-content">
+          <h3 class="special-offers-subtitle">Special Offers</h3>
+          <h2 class="special-offers-title">Save Up To 50%</h2>
+
+          <p class="special-offers-text">
+            Mother's Day Is Coming!<br />
+            For Everything She's Given You, It's Time To Give Back. Shower Her
+            With Love, Happiness, And The Best Of Beautya.
+          </p>
+
+          <p class="special-offers-highlight">
+            Visit Your Local Beautya Branches To Find Out More About Our Special
+            Offers In Make Up And Skincare Products.
+          </p>
+          <br />
+
+          <a href="#" class="special-offers-button">Find Branches</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="blog-section">
+      <div class="blog-header">
+        <h2 class="section-header">Our Blog</h2>
+        <a href="#" class="button">view all</a>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <img src="https://placehold.co/392x294" alt="Blog Post" />
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span>Skincare</span>
+              <span>•</span>
+              <span>Dr. Wade Warren</span>
+              <span>•</span>
+              <span>Jan 20, 2021</span>
+            </div>
+            <h3 class="blog-title">How to get clear skin fast</h3>
+            <p class="blog-excerpt">
+              Many people find it difficult to get clear skin. The methods for
+              getting clear skin will vary, depending on the person's skin type.
+              In general, people struggling with acne or blemishes have skin
+              that is dry, oily, or a combination of the two.
+            </p>
+          </div>
+        </div>
+        <div class="blog-card">
+          <img src="https://placehold.co/392x294" alt="Blog Post" />
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span>Skincare</span>
+              <span>•</span>
+              <span>Dr. Wade Warren</span>
+              <span>•</span>
+              <span>Jan 20, 2021</span>
+            </div>
+            <h3 class="blog-title">How to get clear skin fast</h3>
+            <p class="blog-excerpt">
+              Many people find it difficult to get clear skin. The methods for
+              getting clear skin will vary, depending on the person's skin type.
+              In general, people struggling with acne or blemishes have skin
+              that is dry, oily, or a combination of the two.
+            </p>
+          </div>
+        </div>
+        <div class="blog-card">
+          <img src="https://placehold.co/392x294" alt="Blog Post" />
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span>Skincare</span>
+              <span>•</span>
+              <span>Dr. Wade Warren</span>
+              <span>•</span>
+              <span>Jan 20, 2021</span>
+            </div>
+            <h3 class="blog-title">How to get clear skin fast</h3>
+            <p class="blog-excerpt">
+              Many people find it difficult to get clear skin. The methods for
+              getting clear skin will vary, depending on the person's skin type.
+              In general, people struggling with acne or blemishes have skin
+              that is dry, oily, or a combination of the two.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <!-- Footer Top -->
+      <div class="footer-top">
+        <div class="benefit-item">
+          <i class="fas fa-paw benefit-icon"></i>
+          <span class="benefit-text">No tests on animals</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-leaf benefit-icon"></i>
+          <span class="benefit-text">No animal-derived ingredients</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-bread-slice benefit-icon"></i>
+          <span class="benefit-text">No gluten, or gluten byproducts</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-recycle benefit-icon"></i>
+          <span class="benefit-text">Recyclable packaging</span>
+        </div>
+      </div>
+
+      <!-- Footer Main -->
+      <div class="footer-main">
+        <div class="footer-column">
+          <h3>How can we Help?</h3>
+          <ul>
+            <li><a href="#">beautya branches</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Our Brand</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Products</h3>
+          <ul>
+            <li><a href="#">Women Make up</a></li>
+            <li><a href="#">Women Skincare</a></li>
+            <li><a href="#">Gifts & Sets</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>keep in touch with beautya</h3>
+          <p style="color: white; margin-bottom: 24px">
+            Join the Beautya newsletter and be first to hear about news, offers
+            and skincare advice
+          </p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              placeholder="email address"
+              class="newsletter-input"
+            />
+            <button type="submit" class="newsletter-submit">subscribe</button>
+          </form>
+          <div style="margin-top: 24px">
+            <div class="contact-info">
+              <i class="fas fa-phone-alt contact-icon"></i>
+              <span>1-802-526-2463</span>
+            </div>
+            <div class="contact-info" style="margin-top: 12px">
+              <i class="fas fa-map-marker-alt contact-icon"></i>
+              <span>Dr. Richardson, California</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="#" class="social-icon"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="copyright">© 2023 Beautya. All Rights Reserved.</div>
+        <div class="legal-links">
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    
+  </body>
+</html>

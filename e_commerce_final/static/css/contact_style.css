@@ -1,0 +1,93 @@
+.contact-container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        .form-section { background: #f9f9f9; padding: 30px; border-radius: 10px; }
+        h2 { color: #c80064; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .row { display: flex; gap: 20px; }
+        .row > div { flex: 1; }
+.checkbox {
+    display: flex;
+    align-items: flex-start; /* Hoặc baseline */
+    margin-bottom: 20px;
+    gap: 8px; /* Thay thế margin-right */
+}
+
+.checkbox input {
+    width: auto;
+    margin-top: 3px; /* Điều chỉnh căn dọc thủ công */
+    transform: scale(1.2); /* Tùy chọn - phóng to checkbox */
+}
+
+.checkbox span {
+    line-height: 1.5; /* Đảm bảo dòng chữ cân đối */
+}
+.submit-btn {
+    background: #c80064;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Thêm phần này */
+.form-section .submit-btn {
+    width: auto;
+    padding: 12px 30px;
+    margin: 10px auto;
+    display: block;
+    font-size: 14px;
+}        .cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 20px; /* Thêm khoảng cách giữa các card */
+}
+/* Thêm hiệu ứng hover cho card */
+.card {
+    transition: all 0.3s ease; /* Tạo hiệu ứng mượt */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Nâng card lên 5px */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng đậm hơn */
+    background: #ffe5f2; /* Đổi màu nền khi hover */
+}
+
+/* Thêm hiệu ứng hover cho nút */
+.submit-btn {
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #a0004a; /* Màu đậm hơn */
+    transform: scale(1.05); /* Phóng nhẹ nút */
+}
+
+.card {
+    background: #fff0f8;
+    padding: 25px;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px; /* Chiều cao tối thiểu bằng nhau */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+}
+
+.card h3 {
+    color: #c80064;
+    margin: 10px 0;
+}
+
+.card p {
+    flex-grow: 1; /* Căn đều chiều cao đoạn văn */
+    
+}
+
+.submit-btn {
+    width: 80%; /* Làm nút rộng hơn */
+    margin-top: auto; /* Đẩy nút xuống dưới cùng */
+}
