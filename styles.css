@@ -27,7 +27,7 @@ body {
   width: 100%;
   z-index: 999;
   background: white;
-  padding: 24px 108px;
+  padding: 20px 108px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,6 +61,7 @@ body {
   gap: 40px;
 }
 
+
 .nav-link {
   color: #202020;
   font-weight: 700;
@@ -71,6 +72,8 @@ body {
 .nav-link:hover {
   color: var(--primary-color);
 }
+
+
 
 .header-actions {
   display: flex;
@@ -361,7 +364,6 @@ body {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 60px;
 }
 
 /* Product Slider */
@@ -467,6 +469,7 @@ body {
 .special-offers-section {
   padding: 80px 108px;
   background: #fbeff2;
+  margin-top: 20px;
 }
 
 .special-offers-container {
@@ -474,9 +477,9 @@ body {
   justify-content: space-between;
   align-items: center;
   max-width: 1440px;
-  margin: 0 auto;
   gap: 40px;
   flex-wrap: wrap;
+  
 }
 
 .special-offers-content {
@@ -522,21 +525,6 @@ body {
   line-height: 1.6;
 }
 
-.special-offers-button {
-  display: inline-block;
-  padding: 12px 32px;
-  background-color: var(--primary-color);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.special-offers-button:hover {
-  background-color: var(--dark-bg);
-}
 
 /* Blog Section */
 .blog-section {
