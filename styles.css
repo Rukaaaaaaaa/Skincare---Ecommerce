@@ -1151,23 +1151,18 @@ body {
 
 
 .consent-text {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-  color: #d4d4d4;
-  line-height: 1.6;
-  margin-top: 15px;
+  display: block;
+  font-size: 12px;
+  color: #d4d4d4; /* Light grey for good contrast */
+  line-height: 1.5;
+  margin-top: 10px;
   max-width: 500px;
 }
 
 .consent-text input[type="checkbox"] {
-  transform: scale(1.2);
-  margin-top: 3px;
-  accent-color: #ffffff; /* màu chính của checkbox khi được chọn */
-  cursor: pointer;
+  margin-right: 8px;
+  transform: translateY(2px); /* better vertical alignment */
 }
-
 
 .consent-text a {
   color: #f472b6; /* Accent color for links */
@@ -1177,4 +1172,3 @@ body {
 .consent-text a:hover {
   color: #fb7185; /* Slight hover effect */
 }
-
