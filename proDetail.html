@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Prestige Lip Glow Treatment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Tổng container */
+        .product-container {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+
+        /* Hình ảnh sản phẩm */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .main-image {
+            width: 100%;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail-list img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .thumbnail-list img:hover,
+        .thumbnail-list img.active {
+            border: 2px solid #ee4d2d;
+        }
+
+        /* Chi tiết sản phẩm */
+        .product-details {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .product-subtitle {
+            font-size: 16px;
+            color: #888;
+            margin: 20px 0 20px 0;
+        }
+
+        /* Đánh giá */
+        .product-rating .stars {
+            font-size: 16px;
+            color: #ffce3d;
+            margin-bottom: 8px;
+        }
+
+        .rating-count,
+        .sold-count {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Giá */
+        .price-container {
+            background-color: #fff0e9;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .current-price {
+            font-size: 28px;
+            color: #ee4d2d;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        /* Mô tả */
+        .product-description p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* Tính năng nổi bật */
+        .product-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .product-features li {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .product-features li::before {
+            content: "✓";
+            color: green;
+            position: absolute;
+            left: 0;
+        }
+
+        .voucher-section,
+        .combo-section,
+        .shipping-section,
+        .quantity-section {
+            font-size: 14px;
+            margin-top: 12px;
+            color: #333;
+        }
+
+        .voucher-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .voucher-code {
+            background-color: #fff0e9;
+            color: #ee4d2d;
+            padding: 4px 8px;
+            margin-right: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .quantity-section input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .combo-section strong,
+        .shipping-section strong {
+            color: #555;
+        }
+
+        /* Nút mua hàng */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart,
+        .buy-now {
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            min-width: 160px;
+        }
+
+        .add-to-cart {
+            background-color: #ffb400;
+            color: #fff;
+        }
+
+        .add-to-cart:hover {
+            background-color: #e2a200;
+        }
+
+        .buy-now {
+            background-color: #ee4d2d;
+            color: white;
+        }
+
+        .buy-now:hover {
+            background-color: #d94427;
+        }
+
+        .add-to-cart:active,
+        .buy-now:active {
+            transform: scale(0.97);
+        }
+
+        /* Tabs Section */
+        .tabs-container {
+            margin-top: 40px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tablinks {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .tablinks:hover {
+            background-color: #f8f8f8;
+        }
+
+        .tablinks.active {
+            border-bottom: 3px solid #d8127d;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+            border-top: none;
+        }
+
+        .tab-content-wrapper {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .tab-content-wrapper p, .tab-content-wrapper ul, .tab-content-wrapper ol {
+            margin-bottom: 15px;
+        }
+
+        .tab-content-wrapper ul, .tab-content-wrapper ol {
+            padding-left: 25px;
+        }
+
+        /* Review Items */
+        .review-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-item h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .review-stars {
+            color: #ffb100;
+            margin-left: 5px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: auto;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            color: #d8127d;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+
+        /* Recommended Skincare Routine và You May Also Like Section */
+        .related-products, .you-may-also-like {
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .product-grid-wrapper {
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .product-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            min-width: 250px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 0 0 auto;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+
+        .product-card-details {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .product-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d8127d;
+            margin-bottom: 5px;
+        }
+
+        .product-card-description {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-card-price {
+            font-size: 16px;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            font-size: 24px;
+            color: #c80064;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            z-index: 10;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .nav-arrow:hover {
+            background: wheat;
+        }
+
+        .nav-arrow.left {
+            left: 0;
+        }
+
+        .nav-arrow.right {
+            right: 0;
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .product-images, .product-details {
+                width: 100%;
+            }
+            
+            .tab {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            
+            .tablinks {
+                flex: none;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .product-grid {
+                justify-content: flex-start;
+            }
+            
+            .product-card {
+                flex: 0 0 45%;
+            }
+
+            .nav-arrow {
+                display: block;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-title {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .product-card {
+                flex: 0 0 80%;
+            }
+            
+            .faq-section {
+                padding: 20px 15px;
+            }
+            
+            .tab {
+                overflow-x: auto;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+            <span class="shop-name">BEAUTYA</span>
+        </div>
+  
+        <nav class="nav-menu">
+            <a href="homepage.html" class="nav-link">Home</a>
+            <a href="product.html" class="nav-link">Products</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="contactus.html" class="nav-link">Contacts</a>
+            <a href="Login.html" class="nav-link">Sign in</a>
+        </nav>
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="product-container">
+            <!-- Ảnh sản phẩm -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="img/product1.png" id="currentImage" alt="Ảnh chính">
+                </div>
+                <div class="thumbnail-list">
+                    <img src="img/product2.png" class="thumbnail active" alt="Ảnh 1">
+                    <img src="img/product3.png" class="thumbnail" alt="Ảnh 2">
+                    <img src="img/product4.png" class="thumbnail" alt="Ảnh 3">
+                    <img src="img/product1.png" class="thumbnail" alt="Ảnh 4">
+                </div>
+            </div>
+        
+            <!-- Chi tiết sản phẩm -->
+            <div class="product-details">
+                <h1 class="product-title">Natural Prestige Lip Glow Treatment Shimmer</h1>
+                <p class="product-subtitle">Son dưỡng giúp môi căng mọng, sáng tự nhiên nhờ chiết xuất từ thực vật thiên nhiên.</p>
+              
+                <!-- Đánh giá -->
+                <div class="product-rating">
+                    <div class="stars">
+                        ⭐⭐⭐⭐⭐ <span class="rating-count">(4.9 | 238 Đánh giá)</span>
+                        <span class="sold-count"> | Đã bán 1.2k</span>
+                    </div>
+                </div>
+              
+                <!-- Giá -->
+                <div class="price-container">
+                    <span class="current-price">₫50.000</span>
+                    <span class="original-price">₫65.000</span>
+                </div>
+              
+                <!-- Mã giảm giá -->
+                <div class="voucher-section">
+                    <span class="voucher-label">Mã giảm giá:</span>
+                    <span class="voucher-code">GIAM10K</span>
+                    <span class="voucher-code">FREESHIP</span>
+                </div>
+              
+                <!-- Combo khuyến mãi -->
+                <div class="combo-section">
+                    <strong>Combo:</strong> Mua 3 sản phẩm được giảm giá 10%
+                </div>
+              
+                <!-- Vận chuyển -->
+                <div class="shipping-section">
+                    <strong>Vận chuyển:</strong> Giao hàng tiêu chuẩn - ₫15.000 (Miễn phí cho đơn từ ₫150.000)
+                </div>
+              
+                <!-- Số lượng -->
+                <div class="quantity-section">
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1">
+                </div>
+              
+                <!-- Tính năng nổi bật -->
+                <ul class="product-features">
+                    <li>Dưỡng ẩm sâu với hyaluronic acid</li>
+                    <li>Tạo độ bóng nhẹ bằng khoáng chất tự nhiên</li>
+                    <li>Bổ sung vitamin E và chiết xuất thực vật</li>
+                    <li>Không chứa paraben, không thử nghiệm trên động vật</li>
+                </ul>
+              
+                <!-- Nút mua -->
+                <div class="action-buttons">
+                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                    <button class="buy-now">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Details Tabs -->
+        <div class="tabs-container">
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Description')">Description</button>
+                <button class="tablinks" onclick="openTab(event, 'Ingredients')">Ingredients</button>
+                <button class="tablinks" onclick="openTab(event, 'HowToUse')">How to Use</button>
+                <button class="tablinks" onclick="openTab(event, 'Reviews')">Reviews</button>
+            </div>
+            
+            <div id="Description" class="tabcontent" style="display: block;">
+                <div class="tab-content-wrapper">
+                    <p>Our Natural Prestige Lip Glow Treatment Shimmer is a luxury lip care product that provides deep hydration while enhancing your lips with a subtle, elegant shimmer. The advanced formula combines the nourishing benefits of natural oils and botanical extracts with the visual enhancement of mineral-based shimmer.</p>
+                    <p>This product was developed after extensive research into lip care needs, finding the perfect balance between treatment and aesthetic enhancement. The formula addresses multiple concerns including dryness, fine lines, and lack of natural color, all while providing a beautiful finish that can be worn alone or as a base for other lip products.</p>
+                    <p>The subtle shimmer catches light beautifully, creating the appearance of fuller, more youthful lips without the need for invasive procedures or heavy makeup. Our customers report their lips feeling more comfortable throughout the day, even in harsh weather conditions.</p>
+                </div>
+            </div>
+            
+            <div id="Ingredients" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <p><strong>Key Ingredients:</strong></p>
+                    <ul>
+                        <li><strong>Hyaluronic Acid:</strong> Provides intense hydration and helps lips retain moisture</li>
+                        <li><strong>Shea Butter:</strong> Nourishes and softens lips</li>
+                        <li><strong>Vitamin E:</strong> Antioxidant protection against environmental damage</li>
+                        <li><strong>Jojoba Oil:</strong> Lightweight oil that conditions without feeling greasy</li>
+                        <li><strong>Natural Minerals:</strong> Create a subtle shimmer effect without synthetic glitters</li>
+                        <li><strong>Botanical Extracts:</strong> Including chamomile and aloe to soothe and condition</li>
+                    </ul>
+                    <p>Full Ingredients List: Ricinus Communis (Castor) Seed Oil, Lanolin, Beeswax, Cetyl Alcohol, Simmondsia Chinensis (Jojoba) Seed Oil, Mica, Butyrospermum Parkii (Shea) Butter, Sodium Hyaluronate, Tocopheryl Acetate, Aloe Barbadensis Leaf Extract, Chamomilla Recutita (Matricaria) Flower Extract, Rosmarinus Officinalis (Rosemary) Leaf Extract, Titanium Dioxide, Iron Oxides.</p>
+                </div>
+            </div>
+            
+            <div id="HowToUse" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <p><strong>Directions:</strong></p>
+                    <ol>
+                        <li>Start with clean, dry lips. If needed, gently exfoliate to remove any dry skin.</li>
+                        <li>Apply a small amount of the lip treatment directly to lips.</li>
+                        <li>Spread evenly using the applicator or your fingertip.</li>
+                        <li>Allow a moment for the product to settle and the shimmer to distribute naturally.</li>
+                        <li>Reapply throughout the day as needed for additional hydration and glow.</li>
+                    </ol>
+                    <p><strong>Tips for Best Results:</strong></p>
+                    <ul>
+                        <li>For an enhanced effect, apply a slightly thicker layer in the center of your lips to create dimension.</li>
+                        <li>Can be worn alone for a natural look or under/over your favorite lipstick.</li>
+                        <li>For evening looks, add a second layer for more noticeable shimmer.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="Reviews" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <div class="review-item">
+                        <h3>Sarah K. <span class="review-stars">★★★★★</span></h3>
+                        <p>"I've tried many lip treatments but this one stands out for actually delivering results. My chronically dry lips are finally consistently smooth, and the subtle shimmer is so elegant for daily wear."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>Mia T. <span class="review-stars">★★★★★</span></h3>
+                        <p>"Worth every penny! This lip treatment has replaced both my lip balm and my gloss. The formula feels luxurious and the shimmer is sophisticated, not glittery."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>James L. <span class="review-stars">★★★★</span></h3>
+                        <p>"Bought this for my wife who always complains about dry lips, and she loves it. I've even started using it myself - it's not overly shimmery so it works for everyone."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>Elena R. <span class="review-stars">★★★★★</span></h3>
+                        <p>"Perfect for my sensitive lips that react to most lip products. No irritation and leaves a beautiful subtle glow. Already purchased my second tube!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What is the shelf life of this product? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    The Natural Prestige Lip Glow Treatment has a shelf life of 12 months after opening. The packaging includes a PAO (Period After Opening) symbol indicating this.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is this product suitable for sensitive skin? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, our formula is designed to be gentle and suitable for most sensitive skin types. However, if you have specific allergies, please review the ingredients list carefully.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does the shimmer look on mature lips? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    The shimmer in our lip treatment is specifically designed to be flattering on all ages. It provides a subtle luminosity that helps lips appear more youthful and full without settling into fine lines.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use this under lipstick? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! Many customers use our lip treatment as a hydrating base under their favorite lipsticks. Allow it to absorb for about a minute before applying lipstick for best results.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Does this product have any fragrance? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Our lip treatment has a very subtle natural vanilla scent from botanical extracts, not from artificial fragrances. It's designed to be pleasant but not overpowering.
+                </div>
+            </div>
+        </div>
+           
+        <!-- Recommended Skincare Routine Section -->
+        <div class="related-products">
+            <h2 class="section-title">Recommended Skincare Routine</h2>
+            <div class="product-grid-wrapper">
+                <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
+                <div class="product-grid" id="recommendedGrid">
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product1.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product2.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product3.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product4.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
+            </div>
+        </div>
+
+        <!-- You May Also Like Section -->
+        <div class="you-may-also-like">
+            <h2 class="section-title">You May Also Like</h2>
+            <div class="product-grid-wrapper">
+                <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
+                <div class="product-grid" id="alsoLikeGrid">
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product1.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product2.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product3.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product4.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Function to handle tab switching
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Function to handle thumbnail image clicks
+        function initThumbnails() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.querySelector('.main-image img');
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    mainImage.src = this.src;
+                    thumbnails.forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Function to handle FAQ toggles
+        function initFAQToggles() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const toggleIcon = this.querySelector('.toggle-icon');
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                        toggleIcon.textContent = '+';
+                    } else {
+                        answer.style.display = 'block';
+                        toggleIcon.textContent = '-';
+                    }
+                });
+            });
+        }
+
+        // Function to handle product grid scrolling
+        function scrollGrid(gridId, direction) {
+            const grid = document.getElementById(gridId);
+            const scrollAmount = 270; // Width of each product card (250px) + gap (20px)
+            grid.scrollLeft += direction * scrollAmount;
+
+            // Disable/enable arrows based on scroll position
+            const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+            const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+            leftArrow.disabled = grid.scrollLeft <= 0;
+            rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+        }
+
+        // Initialize everything when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tablinks').click();
+            initThumbnails();
+            initFAQToggles();
+            const buyButton = document.querySelector('.buy-button');
+            if (buyButton) {
+                buyButton.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = '#b50e69';
+                });
+                buyButton.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = '#d8127d';
+                });
+            }
+
+            // Initialize scroll arrows
+            const grids = document.querySelectorAll('.product-grid');
+            grids.forEach(grid => {
+                const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+                const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+                leftArrow.disabled = grid.scrollLeft <= 0;
+                rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="benefit-item">
+                <i class="fas fa-paw benefit-icon"></i>
+                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-leaf benefit-icon"></i>
+                <span class="benefit-text">Không có thành phần từ động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-bread-slice benefit-icon"></i>
+                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-recycle benefit-icon"></i>
+                <span class="benefit-text">Bao bì có thể tái chế</span>
+            </div>
+        </div>
+        <div class="footer-main">
+            <div class="footer-column">
+                <h3>Chúng tôi có thể giúp gì?</h3>
+                <ul>
+                    <li><a href="#">Beautya branches</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Giữ liên lạc với Beautya</h3>
+                <p style="color: white; margin-bottom: 24px">
+                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+                </p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email" class="newsletter-input" />
+                    <button type="submit" class="newsletter-submit">Subscribe</button>
+                </form>
+                <label class="consent-text">
+                    <input type="checkbox" required>
+                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                </label>
+            </div>
+        </div>
+        <div class="footer-contact-row">
+            <div class="footer-contact-group">
+                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+            </div>
+            <div class="footer-social-group">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+            <div class="legal-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
