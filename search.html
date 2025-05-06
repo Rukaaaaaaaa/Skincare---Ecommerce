@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ảnh đè phần trên thanh ngang</title>
+  <style>
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      background-color: #8B4513; /* màu nâu */
+      margin-top: 100px;
+    }
+
+    .image-overlay {
+      position: absolute;
+      right: 20px; /* căn bên phải */
+      bottom: -50px; /* đẩy ảnh ra ngoài, nằm đè phần trên */
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      border: 4px solid white; /* để ảnh nổi bật hơn */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img class="image-overlay" src="https://via.placeholder.com/100" alt="Ảnh đè">
+  </div>
+
+</body>
+</html>
