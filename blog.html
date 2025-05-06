@@ -1,221 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
+    <title>Beautya - Blog</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Beautya - Skincare & Makeup Blog</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="blog_style.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+
+        /* Blog Section */
+        .blog-section {
+            max-width: 1200px;
+            margin: auto;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .blog-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #c80064;
+            margin-bottom: 30px;
+        }
+
+        .blog-posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .blog-posts-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .blog-post {
+            background: #ffffff;
+            border: 1px solid #dfdfdf;
+            border-radius: 8px;
+            width: calc(33.33% - 16px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 294px;
+            object-fit: cover;
+        }
+
+        .blog-post-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            min-height: 250px; /* Đảm bảo chiều cao tối thiểu để các thẻ đồng đều */
+        }
+
+        .blog-post-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: #606060;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .meta-divider {
+            width: 16px;
+            height: 1px;
+            background-color: #606060;
+            transform: rotate(90deg);
+        }
+
+        .blog-post-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0c0c0c;
+            line-height: 140%;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .blog-post-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-post-title a:hover {
+            color: #c80064;
+        }
+
+        .blog-post-excerpt {
+            font-size: 16px;
+            line-height: 180%; /* ~28.8px mỗi dòng */
+            color: #0c0c0c;
+            height: 57.6px; /* 2 dòng x 28.8px, làm tròn để chính xác */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+            -webkit-box-orient: vertical;
+            margin: 0;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #c80064;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            align-self: center;
+            margin-top: 16px;
+        }
+
+        .read-more:hover {
+            background-color: #a60053;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .blog-post {
+                width: calc(33.33% - 16px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .blog-post {
+                width: calc(50% - 12px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-section {
+                margin: 100px auto 20px;
+                padding: 0 10px;
+            }
+
+            .blog-title {
+                font-size: 24px;
+            }
+
+            .blog-post {
+                width: 100%;
+            }
+
+            .blog-post-image {
+                height: 200px;
+            }
+
+            .blog-post-title {
+                font-size: 18px;
+            }
+
+            .blog-post-excerpt {
+                font-size: 14px;
+                height: 50.4px; /* 2 dòng x 25.2px (14px * 1.8) */
+            }
+
+            .blog-post-content {
+                min-height: 220px; /* Giảm chiều cao tối thiểu cho màn hình nhỏ */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
     <header class="header">
-      <div class="container">
         <div class="logo">
-          <img
-            src="static/img/beautya logo.svg"
-            alt="Beautya Logo"
-            style="height: 40px"
-          />
+            <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+            <span class="shop-name">BEAUTYA</span>
         </div>
-
-        <nav class="navbar">
-          <ul class="nav-menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">Sign In</a></li>
-          </ul>
+        <nav class="nav-menu">
+            <a href="homepage.html" class="nav-link">Home</a>
+            <a href="product.html" class="nav-link">Products</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="contactus.html" class="nav-link">Contacts</a>
+            <a href="Login.html" class="nav-link">Sign in</a>
         </nav>
-
-        <div class="search-bar">
-          <button class="search-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
         </div>
-
-        <button class="hamburger" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
     </header>
 
-    <main class="main-content">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <ol>
-            <li><a href="#">Home</a></li>
-            <li><span aria-current="page">Blog</span></li>
-          </ol>
-        </nav>
-
-        <h1 class="page-title">Blog</h1>
-
-        <div class="blog-grid">
-          <!-- Blog Post 1 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img
-                src="/static/images/blog-image0.png"
-                alt="Clear skin routine"
-              />
+    <!-- Blog Section -->
+    <div class="blog-section">
+        <h1 class="blog-title">Blog</h1>
+        <div class="blog-posts-container">
+            <div class="blog-posts-row">
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product1.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Cách Làm Sạch Da Mặt Hiệu Quả</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Nhiều người gặp khó khăn trong việc làm sạch da mặt. Phương pháp làm sạch da sẽ khác nhau tùy thuộc vào loại da của mỗi người. Nói chung, những người gặp vấn đề về mụn hoặc vết thâm thường có da khô, da dầu hoặc kết hợp cả hai.
+                        </p>
+                        <a href="blog_detail.html" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product2.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Top 5 Mẹo Làm Đẹp Tại Nhà</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Khám phá 5 mẹo làm đẹp tại nhà giúp bạn có làn da rạng rỡ mà không cần đến spa. Những phương pháp này phù hợp với mọi loại da.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product3.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Cách Chọn Kem Chống Nắng Phù Hợp</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Kem chống nắng là bước quan trọng trong chăm sóc da. Tìm hiểu cách chọn kem chống nắng phù hợp với loại da và nhu cầu của bạn.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
             </div>
-            <div class="blog-content">
-              <span class="category">Skincare</span>
-              <h2 class="blog-title">How to Get Clear Skin Fast</h2>
-              <div class="blog-meta">
-                <span class="author">Dr. Wade Warren</span>
-                <span class="date">Jan 20, 2021</span>
-              </div>
-              <p class="blog-excerpt">
-                Many people find it difficult to get clear skin. The methods for
-                getting clear skin will vary, depending on the person's skin
-                type...
-              </p>
-              <a href="blog_detail.html" class="read-more">Read More</a>
+            <div class="blog-posts-row">
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product4.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Lợi Ích Của Mặt Nạ Thiên Nhiên</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Mặt nạ thiên nhiên mang lại nhiều lợi ích cho làn da. Tìm hiểu cách sử dụng mặt nạ từ các nguyên liệu tự nhiên để nuôi dưỡng da.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product5.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Cách Dưỡng Ẩm Da Vào Mùa Đông</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Mùa đông khiến da dễ khô và nứt nẻ. Tìm hiểu các bước dưỡng ẩm hiệu quả để giữ cho làn da của bạn luôn mềm mại và mịn màng.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product6.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Sai Lầm Thường Gặp Khi Chăm Sóc Da</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Tránh những sai lầm phổ biến khi chăm sóc da để đạt được làn da khỏe mạnh và rạng rỡ mà bạn luôn mong muốn.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
             </div>
-          </article>
-
-          <!-- Blog Post 2 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img
-                src="/static/images/blog-image1.png"
-                alt="Winter skincare tips"
-              />
+            <div class="blog-posts-row">
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product7.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Cách Làm Đẹp Da Bằng Nước Gạo</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Nước gạo là bí quyết làm đẹp da từ lâu đời. Tìm hiểu cách sử dụng nước gạo để làm sáng và mềm mịn làn da.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product8.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Cách Phân Biệt Các Loại Da</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Hiểu rõ loại da của bạn là bước đầu tiên để chăm sóc da hiệu quả. Tìm hiểu cách phân biệt da dầu, da khô và da hỗn hợp.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
+                <div class="blog-post">
+                    <img class="blog-post-image" src="img/product9.png" alt="Blog Image" />
+                    <div class="blog-post-content">
+                        <h2 class="blog-post-title"><a href="#">Lợi Ích Của Tẩy Tế Bào Chết</a></h2>
+                        <div class="blog-post-meta">
+                            <span>Chăm Sóc Da</span>
+                            <div class="meta-divider"></div>
+                            <span>Dr. Wade Warren</span>
+                            <div class="meta-divider"></div>
+                            <span>20 Tháng 1, 2021</span>
+                        </div>
+                        <p class="blog-post-excerpt">
+                            Tẩy tế bào chết giúp loại bỏ lớp da chết, mang lại làn da mịn màng và sáng khỏe. Tìm hiểu cách thực hiện đúng cách.
+                        </p>
+                        <a href="#" class="read-more">Đọc Thêm</a>
+                    </div>
+                </div>
             </div>
-            <div class="blog-content">
-              <span class="category">Skincare</span>
-              <h2 class="blog-title">Winter Skincare Essentials</h2>
-              <div class="blog-meta">
-                <span class="author">Dr. Sarah Johnson</span>
-                <span class="date">Nov 15, 2021</span>
-              </div>
-              <p class="blog-excerpt">
-                Protecting your skin during winter requires special care. Learn
-                which products can help combat dryness and maintain healthy
-                skin...
-              </p>
-              <a href="#" class="read-more">Read More</a>
-            </div>
-          </article>
-
-          <!-- Additional blog posts (3-9) would follow same structure -->
-
-          <!-- Blog Post 9 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img src="/static/images/blog-image8.png" alt="Makeup trends" />
-            </div>
-            <div class="blog-content">
-              <span class="category">Makeup</span>
-              <h2 class="blog-title">2023 Makeup Trends to Try</h2>
-              <div class="blog-meta">
-                <span class="author">Mia Chen</span>
-                <span class="date">Feb 3, 2023</span>
-              </div>
-              <p class="blog-excerpt">
-                Discover the hottest makeup trends of the year and how to
-                incorporate them into your daily routine for a fresh, modern
-                look...
-              </p>
-              <a href="#" class="read-more">Read More</a>
-            </div>
-          </article>
         </div>
+    </div>
 
-        <div class="pagination">
-          <a href="#" class="page-link active">1</a>
-          <a href="#" class="page-link">2</a>
-          <a href="#" class="page-link">3</a>
-          <a href="#" class="page-link next"
-            >Next <i class="fas fa-chevron-right"></i
-          ></a>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="benefit-item">
+                <i class="fas fa-paw benefit-icon"></i>
+                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-leaf benefit-icon"></i>
+                <span class="benefit-text">Không có thành phần từ động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-bread-slice benefit-icon"></i>
+                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-recycle benefit-icon"></i>
+                <span class="benefit-text">Bao bì có thể tái chế</span>
+            </div>
         </div>
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">
-            <img
-              src="beautya logo.svg"
-              alt="Beautya Logo"
-              style="height: 40px"
-            />
-          </div>
-          <div class="footer-links">
-            <div class="links-column">
-              <h3>Shop</h3>
-              <ul>
-                <li><a href="#">Skincare</a></li>
-                <li><a href="#">Makeup</a></li>
-                <li><a href="#">Haircare</a></li>
-                <li><a href="#">Fragrance</a></li>
-              </ul>
+        <div class="footer-main">
+            <div class="footer-column">
+                <h3>Chúng tôi có thể giúp gì?</h3>
+                <ul>
+                    <li><a href="#">Beautya branches</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
             </div>
-            <div class="links-column">
-              <h3>About</h3>
-              <ul>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Ingredients</a></li>
-                <li><a href="#">Sustainability</a></li>
-                <li><a href="#">Careers</a></li>
-              </ul>
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                </ul>
             </div>
-            <div class="links-column">
-              <h3>Help</h3>
-              <ul>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">FAQs</a></li>
-                <li><a href="#">Shipping</a></li>
-                <li><a href="#">Returns</a></li>
-              </ul>
+            <div class="footer-column">
+                <h3>Giữ liên lạc với Beautya</h3>
+                <p style="color: white; margin-bottom: 24px">
+                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+                </p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email" class="newsletter-input" />
+                    <button type="submit" class="newsletter-submit">Subscribe</button>
+                </form>
+                <label class="consent-text">
+                    <input type="checkbox" required>
+                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                </label>
             </div>
-          </div>
-          <div class="newsletter">
-            <h3>Join Our Newsletter</h3>
-            <form class="newsletter-form">
-              <input type="email" placeholder="Your email address" />
-              <button type="submit">Subscribe</button>
-            </form>
-            <div class="social-links">
-              <a href="#" aria-label="Facebook"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a href="#" aria-label="Instagram"
-                ><i class="fab fa-instagram"></i
-              ></a>
-              <a href="#" aria-label="Twitter"
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a href="#" aria-label="Pinterest"
-                ><i class="fab fa-pinterest-p"></i
-              ></a>
+        </div>
+        <div class="footer-contact-row">
+            <div class="footer-contact-group">
+                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
             </div>
-          </div>
+            <div class="footer-social-group">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2023 Beautya. All rights reserved.</p>
-          <div class="legal-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-          </div>
+            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+            <div class="legal-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
         </div>
-      </div>
     </footer>
-
-    <script src="static/js/blog_script.js"></script>
-  </body>
+</body>
 </html>
