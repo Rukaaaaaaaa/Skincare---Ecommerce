@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Beautya - Skincare & Makeup</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .container {
+        display: flex;
+        gap: 24px;
+        margin: 10px;
+      }
+
+      .sidebar {
+        width: 300px;
+        background: white;
+        padding: 16px;
+        border: 1px solid #e0e0e0;
+        height: fit-content;
+      }
+
+      .sidebar h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+
+      .sidebar .section {
+        margin-bottom: 24px;
+      }
+
+      .sidebar label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .products {
+        flex: 1;
+      }
+
+      .sort-box {
+        max-width: fit-content;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .sort-box select {
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        padding-right: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 10px;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .product-card {
+        background: white;
+        border: 1px solid #dfdfdf;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .product-card img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .product-title {
+        color: #a10550;
+        font-weight: bold;
+        font-size: 15px;
+      }
+
+      .product-description {
+        font-size: 13px;
+        color: #555;
+      }
+
+      .product-price {
+        color: black;
+        font-size: 18px;
+      }
+
+      .product-price small {
+        color: #c5240f;
+      }
+
+      .toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #a10550;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+
+      .section label small {
+        color: #c5240f;
+      }
+
+      .section h4 {
+        padding-bottom: 15px;
+        padding-top: 10px;
+      }
+
+      .divider {
+        border: none;
+        height: 1px;
+        background-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="homepage.html" class="nav-link">Home</a>
+        <a href="product.html" class="nav-link">Products</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contactus.html" class="nav-link">Contacts</a>
+        <a href="Login.html" class="nav-link">Sign in</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="cart-wrapper">
+          <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+          <span class="cart-count">0</span>
+        </div>
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="sidebar">
+        <div class="section">
+          <h3>Bộ lọc tìm kiếm</h3>
+          <div class="toggle-row">
+            <span>Out of Stock Items</span>
+            <label class="switch">
+              <input type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="section">
+          <h4>Danh Mục</h4>
+          <label><input type="checkbox" /> Sữa rửa mặt</label>
+          <label><input type="checkbox" /> Toner/Nước hoa hồng</label>
+          <label><input type="checkbox" /> Kem chống nắng</label>
+          <label><input type="checkbox" /> Mặt nạ</label>
+          <label><input type="checkbox" /> Tẩy trang</label>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="section">
+          <h4>Loại Da</h4>
+          <label><input type="checkbox" /> Da khô</label>
+          <label><input type="checkbox" /> Da dầu</label>
+          <label><input type="checkbox" /> Da nhạy cảm</label>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="section">
+          <h4>Khoảng Giá</h4>
+          <label><input type="checkbox" /> Dưới 50.000<small>đ</small></label>
+          <label><input type="checkbox" /> 50.000<small>đ</small> - 100.000<small>đ</small></label>
+          <label><input type="checkbox" /> Trên 100.000<small>đ</small></label>
+        </div>
+      </div>
+
+      <div class="products">
+        <div class="sort-box">
+          <label for="sort"><b>Sắp xếp theo:</b>&nbsp;&nbsp;</label>
+          <select id="sort">
+            <option>Đề xuất</option>
+            <option>Giá Thấp-Cao</option>
+            <option>Giá Cao-Thấp</option>
+            <option>Mới nhất</option>
+            <option>Bán chạy</option>
+          </select>
+        </div>
+
+        <div class="products-grid">
+          <a href="proDetail.html" class="product-card">
+            <img src="img/product1.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Beautya La Mousse Off/On Foaming Cleaner</div>
+              <div class="product-description">
+                Anti-Pollution Foaming Cleanser With Purifying French Water Lily
+              </div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </a>
+        
+          <div class="product-card">
+            <img src="img/product2.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Beaute Prestige Le Mousse</div>
+              <div class="product-description">Luxury foaming cleanser for all skin types.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product3.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Expert Skincare Advice</div>
+              <div class="product-description">Talk to our skincare advisors today.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product4.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Dior Prestige Le Mousse</div>
+              <div class="product-description">Infused with Rose de Granville extract.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product5.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Dior Gold Serum</div>
+              <div class="product-description">Youth-activating and firming serum.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product6.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Prestige Night Cream</div>
+              <div class="product-description">Deeply nourishing overnight treatment.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product7.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Awarded: Rich Cream</div>
+              <div class="product-description">With hyaluronic acid and botanicals.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        
+          <div class="product-card">
+            <img src="img/product8.png" alt="" />
+            <div class="product-info">
+              <div class="product-title">Beaute Prestige Toner</div>
+              <div class="product-description">Refresh and balance your skin daily.</div>
+              <div class="product-price">65.000<small>đ</small></div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</html>

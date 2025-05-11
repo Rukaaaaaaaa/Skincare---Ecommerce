@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .cart-page {
+      max-width: 1200px;
+      padding: 0 20px;
+      margin: auto;
+    }
+    .cart-page h1 {
+      font-size: 28px;
+      color: #c80064;
+      margin: 20px 0 30px;
+      font-weight: 700;
+    }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+    .cart-table thead {
+      background-color: #f9f9f9;
+      font-weight: bold;
+    }
+    .cart-table th, .cart-table td {
+      text-align: left;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-table td img {
+      width: 80px;
+      height: 80px;
+      vertical-align: middle;
+      margin: 0 20px;
+      border-radius: 5px;
+    }
+    .cart-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .cart-actions button {
+      padding: 10px 20px;
+      background-color: white;
+      color: #333;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .cart-actions button:hover {
+      background-color: #f2f2f2;
+    }
+    .cart-summary {
+      width: 400px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .cart-summary h3 {
+      margin-bottom: 15px;
+    }
+    .qty-input {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .cart-summary p {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .cart-summary .price {
+      text-align: right;
+      font-weight: 600;
+    }
+    .cart-summary button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: #c80064;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .cart-summary button:hover {
+      background-color: #a0004f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+      <span class="shop-name">BEAUTYA</span>
+    </div>
+    <nav class="nav-menu">
+      <a href="homepage.html" class="nav-link">Home</a>
+      <a href="product.html" class="nav-link">Products</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="contactus.html" class="nav-link">Contacts</a>
+      <a href="Login.html" class="nav-link">Sign in</a>
+    </nav>
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+  </header>
+
+  <!-- Cart Content -->
+  <main class="cart-page">
+    <h1>Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Sản phẩm</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Tổng tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td class="item-price" data-price="65000">65.000<small>đ</small></td>
+          <td><input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)"></td>
+          <td class="item-subtotal">65.000<small>đ</small></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" class="select-item"> <img src="img/unsplash_HvkDYluePqw.png" alt="Rose Perfume"> Rose Perfume</td>
+          <td class="item-price" data-price="100000">100.000<small>đ</small></td>
+          <td><input type="number" class="qty-input" value="1" min="1" onchange="updateQty(this)"></td>
+          <td class="item-subtotal">100.000<small>đ</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cart-actions">
+      <label><input type="checkbox" id="select-all"> Chọn tất cả</label>
+      <button onclick="updateCart()">Xóa</button>
+    </div>
+
+    <div class="cart-summary">
+      <p><span><strong>Tổng:</strong></span> <span class="price"><strong>165.000<small>đ</small></strong></span></p>
+      <button onclick="window.location.href='checkout.html'">Thanh Toán</button>
+    </div>
+  </main>
+
+  <script>
+    function updateSubtotal(row) {
+      const price = parseInt(row.querySelector('.item-price').dataset.price);
+      const qty = parseInt(row.querySelector('.qty-input').value);
+      const subtotal = price * qty;
+      row.querySelector('.item-subtotal').textContent = subtotal.toLocaleString() + 'đ';
+      updateTotal();
+    }
+
+    function updateQty(input) {
+      if (parseInt(input.value) < 1) input.value = 1;
+      updateSubtotal(input.closest('tr'));
+    }
+
+    function updateTotal() {
+      let total = 0;
+      document.querySelectorAll('tbody tr').forEach(row => {
+        const checkbox = row.querySelector('.select-item');
+        if (checkbox.checked) {
+          const subtotalText = row.querySelector('.item-subtotal').textContent.replace(/[^\d]/g, '');
+          total += parseInt(subtotalText);
+        }
+      });
+      document.querySelector('.cart-summary .price').innerHTML = '<strong>' + total.toLocaleString() + '<small>đ</small></strong>';
+    }
+
+    document.getElementById('select-all').addEventListener('change', function () {
+      document.querySelectorAll('.select-item').forEach(cb => cb.checked = this.checked);
+      updateTotal();
+    });
+
+    document.querySelectorAll('.select-item').forEach(cb => {
+      cb.addEventListener('change', updateTotal);
+    });
+
+    function updateCart() {
+      document.querySelectorAll('.select-item:checked').forEach(cb => {
+        cb.closest('tr').remove();
+      });
+      updateTotal();
+    }
+
+    window.onload = () => {
+      document.querySelectorAll('tbody tr').forEach(row => updateSubtotal(row));
+    };
+  </script>
+
+        <!-- Footer -->
+        <footer>
+          <!-- Footer Top -->
+          <div class="footer-top">
+            <div class="benefit-item">
+              <i class="fas fa-paw benefit-icon"></i>
+              <span class="benefit-text">Không thử nghiệm trên động vật</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-leaf benefit-icon"></i>
+              <span class="benefit-text">Không có thành phần từ động vật</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-bread-slice benefit-icon"></i>
+              <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fas fa-recycle benefit-icon"></i>
+              <span class="benefit-text">Bao bì có thể tái chế</span>
+            </div>
+          </div>
+    
+          <!-- Footer Main -->
+          <div class="footer-main">
+            <div class="footer-column">
+              <h3>Chúng tôi có thể giúp gì?</h3>
+              <ul>
+                <li><a href="#">Beautya branches</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Products</h3>
+              <ul>
+                <li><a href="#">Chính Sách Bảo Mật</a></li>
+                <li><a href="#">Chính Sách Bảo Hành</a></li>
+                <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Giữ liên lạc với Beautya</h3>
+              <p style="color: white; margin-bottom: 24px">
+                  Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+              </p>
+              <form class="newsletter-form">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  class="newsletter-input"
+                />
+                <button type="submit" class="newsletter-submit">Subscribe</button>
+              </form>
+              <label class="consent-text">
+                <input type="checkbox" required>
+                Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+              </label>
+              </div>
+            </div>
+          </div>
+    
+          <div class="footer-contact-row">
+            <div class="footer-contact-group">
+              <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+              <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+            </div>
+            <div class="footer-social-group">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+    
+          <!-- Footer Bottom -->
+          <div class="footer-bottom">
+            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+            <div class="legal-links">
+              <a href="#">Terms & Conditions</a>
+              <a href="#">Privacy Policy</a>
+            </div>
+          </div>
+        </footer>
+</body>
+</html>
