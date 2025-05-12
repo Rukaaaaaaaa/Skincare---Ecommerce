@@ -528,24 +528,25 @@
         }
     </style>
 </head>
+{% load static %}
 <body>
     <!-- Header -->
     <header class="header">
         <div class="logo">
-            <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+            <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO" />
             <span class="shop-name">BEAUTYA</span>
         </div>
-  
+
         <nav class="nav-menu">
-            <a href="homepage.html" class="nav-link">Home</a>
-            <a href="product.html" class="nav-link">Products</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="contactus.html" class="nav-link">Contacts</a>
-            <a href="Login.html" class="nav-link">Sign in</a>
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+            <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+            <a href="{% url 'about' %}" class="nav-link">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
         </nav>
         <div class="header-actions">
             <div class="cart-wrapper">
-                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+        <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
                 <span class="cart-count">0</span>
             </div>
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -557,66 +558,69 @@
             <!-- Ảnh sản phẩm -->
             <div class="product-gallery">
                 <div class="main-image">
-                    <img src="img/product1.png" id="currentImage" alt="Ảnh chính">
+                    <img src="{{ product.image.url }}" id="currentImage" alt="{{ product.name }}">
                 </div>
                 <div class="thumbnail-list">
-                    <img src="img/product2.png" class="thumbnail active" alt="Ảnh 1">
-                    <img src="img/product3.png" class="thumbnail" alt="Ảnh 2">
-                    <img src="img/product4.png" class="thumbnail" alt="Ảnh 3">
-                    <img src="img/product1.png" class="thumbnail" alt="Ảnh 4">
+                    <img src="{{ product.image.url }}" class="thumbnail active" alt="{{ product.name }}">
                 </div>
             </div>
-        
+
             <!-- Chi tiết sản phẩm -->
             <div class="product-details">
-                <h1 class="product-title">Natural Prestige Lip Glow Treatment Shimmer</h1>
-                <p class="product-subtitle">Son dưỡng giúp môi căng mọng, sáng tự nhiên nhờ chiết xuất từ thực vật thiên nhiên.</p>
-              
+                <h1 class="product-title">{{ product.name }}</h1>
+                <p class="product-subtitle">{{ product.description }}</p>
+
                 <!-- Đánh giá -->
                 <div class="product-rating">
                     <div class="stars">
-                        ⭐⭐⭐⭐⭐ <span class="rating-count">(4.9 | 238 Đánh giá)</span>
-                        <span class="sold-count"> | Đã bán 1.2k</span>
+                        ⭐⭐⭐⭐⭐ <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh giá)</span>
+                        <span class="sold-count"> | Đã bán {{ product.sold_count }}</span>
                     </div>
                 </div>
-              
+
                 <!-- Giá -->
                 <div class="price-container">
-                    <span class="current-price">₫50.000</span>
-                    <span class="original-price">₫65.000</span>
+                    <span class="current-price">₫{{ product.price }}</span>
+                    {% if product.original_price %}<span class="original-price">₫{{ product.original_price }}</span>{% endif %}
                 </div>
-              
+
                 <!-- Mã giảm giá -->
+                {% if product.vouchers %}
                 <div class="voucher-section">
                     <span class="voucher-label">Mã giảm giá:</span>
-                    <span class="voucher-code">GIAM10K</span>
-                    <span class="voucher-code">FREESHIP</span>
+                    {% for v in product.vouchers.split(',') %}<span class="voucher-code">{{ v }}</span>{% endfor %}
                 </div>
-              
+                {% endif %}
+
                 <!-- Combo khuyến mãi -->
+                {% if product.combo %}
                 <div class="combo-section">
-                    <strong>Combo:</strong> Mua 3 sản phẩm được giảm giá 10%
+                    <strong>Combo:</strong> {{ product.combo }}
                 </div>
-              
+                {% endif %}
+
                 <!-- Vận chuyển -->
+                {% if product.shipping %}
                 <div class="shipping-section">
-                    <strong>Vận chuyển:</strong> Giao hàng tiêu chuẩn - ₫15.000 (Miễn phí cho đơn từ ₫150.000)
+                    <strong>Vận chuyển:</strong> {{ product.shipping }}
                 </div>
-              
+                {% endif %}
+
                 <!-- Số lượng -->
                 <div class="quantity-section">
                     <label for="quantity">Số lượng:</label>
                     <input type="number" id="quantity" name="quantity" min="1" value="1">
                 </div>
-              
+
                 <!-- Tính năng nổi bật -->
+                {% if product.features %}
                 <ul class="product-features">
-                    <li>Dưỡng ẩm sâu với hyaluronic acid</li>
-                    <li>Tạo độ bóng nhẹ bằng khoáng chất tự nhiên</li>
-                    <li>Bổ sung vitamin E và chiết xuất thực vật</li>
-                    <li>Không chứa paraben, không thử nghiệm trên động vật</li>
+                    {% for feature in product.features.split('\n') %}
+                        <li>{{ feature }}</li>
+                    {% endfor %}
                 </ul>
-              
+                {% endif %}
+
                 <!-- Nút mua -->
                 <div class="action-buttons">
                     <button class="add-to-cart">Thêm vào giỏ hàng</button>
@@ -624,8 +628,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Product Details Tabs -->
+
+        <!-- Tabs chi tiết -->
         <div class="tabs-container">
             <div class="tab">
                 <button class="tablinks active" onclick="openTab(event, 'Description')">Description</button>
@@ -633,217 +637,90 @@
                 <button class="tablinks" onclick="openTab(event, 'HowToUse')">How to Use</button>
                 <button class="tablinks" onclick="openTab(event, 'Reviews')">Reviews</button>
             </div>
-            
+
             <div id="Description" class="tabcontent" style="display: block;">
                 <div class="tab-content-wrapper">
-                    <p>Our Natural Prestige Lip Glow Treatment Shimmer is a luxury lip care product that provides deep hydration while enhancing your lips with a subtle, elegant shimmer. The advanced formula combines the nourishing benefits of natural oils and botanical extracts with the visual enhancement of mineral-based shimmer.</p>
-                    <p>This product was developed after extensive research into lip care needs, finding the perfect balance between treatment and aesthetic enhancement. The formula addresses multiple concerns including dryness, fine lines, and lack of natural color, all while providing a beautiful finish that can be worn alone or as a base for other lip products.</p>
-                    <p>The subtle shimmer catches light beautifully, creating the appearance of fuller, more youthful lips without the need for invasive procedures or heavy makeup. Our customers report their lips feeling more comfortable throughout the day, even in harsh weather conditions.</p>
+                    <p>{{ product.detail }}</p>
                 </div>
             </div>
-            
+
             <div id="Ingredients" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <p><strong>Key Ingredients:</strong></p>
-                    <ul>
-                        <li><strong>Hyaluronic Acid:</strong> Provides intense hydration and helps lips retain moisture</li>
-                        <li><strong>Shea Butter:</strong> Nourishes and softens lips</li>
-                        <li><strong>Vitamin E:</strong> Antioxidant protection against environmental damage</li>
-                        <li><strong>Jojoba Oil:</strong> Lightweight oil that conditions without feeling greasy</li>
-                        <li><strong>Natural Minerals:</strong> Create a subtle shimmer effect without synthetic glitters</li>
-                        <li><strong>Botanical Extracts:</strong> Including chamomile and aloe to soothe and condition</li>
-                    </ul>
-                    <p>Full Ingredients List: Ricinus Communis (Castor) Seed Oil, Lanolin, Beeswax, Cetyl Alcohol, Simmondsia Chinensis (Jojoba) Seed Oil, Mica, Butyrospermum Parkii (Shea) Butter, Sodium Hyaluronate, Tocopheryl Acetate, Aloe Barbadensis Leaf Extract, Chamomilla Recutita (Matricaria) Flower Extract, Rosmarinus Officinalis (Rosemary) Leaf Extract, Titanium Dioxide, Iron Oxides.</p>
+                    <p>{{ product.ingredients }}</p>
                 </div>
             </div>
-            
+
             <div id="HowToUse" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <p><strong>Directions:</strong></p>
-                    <ol>
-                        <li>Start with clean, dry lips. If needed, gently exfoliate to remove any dry skin.</li>
-                        <li>Apply a small amount of the lip treatment directly to lips.</li>
-                        <li>Spread evenly using the applicator or your fingertip.</li>
-                        <li>Allow a moment for the product to settle and the shimmer to distribute naturally.</li>
-                        <li>Reapply throughout the day as needed for additional hydration and glow.</li>
-                    </ol>
-                    <p><strong>Tips for Best Results:</strong></p>
-                    <ul>
-                        <li>For an enhanced effect, apply a slightly thicker layer in the center of your lips to create dimension.</li>
-                        <li>Can be worn alone for a natural look or under/over your favorite lipstick.</li>
-                        <li>For evening looks, add a second layer for more noticeable shimmer.</li>
-                    </ul>
+                    <p>{{ product.how_to_use }}</p>
                 </div>
             </div>
-            
+
             <div id="Reviews" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <div class="review-item">
-                        <h3>Sarah K. <span class="review-stars">★★★★★</span></h3>
-                        <p>"I've tried many lip treatments but this one stands out for actually delivering results. My chronically dry lips are finally consistently smooth, and the subtle shimmer is so elegant for daily wear."</p>
-                    </div>
-                    <div class="review-item">
-                        <h3>Mia T. <span class="review-stars">★★★★★</span></h3>
-                        <p>"Worth every penny! This lip treatment has replaced both my lip balm and my gloss. The formula feels luxurious and the shimmer is sophisticated, not glittery."</p>
-                    </div>
-                    <div class="review-item">
-                        <h3>James L. <span class="review-stars">★★★★</span></h3>
-                        <p>"Bought this for my wife who always complains about dry lips, and she loves it. I've even started using it myself - it's not overly shimmery so it works for everyone."</p>
-                    </div>
-                    <div class="review-item">
-                        <h3>Elena R. <span class="review-stars">★★★★★</span></h3>
-                        <p>"Perfect for my sensitive lips that react to most lip products. No irritation and leaves a beautiful subtle glow. Already purchased my second tube!"</p>
-                    </div>
+                    <p>{{ product.reviews }}</p>
                 </div>
             </div>
         </div>
-        
+
         <!-- FAQ Section -->
+        {% if product.faqs %}
         <div class="faq-section">
             <h2 class="section-title">Frequently Asked Questions</h2>
+            {% for item in product.faqs %}
             <div class="faq-item">
-                <div class="faq-question">
-                    What is the shelf life of this product? <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    The Natural Prestige Lip Glow Treatment has a shelf life of 12 months after opening. The packaging includes a PAO (Period After Opening) symbol indicating this.
-                </div>
+                <div class="faq-question">{{ item.question }} <span class="toggle-icon">+</span></div>
+                <div class="faq-answer">{{ item.answer }}</div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Is this product suitable for sensitive skin? <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Yes, our formula is designed to be gentle and suitable for most sensitive skin types. However, if you have specific allergies, please review the ingredients list carefully.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    How does the shimmer look on mature lips? <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    The shimmer in our lip treatment is specifically designed to be flattering on all ages. It provides a subtle luminosity that helps lips appear more youthful and full without settling into fine lines.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Can I use this under lipstick? <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Absolutely! Many customers use our lip treatment as a hydrating base under their favorite lipsticks. Allow it to absorb for about a minute before applying lipstick for best results.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    Does this product have any fragrance? <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Our lip treatment has a very subtle natural vanilla scent from botanical extracts, not from artificial fragrances. It's designed to be pleasant but not overpowering.
-                </div>
-            </div>
+            {% endfor %}
         </div>
-           
+        {% endif %}
+
         <!-- Recommended Skincare Routine Section -->
+        {% if product.recommendations %}
         <div class="related-products">
             <h2 class="section-title">Recommended Skincare Routine</h2>
             <div class="product-grid-wrapper">
                 <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
                 <div class="product-grid" id="recommendedGrid">
+                    {% for p in product.recommendations %}
                     <div class="product-card">
-                        <img class="product-card-image" src="img/product1.png" alt="Beautya Capture Total Dreamskin">
+                        <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
                         <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
+                            <h3 class="product-card-title">{{ p.name }}</h3>
+                            <p class="product-card-description">{{ p.description }}</p>
+                            <div class="product-card-price">₫{{ p.price }}</div>
                         </div>
                     </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product2.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product3.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product4.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
             </div>
         </div>
+        {% endif %}
 
         <!-- You May Also Like Section -->
+        {% if product.related_products %}
         <div class="you-may-also-like">
             <h2 class="section-title">You May Also Like</h2>
             <div class="product-grid-wrapper">
                 <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
                 <div class="product-grid" id="alsoLikeGrid">
+                    {% for p in product.related_products %}
                     <div class="product-card">
-                        <img class="product-card-image" src="img/product1.png" alt="Beautya Capture Total Dreamskin">
+                        <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
                         <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
+                            <h3 class="product-card-title">{{ p.name }}</h3>
+                            <p class="product-card-description">{{ p.description }}</p>
+                            <div class="product-card-price">₫{{ p.price }}</div>
                         </div>
                     </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product2.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product3.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product4.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
-                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
-                            <div class="product-card-price">$76.00</div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
             </div>
         </div>
+        {% endif %}
     </main>
 
     <script>

@@ -331,130 +331,94 @@
 
     </style>
 </head>
+{% load static %}
+{% load humanize %}
+<form method="post" action="{% url 'checkout' %}">
+{% csrf_token %}
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
-            <span class="shop-name">BEAUTYA</span>
-        </div>
-        <nav class="nav-menu">
-            <a href="homepage.html" class="nav-link">Home</a>
-            <a href="product.html" class="nav-link">Products</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="contactus.html" class="nav-link">Contacts</a>
-            <a href="Login.html" class="nav-link">Sign in</a>
-        </nav>
-        <div class="header-actions">
-            <div class="cart-wrapper">
-                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
-                <span class="cart-count">0</span>
-            </div>
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        </div>
-    </header>
-
-    <div class="checkout-container">
-        <h1>Thanh Toán</h1>
-
-        <div class="address-input">
-            <div>
-                <label for="fullname">Họ và Tên</label>
-                <input type="text" id="fullname" placeholder="Nhập họ và tên người nhận" required>
-            </div>
-            <div>
-                <label for="phone">Số điện thoại</label>
-                <input type="tel" id="phone" placeholder="Nhập số điện thoại" required>
-            </div>
-            <div>
-                <label for="province">Tỉnh / Thành phố</label>
-                <select id="province" required></select>
-            </div>
-            <div>
-                <label for="district">Quận / Huyện</label>
-                <select id="district" required><option value="">-- Chọn Quận / Huyện --</option></select>
-            </div>
-            <div class="full-width">
-                <label for="ward">Xã / Phường / Thị trấn</label>
-                <select id="ward" required><option value="">-- Chọn Xã / Phường / Thị trấn --</option></select>
-            </div>
-            <div class="full-width">
-                <label for="detail-address">Địa chỉ cụ thể</label>
-                <input type="text" id="detail-address" placeholder="Số nhà, tên đường..." required>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><img src="img/product1.png" alt="Rose Perfume"> Rose Perfume</td>
-                    <td>65.000<small>đ</small></td>
-                    <td><input type="number" class="qty-input" value="1" min="1"></td>
-                    <td class="item-subtotal">65.000<small>đ</small></td>
-                </tr>
-                <tr>
-                    <td><img src="img/product2.png" alt="Rose Perfume"> Rose Perfume</td>
-                    <td>100.000<small>đ</small></td>
-                    <td><input type="number" class="qty-input" value="2" min="1"></td>
-                    <td class="item-subtotal">100.000<small>đ</small></td>
-                </tr>
-
-            </tbody>
-        </table>
-
-        <div class="shipping-method">
-            <h3>Phương thức vận chuyển</h3>
-            <label class="shipping-option">
-                <input type="radio" name="shipping-method" value="20000" data-method="Nhanh" checked>
-                Giao nhanh 20.000đ (16 - 19 tháng 4)
-            </label>
-            <label class="shipping-option">
-                <input type="radio" name="shipping-method" value="100000" data-method="Hỏa Tốc">
-                Giao hỏa tốc 100.000đ (Đơn từ 0h-15h đảm bảo nhận hàng trong vòng 12h, sau thời gian trên sẽ nhận hàng vào ngày hôm sau)
-            </label>
-        </div>
-
-        <div class="coupon-section">
-            <select id="coupon-code">
-                <option value="">-- Chọn mã giảm giá --</option>
-                <option value="freeship">Miễn phí vận chuyển</option>
-                <option value="discount10k">Giảm 10.000đ</option>
-            </select>
-            <button onclick="applyCoupon()">Áp dụng</button>
-        </div>
-
-        <div class="payment-method">
-            <h3>Phương thức thanh toán</h3>
-            <label class="payment-option">
-                <input type="radio" name="payment-method" value="cod" checked>
-                Thanh toán khi nhận hàng (COD)
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment-method" value="bank">
-                Chuyển khoản ngân hàng
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment-method" value="momo">
-                Thanh toán qua MoMo
-            </label>
-        </div>
-
-        <div class="cart-summary">
-            <h3>Tổng đơn hàng</h3>
-            <p><span>Tổng tiền hàng:</span><span class="summary-subtotal">0đ</span></p>
-            <p><span>Phí vận chuyển:</span><span class="summary-shipping">0đ</span></p>
-            <p><span>Giảm giá:</span><span class="summary-discount">0đ</span></p>
-            <p><span><strong>Tổng cộng:</strong></span><span class="summary-total"><strong>0đ</strong></span></p>
-            <button onclick="return validateOrder()">Đặt hàng</button>
-        </div>
+  <header class="header">
+    <div class="logo">
+      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO" />
+      <span class="shop-name">BEAUTYA</span>
     </div>
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+      <a href="{% url 'about' %}" class="nav-link">About Us</a>
+      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+    </nav>
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+        <span class="cart-count">{{ cart_items|length }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+  </header>
+
+  <div class="checkout-container">
+    <h1>Thanh Toán</h1>
+    <div class="address-input">
+      <div><label>Họ và Tên</label><input type="text" name="fullname" required></div>
+      <div><label>Số điện thoại</label><input type="tel" name="phone" required></div>
+      <div><label>Tỉnh / Thành phố</label><input type="text" name="province" required></div>
+      <div><label>Quận / Huyện</label><input type="text" name="district" required></div>
+      <div class="full-width"><label>Xã / Phường / Thị trấn</label><input type="text" name="ward" required></div>
+      <div class="full-width"><label>Địa chỉ cụ thể</label><input type="text" name="detail-address" required></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Tổng</th></tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"> {{ item.product.name }}</td>
+          <td>{{ item.product.price|intcomma }}<small>đ</small></td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.subtotal|intcomma }}<small>đ</small></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="shipping-method">
+      <h3>Phương thức vận chuyển</h3>
+      <label><input type="radio" name="shipping-method" value="20000" checked> Giao nhanh 20.000đ</label>
+      <label><input type="radio" name="shipping-method" value="100000"> Giao hỏa tốc 100.000đ</label>
+    </div>
+
+    <div class="coupon-section">
+      <select name="coupon">
+        <option value="">-- Chọn mã giảm giá --</option>
+        <option value="freeship">Miễn phí vận chuyển</option>
+        <option value="discount10k">Giảm 10.000đ</option>
+      </select>
+    </div>
+
+    <div class="payment-method">
+      <h3>Phương thức thanh toán</h3>
+      <label><input type="radio" name="payment-method" value="cod" checked> COD</label>
+      <label><input type="radio" name="payment-method" value="bank"> Ngân hàng</label>
+      <label><input type="radio" name="payment-method" value="momo"> MoMo</label>
+    </div>
+
+    <div class="cart-summary">
+      <h3>Tổng đơn hàng</h3>
+      <p><span>Tổng tiền hàng:</span><span>{{ total|intcomma }}đ</span></p>
+      <p><span>Phí vận chuyển:</span><span id="shipping_display">0đ</span></p>
+      <p><span>Giảm giá:</span><span id="discount_display">0đ</span></p>
+      <p><strong><span>Tổng cộng:</span><span id="total_display">{{ total|intcomma }}đ</span></strong></p>
+
+      <input type="hidden" name="shipping_fee" id="shipping_fee" value="20000">
+      <input type="hidden" name="discount" id="discount" value="0">
+      <input type="hidden" name="total" id="total_price" value="{{ total }}">
+
+      <button type="submit">Đặt hàng</button>
+    </div>
+  </div>
 
     <!-- Modal for QR Code -->
     <div id="qr-modal" class="modal">
