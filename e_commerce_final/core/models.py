@@ -1,56 +1,59 @@
-from django.db import models
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.utils import timezone
+from .models import Category, Product, Blog, SpecialOffer, NewsletterSubscriber
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='categories/')
+# Trang chủ
+def home(request):
+    context = {
+        # Hero slider: dùng 3 sản phẩm mới nhất
+        'hero_slides': Product.objects.filter(label='new')[:3],
 
-    def __str__(self):
-        return self.name
+        # Danh mục sản phẩm
+        'categories': Category.objects.all(),
 
+        # Best sellers: lấy sản phẩm được gắn nhãn best_seller
+        'best_sellers': Product.objects.filter(label='best_seller')[:8],
 
-class Product(models.Model):
-    CATEGORY_CHOICES = [
-        ('best_seller', 'Best Seller'),
-        ('new', 'New Product'),
-        ('other', 'Other'),
-    ]
+        # New In: sản phẩm được gắn nhãn new
+        'new_products': Product.objects.filter(label='new')[:6],
 
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    price = models.FloatField()
-    image = models.ImageField(upload_to='products/')
-    label = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
+        # Ưu đãi đặc biệt
+        'special_offer': SpecialOffer.objects.first(),
 
-    def __str__(self):
-        return f"{self.name} ({self.get_label_display()})"
+        # Blog mới nhất
+        'blog_posts': Blog.objects.order_by('-date')[:3],
+    }
+    return render(request, 'home.html', context)
 
+# Danh sách blog
+def blog_list(request):
+    blogs = Blog.objects.order_by('-date')
+    return render(request, 'blog.html', {'blogs': blogs})
 
-class Blog(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=100)
-    content = models.TextField()
-    image = models.ImageField(upload_to='blogs/')
-    category = models.CharField(max_length=100)
-    date = models.DateField()
+# Chi tiết blog
+def blog_detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    return render(request, 'blog_detail.html', {'blog': blog})
 
-    def __str__(self):
-        return f"{self.title} - {self.author}"
+# Trang Giới thiệu
+def about(request):
+    return render(request, 'about.html')
 
+# Trang Liên hệ
+def contact(request):
+    return render(request, 'contactus.html')
 
-class SpecialOffer(models.Model):
-    title = models.CharField(max_length=255)
-    subtitle = models.CharField(max_length=255)
-    description = models.TextField()
-    highlight = models.TextField()
-    image = models.ImageField(upload_to='offers/')
-
-    def __str__(self):
-        return self.title
-
-
-class NewsletterSubscriber(models.Model):
-    email = models.EmailField(unique=True)
-    subscribed_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.email
+# Đăng ký nhận bản tin (newsletter)
+def subscribe_newsletter(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
+            if created:
+                subscriber.subscribed_at = timezone.now()
+                subscriber.save()
+                return JsonResponse({'status': 'success', 'message': 'Đăng ký thành công!'})
+            else:
+                return JsonResponse({'status': 'info', 'message': 'Email đã tồn tại!'})
+    return JsonResponse({'status': 'error', 'message': 'Yêu cầu không hợp lệ.'})
