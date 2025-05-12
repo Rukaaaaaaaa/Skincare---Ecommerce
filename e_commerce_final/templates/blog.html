@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Beautya - Blog</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+
+        /* Blog Section */
+        .blog-section {
+            max-width: 1200px;
+            margin: auto;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .blog-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #c80064;
+            margin-bottom: 30px;
+        }
+
+        .blog-posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .blog-posts-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .blog-post {
+            background: #ffffff;
+            border: 1px solid #dfdfdf;
+            border-radius: 8px;
+            width: calc(33.33% - 16px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 294px;
+            object-fit: cover;
+        }
+
+        .blog-post-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            min-height: 250px; /* Đảm bảo chiều cao tối thiểu để các thẻ đồng đều */
+        }
+
+        .blog-post-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: #606060;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .meta-divider {
+            width: 16px;
+            height: 1px;
+            background-color: #606060;
+            transform: rotate(90deg);
+        }
+
+        .blog-post-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0c0c0c;
+            line-height: 140%;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .blog-post-title a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-post-title a:hover {
+            color: #c80064;
+        }
+
+        .blog-post-excerpt {
+            font-size: 16px;
+            line-height: 180%; /* ~28.8px mỗi dòng */
+            color: #0c0c0c;
+            height: 57.6px; /* 2 dòng x 28.8px, làm tròn để chính xác */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+            line-clamp: 2; /* Standard property for compatibility */
+            -webkit-box-orient: vertical;
+            margin: 0;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #c80064;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            align-self: center;
+            margin-top: 16px;
+        }
+
+        .read-more:hover {
+            background-color: #a60053;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .blog-post {
+                width: calc(33.33% - 16px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .blog-post {
+                width: calc(50% - 12px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-section {
+                margin: 100px auto 20px;
+                padding: 0 10px;
+            }
+
+            .blog-title {
+                font-size: 24px;
+            }
+
+            .blog-post {
+                width: 100%;
+            }
+
+            .blog-post-image {
+                height: 200px;
+            }
+
+            .blog-post-title {
+                font-size: 18px;
+            }
+
+            .blog-post-excerpt {
+                font-size: 14px;
+                height: 50.4px; /* 2 dòng x 25.2px (14px * 1.8) */
+            }
+
+            .blog-post-content {
+                min-height: 220px; /* Giảm chiều cao tối thiểu cho màn hình nhỏ */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="img/unsplash_HvkDYluePqw.png" alt="LOGO" />
+            <span class="shop-name">BEAUTYA</span>
+        </div>
+        <nav class="nav-menu">
+            <a href="homepage.html" class="nav-link">Home</a>
+            <a href="product.html" class="nav-link">Products</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="contactus.html" class="nav-link">Contacts</a>
+            <a href="Login.html" class="nav-link">Sign in</a>
+        </nav>
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+    </header>
+
+   <!-- Blog Section -->
+<div class="blog-section">
+  <h1 class="blog-title">Blog</h1>
+  <div class="blog-posts-container">
+    <div class="blog-posts-row">
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog1.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog1.id %}">{{ blog1.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog1.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog1.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog1.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog1.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog1.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog2.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog2.id %}">{{ blog2.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog2.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog2.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog2.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog2.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog2.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog3.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog3.id %}">{{ blog3.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog3.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog3.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog3.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog3.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog3.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-posts-row">
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog4.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog4.id %}">{{ blog4.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog4.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog4.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog4.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog4.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog4.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog5.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog5.id %}">{{ blog5.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog5.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog5.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog5.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog5.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog5.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog6.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog6.id %}">{{ blog6.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog6.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog6.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog6.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog6.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog6.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-posts-row">
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog7.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog7.id %}">{{ blog7.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog7.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog7.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog7.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog7.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog7.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog8.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog8.id %}">{{ blog8.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog8.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog8.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog8.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog8.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog8.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+      <div class="blog-post">
+        <img class="blog-post-image" src="{{ blog9.image.url }}" alt="Blog Image" />
+        <div class="blog-post-content">
+          <h2 class="blog-post-title"><a href="{% url 'blog_detail' blog9.id %}">{{ blog9.title }}</a></h2>
+          <div class="blog-post-meta">
+            <span>{{ blog9.category }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog9.author }}</span>
+            <div class="meta-divider"></div>
+            <span>{{ blog9.created_at|date:"d F, Y" }}</span>
+          </div>
+          <p class="blog-post-excerpt">{{ blog9.excerpt }}</p>
+          <a href="{% url 'blog_detail' blog9.id %}" class="read-more">Đọc Thêm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="benefit-item">
+                <i class="fas fa-paw benefit-icon"></i>
+                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-leaf benefit-icon"></i>
+                <span class="benefit-text">Không có thành phần từ động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-bread-slice benefit-icon"></i>
+                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-recycle benefit-icon"></i>
+                <span class="benefit-text">Bao bì có thể tái chế</span>
+            </div>
+        </div>
+        <div class="footer-main">
+            <div class="footer-column">
+                <h3>Chúng tôi có thể giúp gì?</h3>
+                <ul>
+                    <li><a href="#">Beautya branches</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Giữ liên lạc với Beautya</h3>
+                <p style="color: white; margin-bottom: 24px">
+                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+                </p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email" class="newsletter-input" />
+                    <button type="submit" class="newsletter-submit">Subscribe</button>
+                </form>
+                <label class="consent-text">
+                    <input type="checkbox" required>
+                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                </label>
+            </div>
+        </div>
+        <div class="footer-contact-row">
+            <div class="footer-contact-group">
+                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+            </div>
+            <div class="footer-social-group">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+            <div class="legal-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
