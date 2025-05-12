@@ -57,8 +57,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "django.template.context_processors.media",   # ✅ thêm để hiển thị ảnh media
-                "django.template.context_processors.static",  # ✅ để dùng {% static %}
+                "django.template.context_processors.media",  
+                "django.template.context_processors.static", 
             ],
         },
     },
@@ -112,6 +112,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
