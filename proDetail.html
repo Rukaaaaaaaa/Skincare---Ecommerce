@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Prestige Lip Glow Treatment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Tổng container */
+        .product-container {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+
+        /* Hình ảnh sản phẩm */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .main-image {
+            width: 100%;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail-list img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .thumbnail-list img:hover,
+        .thumbnail-list img.active {
+            border: 2px solid #ee4d2d;
+        }
+
+        /* Chi tiết sản phẩm */
+        .product-details {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .product-subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        /* Đánh giá */
+        .product-rating .stars {
+            font-size: 16px;
+            color: #ffce3d;
+            margin-bottom: 8px;
+        }
+
+        .rating-count,
+        .sold-count {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Giá */
+        .price-container {
+            background-color: #fff0e9;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .current-price {
+            font-size: 28px;
+            color: #a10550;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        /* Mô tả */
+        .product-description p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* Tính năng nổi bật */
+        .product-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .product-features li {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .product-features li::before {
+            content: "✓";
+            color: green;
+            position: absolute;
+            left: 0;
+        }
+
+        .voucher-section,
+        .combo-section,
+        .shipping-section,
+        .quantity-section {
+            font-size: 14px;
+            margin-top: 12px;
+            color: #333;
+        }
+
+        .voucher-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .voucher-code {
+            background-color: #fff0e9;
+            color: #a10550;
+            padding: 4px 8px;
+            margin-right: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .quantity-section input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .combo-section strong,
+        .shipping-section strong {
+            color: #555;
+        }
+
+        /* Nút mua hàng */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart,
+        .buy-now {
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            min-width: 160px;
+        }
+
+        .add-to-cart {
+            background-color: gray;
+            color: #fff;
+        }
+
+        .add-to-cart:hover {
+            background-color: rgb(74, 73, 73);
+        }
+
+        .buy-now {
+            background-color: #a10550;
+            color: white;
+        }
+
+        .buy-now:hover {
+            background-color: #6c0336;
+        }
+
+        .add-to-cart:active,
+        .buy-now:active {
+            transform: scale(0.97);
+        }
+
+        /* Tabs Section */
+        .tabs-container {
+            margin-top: 40px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tablinks {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .tablinks:hover {
+            background-color: #f8f8f8;
+        }
+
+        .tablinks.active {
+            border-bottom: 3px solid #d8127d;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+            border-top: none;
+        }
+
+        .tab-content-wrapper {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .tab-content-wrapper p, .tab-content-wrapper ul, .tab-content-wrapper ol {
+            margin-bottom: 15px;
+        }
+
+        .tab-content-wrapper ul, .tab-content-wrapper ol {
+            padding-left: 25px;
+        }
+
+        /* Review Items */
+        .review-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-item h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .review-stars {
+            color: #ffb100;
+            margin-left: 5px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: auto;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            color: #d8127d;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+
+        /* Recommended Skincare Routine và You May Also Like Section */
+        .related-products, .you-may-also-like {
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .product-grid-wrapper {
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .product-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            min-width: 250px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 0 0 auto;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+
+        .product-card-details {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .product-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d8127d;
+            margin-bottom: 5px;
+        }
+
+        .product-card-description {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-card-price {
+            font-size: 16px;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            font-size: 24px;
+            color: #c80064;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            z-index: 10;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .nav-arrow:hover {
+            background: wheat;
+        }
+
+        .nav-arrow.left {
+            left: 0;
+        }
+
+        .nav-arrow.right {
+            right: 0;
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .product-images, .product-details {
+                width: 100%;
+            }
+            
+            .tab {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            
+            .tablinks {
+                flex: none;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .product-grid {
+                justify-content: flex-start;
+            }
+            
+            .product-card {
+                flex: 0 0 45%;
+            }
+
+            .nav-arrow {
+                display: block;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-title {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .product-card {
+                flex: 0 0 80%;
+            }
+            
+            .faq-section {
+                padding: 20px 15px;
+            }
+            
+            .tab {
+                overflow-x: auto;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="img/beautya logo.svg" alt="LOGO" />
+            <span class="shop-name">BEAUTYA</span>
+        </div>
+  
+        <nav class="nav-menu">
+            <a href="homepage.html" class="nav-link">Home</a>
+            <a href="product.html" class="nav-link">Products</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="contactus.html" class="nav-link">Contacts</a>
+            <a href="Login.html" class="nav-link">Sign in</a>
+        </nav>
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="window.location.href='cart.html'"></i>
+                <span class="cart-count">2</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="product-container">
+            <!-- Ảnh sản phẩm -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light.webp" id="currentImage" alt="Ảnh chính">
+                </div>
+                <div class="thumbnail-list">
+                    <img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light-3.jpg" class="thumbnail active" alt="Ảnh 1">
+                    <img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light-2.jpg" class="thumbnail" alt="Ảnh 2">
+                    <img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light-5.jpg" class="thumbnail" alt="Ảnh 3">
+                    <img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light-1.jpg" class="thumbnail" alt="Ảnh 4">
+                </div>
+            </div>
+        
+            <!-- Chi tiết sản phẩm -->
+            <div class="product-details">
+                <h1 class="product-title">MARTIDERM</h1>
+                <p class="product-subtitle">Kem Chống Nắng MartiDerm The Originals Proteos Screen SPF50+ 40ml - Light</p>
+              
+                <!-- Đánh giá -->
+                <div class="product-rating">
+                    <div class="stars">
+                        ⭐⭐⭐⭐⭐ <span class="rating-count">(4.9 | 238 Đánh giá)</span>
+                        <span class="sold-count"> | Đã bán 1.2k</span>
+                    </div>
+                </div>
+              
+                <!-- Giá -->
+                <div class="price-container">
+                    <span class="current-price">₫50.000</span>
+                    <span class="original-price">₫65.000</span>
+                </div>
+              
+                <!-- Mã giảm giá -->
+                <div class="voucher-section">
+                    <span class="voucher-label">Mã giảm giá:</span>
+                    <span class="voucher-code">GIAM10K</span>
+                    <span class="voucher-code">FREESHIP</span>
+                </div>
+              
+                <!-- Combo khuyến mãi -->
+                <div class="combo-section">
+                    <strong>Combo:</strong> Mua 3 sản phẩm được giảm giá 20%
+                </div>
+              
+                <!-- Vận chuyển -->
+                <div class="shipping-section">
+                    <strong>Vận chuyển:</strong> Giao hàng tiêu chuẩn - ₫15.000 (Miễn phí cho đơn từ ₫150.000)
+                </div>
+              
+                <!-- Số lượng -->
+                <div class="quantity-section">
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1">
+                </div>
+              
+                <!-- Tính năng nổi bật -->
+                <ul class="product-features">
+                    <li>Chống nắng phổ rộng</li>
+                    <li>Cải thiện tông da đều màu</li>
+                    <li>Chống lão hóa và giảm nếp nhăn</li>
+                    <li>Dưỡng ẩm sâu và giữ da mềm mại</li>
+                    <li>Tăng cường đàn hồi và săn chắc da</li>
+                    <li>Làm lớp nền trang điểm</li>
+                </ul>
+              
+                <!-- Nút mua -->
+                <div class="action-buttons">
+                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                    <button class="buy-now">Mua ngay</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Details Tabs -->
+        <div class="tabs-container">
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Description')">Mô tả sản phẩm</button>
+                <button class="tablinks" onclick="openTab(event, 'Ingredients')">Thành phần</button>
+                <button class="tablinks" onclick="openTab(event, 'HowToUse')">Cách dùng</button>
+                <button class="tablinks" onclick="openTab(event, 'Reviews')">Reviews</button>
+            </div>
+            
+            <div id="Description" class="tabcontent" style="display: block;">
+                <div class="tab-content-wrapper">
+                    <p>Kem chống nắng MartiDerm The Originals Proteos Screen SPF50+ 40ml - Light là kem chống nắng kết hợp giữa chức năng chống nắng phổ rộng, hiệu chỉnh sắc tố da và dưỡng da chuyên sâu. Đây là sản phẩm thuộc dòng dược mỹ phẩm cao cấp từ MartiDerm, một thương hiệu nổi tiếng đến từ Tây Ban Nha, nổi bật nhờ các công nghệ hiện đại cùng thành phần an toàn, hiệu quả đã được nghiên cứu kỹ lưỡng.</p>
+                    <p>Điểm đặc biệt của sản phẩm nằm ở kết cấu kem lỏng chuyển hóa thành phấn mịn (cream-to-powder), dễ tán đều, thấm nhanh, không gây bí da hay nhờn rít. Khi thoa lên da, sản phẩm tạo nên một lớp nền tự nhiên, nhẹ nhàng như lớp trang điểm, giúp che phủ các khuyết điểm nhỏ như vết thâm mụn, lỗ chân lông to hay làn da xỉn màu. Sự kết hợp giữa các hạt vi màu được đóng gói thông minh cùng hoạt chất dưỡng da như Proteoglycans và Hyaluronic Acid giúp da không chỉ được bảo vệ mà còn trở nên sáng khỏe, mịn màng hơn theo thời gian.</p>
+                    <p>Sản phẩm phù hợp với mọi loại da, kể cả da nhạy cảm, dễ bị kích ứng hay đang điều trị các vấn đề như tăng sắc tố, lão hóa, da yếu sau laser hoặc peel da.</p>
+                </div>
+            </div>
+            
+            <div id="Ingredients" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <p><strong>Thành phần đầy đủ:&nbsp;</strong>Aqua (Water), Ethylhexyl Methoxycinnamate, Butylene Glycol, Propylene Glycol, Polymethyl Methacrylate, PEG-8, Ethylhexyl Salicylate, Homosalate, Butyl Methoxydibenzoylmethane, Titanium Dioxide, Caprylyl Methicone, &nbsp;Dimethicone, Bis-Ethylhexylophenol Methoxyphenyl Triazine, Sodium Potassium Aluminum Silicate, Silica, Ethylhexyl Triazone, CI 77891 (Titanium Dioxide), PEG-12 Dimethicone/PPG-20 Crosspolymer, Cellulose Acetate, Magnesium Stearate, Propylene Glycol Stearate, Lecithin, Tocopherol, Glycine Soya (Soybean) Oil, Glycine Soya (Soybean) Protein, Theobroma Cocoa Seed Extract, Citric Acid, Hyaluronic Acid, Silanetriol, Ascorbyl Palmitate, Sodium Lactate, Beta-Silosterol, Phytic Acid, Squalene, Ascorbic Acid, Beta-Carotene, Daucus Carota Sativa (Carrot) Root Extract, Acrylates /C10-30 Alkyl Acrylate Crosspolymer, Carbomer, Hydrogenated Phosphatidylcholine, Lysolecithin, Disodium EDTA, Ethylhexylglycerin, Sodium Hydroxide, Xanthan Gum, BHT, Perfume (Fragrance), Phenoxyethanol,Sodium Benzoate, Sorbic Acid, Potassium Sorbate, CI 77492 (Iron Oxides), CI 77491 (Iron Oxides), CI 77499 (Iron Oxides).</p>
+                    <p><strong>Trong đó:</strong></p>
+                    <ul>
+	<li data-end="1813" data-start="1663"><strong data-end="1683" data-start="1663">Spectrum Complex</strong>: Một tổ hợp hoạt chất bảo vệ da toàn diện khỏi tia UVB, UVA1, UVA2, IR (tia hồng ngoại), HEV (ánh sáng xanh) nhờ sự kết hợp giữa:
+
+	<ul>
+		<li><strong data-end="1841" data-start="1819">UVA/UVB sunscreens</strong>: Kết hợp giữa màng lọc vật lý và hóa học giúp tăng cường hiệu quả chống nắng, ngăn chặn các tổn thương do ánh nắng gây ra.</li>
+		<li><strong data-end="2011" data-start="1975">Chiết xuất Cocoa (Cocoa Extract)</strong>: Chiết xuất từ hạt cacao không lên men mang trong mình hàm lượng cao các polyphenol. Hoạt chất này giúp bảo vệ da trước tác động của ánh sáng xanh (HEV), đồng thời cải thiện độ đàn hồi và làm mờ các nếp nhăn.</li>
+		<li><strong data-end="2207" data-start="2179">Encapsulated Pro-Retinol</strong>:&nbsp;Tiền chất retinol được "bảo vệ" bởi công nghệ đóng gói tiên tiến, giúp tăng cường độ ổn định và khả năng thẩm thấu sâu vào da. Thành phần này không chỉ chống oxy hóa mà còn tạo "lá chắn" bảo vệ da trước tác động của tia hồng ngoại (IR).</li>
+	</ul>
+	</li>
+	<li data-end="2530" data-start="2372"><strong data-end="2397" data-start="2372">Encapsulated Pigments</strong>: Các hạt sắc tố siêu nhỏ được ứng dụng công nghệ bao bọc đặc biệt, đảm bảo sự ổn định tối ưu cho sản phẩm. Khi thoa lên da, chúng tạo thành một lớp phủ mỏng nhẹ, giúp da trông sáng mịn và đều màu tự nhiên.</li>
+	<li data-end="2732" data-start="2534"><strong data-end="2551" data-start="2534">Proteoglycans</strong>: Thành phần độc quyền từ MartiDerm, đây là phân tử protein glycosyl hóa tự nhiên, có mặt chủ yếu trong mô liên kết, giúp dưỡng ẩm sâu, tái cấu trúc da, tăng độ đàn hồi và săn chắc.</li>
+	<li data-end="2911" data-start="2736"><strong data-end="2755" data-start="2736">Hyaluronic Acid</strong>: Giúp giữ nước hiệu quả, làm mềm mượt bề mặt da và tạo cảm giác căng mịn, tươi trẻ suốt cả ngày.</li>
+</ul>    
+                </div>
+            </div>
+            
+            <div id="HowToUse" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <p>Lấy một lượng vừa đủ Proteos Screen SPF 50+ Color Fluid Cream (Light), chấm đều lên trán, mũi, hai má, cằm và cổ. Dùng tay sạch tán đều và vỗ nhẹ để kem thẩm thấu hoàn toàn vào da.</p>
+                    <p><strong>Lưu ý:</strong></p>
+                    <ul>
+	<li>Sử dụng mỗi sáng, trước khi ra nắng 15–20 phút.</li>
+	<li>Có thể thoa lại sau 2–3 tiếng nếu hoạt động ngoài trời lâu, hoặc sau khi đổ mồ hôi nhiều.</li>
+	<li>Nếu sử dụng như lớp nền trang điểm, có thể không cần dùng thêm kem nền hoặc cushion.</li>
+</ul>
+                    
+                </div>
+            </div>
+            
+            <div id="Reviews" class="tabcontent">
+                <div class="tab-content-wrapper">
+                    <div class="review-item">
+                        <h3>Sarah K. <span class="review-stars">★★★★★</span></h3>
+                        <p>"I've tried many lip treatments but this one stands out for actually delivering results. My chronically dry lips are finally consistently smooth, and the subtle shimmer is so elegant for daily wear."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>Mia T. <span class="review-stars">★★★★★</span></h3>
+                        <p>"Worth every penny! This lip treatment has replaced both my lip balm and my gloss. The formula feels luxurious and the shimmer is sophisticated, not glittery."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>James L. <span class="review-stars">★★★★</span></h3>
+                        <p>"Bought this for my wife who always complains about dry lips, and she loves it. I've even started using it myself - it's not overly shimmery so it works for everyone."</p>
+                    </div>
+                    <div class="review-item">
+                        <h3>Elena R. <span class="review-stars">★★★★★</span></h3>
+                        <p>"Perfect for my sensitive lips that react to most lip products. No irritation and leaves a beautiful subtle glow. Already purchased my second tube!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="section-title">Câu hỏi thường gặp</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    1. Kem chống nắng có thực sự cần thiết khi ở trong nhà hoặc trời râm không? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Có. Dù bạn ở trong nhà hay khi trời râm mát, tia UVA vẫn có thể xuyên qua cửa kính và gây hại cho da. Do đó, bạn vẫn nên sử dụng kem chống nắng hàng ngày để bảo vệ làn da khỏi lão hóa sớm và tổn thương từ tia UV.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    2. Tôi nên thoa kem chống nắng bao lâu trước khi ra ngoài? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+Bạn nên thoa kem chống nắng khoảng 15–20 phút trước khi ra ngoài để kem có thời gian thẩm thấu và phát huy hiệu quả bảo vệ da tối ưu.                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                     3. Kem chống nắng có cần thoa lại trong ngày không? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+Có. Bạn nên thoa lại kem chống nắng sau mỗi 2–3 tiếng, đặc biệt nếu bạn hoạt động ngoài trời lâu, ra nhiều mồ hôi, hoặc sau khi bơi để duy trì hiệu quả chống nắng.                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                   4. Nên chọn kem chống nắng vật lý hay hóa học?<span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+Kem chống nắng vật lý (physical/mineral) phù hợp với da nhạy cảm vì dịu nhẹ, ít gây kích ứng. <br>
+
+Kem chống nắng hóa học thường mỏng nhẹ, thấm nhanh, phù hợp với da dầu hoặc dùng làm lớp lót trang điểm.
+Bạn có thể chọn theo nhu cầu và loại da của mình.                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                     5. Kem chống nắng có gây bí da, nổi mụn không? <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+Nếu bạn chọn sản phẩm phù hợp với loại da của mình (ví dụ: dạng gel hoặc oil-free cho da dầu/mụn), kem chống nắng sẽ không gây bí da. Ngoài ra, hãy chọn sản phẩm non-comedogenic (không gây bít tắc lỗ chân lông) để hạn chế nguy cơ nổi mụn.                </div>
+            </div>
+        </div>
+           
+        <!-- Recommended Skincare Routine Section -->
+        <div class="related-products">
+            <h2 class="section-title">Sản phẩm dành cho bạn</h2>
+            <div class="product-grid-wrapper">
+                <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
+                <div class="product-grid" id="recommendedGrid">
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/images/san-pham/gel-rua-mat-tam-la-roche-posay-lam-sach-giam-mun-200ml.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">LA ROCHE-POSAY</h3>
+                            <p class="product-card-description">Gel Rửa Mặt La Roche-Posay Effaclar Gel Purifying Micro-Peeling Giảm Mụn Cho Mặt, Toàn Thân 200ml</p>
+                            <div class="product-card-price">451.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/images/san-pham/kem-chong-nang-round-lab-birch-juice-moisturizing-sunscreen-50ml.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Round Lab</h3>
+                            <p class="product-card-description">Kem Chống Nắng Round Lab Birch Juice Moisturizing Sunscreen 50ml</p>
+                            <div class="product-card-price">485.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/files/xit-chong-nang-anessa-duong-da-da-nang-spf50-pa-60g-6.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">ANESSA</h3>
+                            <p class="product-card-description">Xịt Chống Nắng Anessa Dưỡng Da Đa Năng SPF50+ PA++++ 60g</p>
+                            <div class="product-card-price">364.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-beplain-sunmuse-moisture-sunscreen-50ml-da-kho.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beplain</h3>
+                            <p class="product-card-description">Kem Chống Nắng Beplain Sunmuse Moisture Sunscreen 50ml (Da Khô)</p>
+                            <div class="product-card-price">485.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
+            </div>
+        </div>
+
+        <!-- You May Also Like Section -->
+        <div class="you-may-also-like">
+            <h2 class="section-title">Có thể bạn cũng thích</h2>
+            <div class="product-grid-wrapper">
+                <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
+                <div class="product-grid" id="alsoLikeGrid">
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/files/combo-2x-nuoc-tay-trang-eucerin-dermatoclean-micellar-3-in-1-400ml-2.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">EUCERIN</h3>
+                            <p class="product-card-description">Combo 2x Nước Tẩy Trang Eucerin Dermatoclean Micellar 3 IN 1 400ml</p>
+                            <div class="product-card-price">615.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/images/sua-rua-mat-cocoon-sen-hau-giang-50ml.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">COCOON</h3>
+                            <p class="product-card-description">Sữa Rửa Mặt Cocoon Sen Hậu Giang 50ml</p>
+                            <div class="product-card-price">75.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/images/mat-na-giay-round-lab-ngai-cuu-mugwort-calming-mask-25ml.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Round Lab</h3>
+                            <p class="product-card-description">Mặt Nạ Giấy Round Lab Ngải Cứu Mugwort Calming Mask 25ml</p>
+                            <div class="product-card-price">48.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="https://cocolux.com/storage/upload_image/files/nuoc-hoa-hong-some-by-mi-beta-panthenol-repair-toner-30ml.webp" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">SOME BY MI</h3>
+                            <p class="product-card-description">Nước Hoa Hồng Some By Mi Beta Panthenol Repair Toner 30ml</p>
+                            <div class="product-card-price">80.000<small>đ</small></div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img class="product-card-image" src="img/product5.png" alt="Beautya Capture Total Dreamskin">
+                        <div class="product-card-details">
+                            <h3 class="product-card-title">Beautya Capture Total Dreamskin</h3>
+                            <p class="product-card-description">Care & Perfect Plumping Gloss - Instant and Long-Term Volume Effect - 24h Hydration</p>
+                            <div class="product-card-price">$76.00</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Function to handle tab switching
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Function to handle thumbnail image clicks
+        function initThumbnails() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.querySelector('.main-image img');
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    mainImage.src = this.src;
+                    thumbnails.forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Function to handle FAQ toggles
+        function initFAQToggles() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const toggleIcon = this.querySelector('.toggle-icon');
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                        toggleIcon.textContent = '+';
+                    } else {
+                        answer.style.display = 'block';
+                        toggleIcon.textContent = '-';
+                    }
+                });
+            });
+        }
+
+        // Function to handle product grid scrolling
+        function scrollGrid(gridId, direction) {
+            const grid = document.getElementById(gridId);
+            const scrollAmount = 270; // Width of each product card (250px) + gap (20px)
+            grid.scrollLeft += direction * scrollAmount;
+
+            // Disable/enable arrows based on scroll position
+            const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+            const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+            leftArrow.disabled = grid.scrollLeft <= 0;
+            rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+        }
+
+        // Initialize everything when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.tablinks').click();
+            initThumbnails();
+            initFAQToggles();
+            const buyButton = document.querySelector('.buy-button');
+            if (buyButton) {
+                buyButton.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = '#b50e69';
+                });
+                buyButton.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = '#d8127d';
+                });
+            }
+
+            // Initialize scroll arrows
+            const grids = document.querySelectorAll('.product-grid');
+            grids.forEach(grid => {
+                const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+                const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+                leftArrow.disabled = grid.scrollLeft <= 0;
+                rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="benefit-item">
+                <i class="fas fa-paw benefit-icon"></i>
+                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-leaf benefit-icon"></i>
+                <span class="benefit-text">Không có thành phần từ động vật</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-bread-slice benefit-icon"></i>
+                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-recycle benefit-icon"></i>
+                <span class="benefit-text">Bao bì có thể tái chế</span>
+            </div>
+        </div>
+        <div class="footer-main">
+            <div class="footer-column">
+                <h3>Chúng tôi có thể giúp gì?</h3>
+                <ul>
+                    <li><a href="#">Beautya branches</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Products</h3>
+                <ul>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Giữ liên lạc với Beautya</h3>
+                <p style="color: white; margin-bottom: 24px">
+                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+                </p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email" class="newsletter-input" />
+                    <button type="submit" class="newsletter-submit">Subscribe</button>
+                </form>
+                <label class="consent-text">
+                    <input type="checkbox" required>
+                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                </label>
+            </div>
+        </div>
+        <div class="footer-contact-row">
+            <div class="footer-contact-group">
+                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+            </div>
+            <div class="footer-social-group">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+            <div class="legal-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
