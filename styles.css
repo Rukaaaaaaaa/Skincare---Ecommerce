@@ -475,9 +475,9 @@ body {
 
 /* Special Offers */
 .special-offers-section {
-  padding: 80px 108px;
   background: #fbeff2;
   margin-top: 20px;
+  padding-left: 20px;
 }
 
 .special-offers-container {
@@ -501,7 +501,7 @@ body {
 }
 
 .special-offers-image img {
-  width: 600px;
+  width: 800px;
   height: 382px;
   display: block;
 }
