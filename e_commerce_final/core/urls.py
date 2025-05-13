@@ -8,4 +8,5 @@ urlpatterns = [
     path('blogs/', views.blog_list, name='blog_list'),
     path('blogs/<int:blog_id>/', views.blog_detail, name='blog_detail'),
     path('subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
+    path('search/', views.search_view, name='search'),
 ]
