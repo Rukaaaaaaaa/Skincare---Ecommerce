@@ -46,7 +46,6 @@ body {
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--primary-color);
   transition: transform 0.3s ease;
 }
 
@@ -401,6 +400,15 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+.product-card img {
+  width: 285px;
+  height: 384px;
+  object-fit: contain; /* hoặc contain nếu không muốn ảnh bị crop */
+  border-bottom: 1px solid #eee;
+}
+
+
+
 /* Navigation Arrows */
 .product-slider-nav {
   position: absolute;
@@ -493,7 +501,7 @@ body {
 }
 
 .special-offers-image img {
-  width: 575px;
+  width: 600px;
   height: 382px;
   display: block;
 }
@@ -920,7 +928,7 @@ body {
   }
 
   .product-price {
-    color: var(--text-dark);
+    color: #c80064;
     font-size: 18px;
     font-weight: 600;
   }
@@ -965,7 +973,6 @@ body {
 .product-description {
   color: #0C0C0C;
   font-size: 12px;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   line-height: 21.6px;
   text-transform: capitalize;
@@ -974,9 +981,8 @@ body {
 }
 
 .product-price {
-  color: #0C0C0C;
+  color: #c80064;
   font-size: 18px;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   line-height: 32.4px;
 }
