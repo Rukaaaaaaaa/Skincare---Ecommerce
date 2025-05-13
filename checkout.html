@@ -91,9 +91,10 @@
             width: 60px;
             height: 60px;
             vertical-align: middle;
-            border-radius: 8px;
+            border-radius: 5px;
             margin-right: 12px;
             object-fit: cover;
+            border: 1px solid gainsboro;
         }
 
         .qty-input {
@@ -394,16 +395,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><img src="img/product1.png" alt="Rose Perfume"> Rose Perfume</td>
-                    <td>65.000<small>đ</small></td>
+                    <td><img src="https://cocolux.com/storage/upload_image/images/kem-chong-nang-martiderm-the-originals-proteos-screen-spf50-40ml-light.webp" alt="Rose Perfume">MARTIDERM</td>
+                    <td>1.380.000<small>đ</small></td>
                     <td><input type="number" class="qty-input" value="1" min="1"></td>
-                    <td class="item-subtotal">65.000<small>đ</small></td>
+                    <td class="item-subtotal">1.380.000<small>đ</small></td>
                 </tr>
                 <tr>
-                    <td><img src="img/product2.png" alt="Rose Perfume"> Rose Perfume</td>
-                    <td>100.000<small>đ</small></td>
-                    <td><input type="number" class="qty-input" value="2" min="1"></td>
-                    <td class="item-subtotal">100.000<small>đ</small></td>
+                    <td><img src="https://cocolux.com/storage/upload_image/images/sua-rua-mat-cerave-blemish-control-cleanser-cho-da-dau-mun-88ml.webp" alt="Rose Perfume"> CERAVE</td>
+                    <td>195.000<small>đ</small></td>
+                    <td><input type="number" class="qty-input" value="1" min="1"></td>
+                    <td class="item-subtotal">195.000<small>đ</small></td>
                 </tr>
 
             </tbody>
@@ -608,45 +609,53 @@
             updateTotal();
         }
 
-        function updateTotal() {
-            let subtotal = 0;
-            document.querySelectorAll('tbody tr').forEach(row => {
-                const priceText = row.cells[1].textContent.replace('đ', '').replace('.', '');
-                const price = parseInt(priceText);
-                const qty = parseInt(row.querySelector('.qty-input').value);
-                const itemSubtotal = price * qty;
-                row.querySelector('.item-subtotal').textContent = itemSubtotal.toLocaleString() + 'đ';
-                subtotal += itemSubtotal;
-            });
-
-            const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
-            let shipping = selectedShipping ? parseInt(selectedShipping.value) : 0;
-
-            const provinceSelect = document.querySelector('#province');
-            const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
-            const provinceName = selectedOption?.dataset.name || '';
-
-            if (selectedShipping?.dataset.method === 'Hỏa Tốc' && provinceName !== 'Thành phố Hà Nội') {
-                alert('Phương thức giao hàng Hỏa Tốc chỉ áp dụng tại Hà Nội.');
-                selectedShipping.checked = false;
-                document.querySelector('input[name="shipping-method"][data-method="Nhanh"]').checked = true;
-                shipping = 20000;
-            }
-
-            let discount = 0;
-            if (appliedCoupon) {
-                if (appliedCoupon.type === 'freeship') {
-                    shipping = 0;
-                } else if (appliedCoupon.type === 'discount') {
-                    discount = appliedCoupon.value;
-                }
-            }
-
-            document.querySelector('.summary-subtotal').textContent = subtotal.toLocaleString() + 'đ';
-            document.querySelector('.summary-shipping').textContent = shipping.toLocaleString() + 'đ';
-            document.querySelector('.summary-discount').textContent = discount.toLocaleString() + 'đ';
-            document.querySelector('.summary-total').textContent = (subtotal + shipping - discount).toLocaleString() + 'đ';
+function updateTotal() {
+    let subtotal = 0;
+    document.querySelectorAll('tbody tr').forEach(row => {
+        // Get price from the price column
+        const priceText = row.cells[1].textContent.replace('đ', '').replace(/\./g, '');
+        const price = parseInt(priceText);
+        const qty = parseInt(row.querySelector('.qty-input').value);
+        
+        // Check for valid price and quantity
+        if (isNaN(price) || isNaN(qty)) {
+            console.error('Invalid price or quantity:', priceText, qty);
+            return;
         }
+
+        const itemSubtotal = price * qty;
+        row.querySelector('.item-subtotal').textContent = itemSubtotal.toLocaleString('vi-VN') + 'đ';
+        subtotal += itemSubtotal;
+    });
+
+    const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
+    let shipping = selectedShipping ? parseInt(selectedShipping.value) : 0;
+
+    const provinceSelect = document.querySelector('#province');
+    const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
+    const provinceName = selectedOption?.dataset.name || '';
+
+    if (selectedShipping?.dataset.method === 'Hỏa Tốc' && provinceName !== 'Thành phố Hà Nội') {
+        alert('Phương thức giao hàng Hỏa Tốc chỉ áp dụng tại Hà Nội.');
+        selectedShipping.checked = false;
+        document.querySelector('input[name="shipping-method"][data-method="Nhanh"]').checked = true;
+        shipping = 20000;
+    }
+
+    let discount = 0;
+    if (appliedCoupon) {
+        if (appliedCoupon.type === 'freeship') {
+            shipping = 0;
+        } else if (appliedCoupon.type === 'discount') {
+            discount = appliedCoupon.value;
+        }
+    }
+
+    document.querySelector('.summary-subtotal').textContent = subtotal.toLocaleString('vi-VN') + 'đ';
+    document.querySelector('.summary-shipping').textContent = shipping.toLocaleString('vi-VN') + 'đ';
+    document.querySelector('.summary-discount').textContent = discount.toLocaleString('vi-VN') + 'đ';
+    document.querySelector('.summary-total').textContent = (subtotal + shipping - discount).toLocaleString('vi-VN') + 'đ';
+}
 
         function validateOrder() {
             const name = document.getElementById('fullname').value.trim();
