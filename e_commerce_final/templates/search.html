@@ -1,37 +1,113 @@
 <!DOCTYPE html>
 <html lang="vi">
-  {% load static %}
-  {% load socialaccount %}
+{% load static %}
 <head>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
   <meta charset="UTF-8">
-  <title>Ảnh đè phần trên thanh ngang</title>
+  <title>Kết quả tìm kiếm</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <style>
-    .container {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .search-banner {
       position: relative;
-      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       height: 100px;
-      background-color: #8B4513; /* màu nâu */
-      margin-top: 100px;
+      background-color: #8B4513;
+      padding-right: 140px;
+    }
+
+    .search-banner input[type="text"] {
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      width: 250px;
+    }
+
+    .search-banner button {
+      padding: 8px 16px;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+      border-radius: 4px;
     }
 
     .image-overlay {
       position: absolute;
-      right: 20px; /* căn bên phải */
-      bottom: -50px; /* đẩy ảnh ra ngoài, nằm đè phần trên */
+      right: 20px;
+      bottom: -50px;
       width: 100px;
       height: 100px;
       object-fit: cover;
+      border: 4px solid white;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      border: 4px solid white; /* để ảnh nổi bật hơn */
+    }
+
+    .results {
+      margin-top: 120px;
+      text-align: center;
+    }
+
+    .results h2 {
+      margin-bottom: 20px;
+    }
+
+    .product-card {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 16px;
+      margin: 12px;
+      width: 200px;
+      border-radius: 6px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- Search Bar -->
+  <div class="search-banner">
+    <form method="get" action="{% url 'search' %}" style="display: flex; align-items: center;">
+      <input type="text" name="q" value="{{ query }}" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
     <img class="image-overlay" src="https://via.placeholder.com/100" alt="Ảnh đè">
+  </div>
+
+  <!-- Kết quả tìm kiếm -->
+  <div class="results">
+    {% if query %}
+      <h2>Kết quả tìm kiếm cho "{{ query }}"</h2>
+      {% if results %}
+        {% for product in results %}
+          <div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>Giá: {{ product.price }}đ</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>Không tìm thấy kết quả nào cho "{{ query }}".</p>
+      {% endif %}
+    {% else %}
+      <p>Vui lòng nhập từ khóa tìm kiếm.</p>
+    {% endif %}
   </div>
 
 </body>

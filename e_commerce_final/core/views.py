@@ -57,3 +57,8 @@ def subscribe_newsletter(request):
             else:
                 return JsonResponse({'status': 'info', 'message': 'Email đã tồn tại!'})
     return JsonResponse({'status': 'error', 'message': 'Yêu cầu không hợp lệ.'})
+def search_view(request):
+    query = request.GET.get('q')
+    results = Product.objects.filter(name__icontains=query) if query else []
+    return render(request, 'search.html', {'query': query, 'results': results})
+    
