@@ -627,50 +627,62 @@
       lazyImages.forEach(img => imageObserver.observe(img));
 
       // Slider logic dùng transform
-      function setupSlider(sliderId, visibleCards = 3) {
-        const slider = document.getElementById(sliderId);
-        const productGrid = slider.querySelector('.product-grid');
-        const cards = productGrid.querySelectorAll('.product-card');
+function setupSlider(sliderId, visibleCards = 4, autoSlide = true, interval = 4000) {
+  const slider = document.getElementById(sliderId);
+  const productGrid = slider.querySelector('.product-grid');
+  const cards = productGrid.querySelectorAll('.product-card');
 
-        let cardWidth = 0;
-        let currentIndex = 0;
+  let cardWidth = 0;
+  let currentIndex = 0;
 
-        function calculateCardWidth() {
-          if (cards.length > 0) {
-            const style = window.getComputedStyle(cards[0]);
-            const gap = parseInt(style.marginRight) || 24;
-            cardWidth = cards[0].offsetWidth + gap;
-          }
-        }
+  function calculateCardWidth() {
+    if (cards.length > 0) {
+      const style = window.getComputedStyle(cards[0]);
+      const gap = parseInt(style.marginRight) || 24;
+      cardWidth = cards[0].offsetWidth + gap;
+    }
+  }
 
-        calculateCardWidth();
+  calculateCardWidth();
 
-        function scrollSlider(direction) {
-          currentIndex += direction;
-          const totalCards = cards.length;
+  function scrollSlider(direction) {
+    const totalCards = cards.length;
+    currentIndex += direction;
 
-          if (currentIndex >= totalCards - visibleCards + 1) {
-            currentIndex = 0;
-          } else if (currentIndex < 0) {
-            currentIndex = totalCards - visibleCards;
-          }
+    if (currentIndex > totalCards - visibleCards) {
+      currentIndex = 0;
+    } else if (currentIndex < 0) {
+      currentIndex = totalCards - visibleCards;
+    }
 
-          productGrid.style.transition = 'transform 0.5s ease';
-          productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        }
+    productGrid.style.transition = 'transform 0.5s ease';
+    productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+  }
 
-        // Recalculate width on resize
-        window.addEventListener('resize', () => {
-          calculateCardWidth();
-          currentIndex = 0;
-          productGrid.style.transition = 'none';
-          productGrid.style.transform = 'translateX(0)';
-          void productGrid.offsetWidth;
-          productGrid.style.transition = 'transform 0.5s ease';
-        });
+  // Recalculate on resize
+  window.addEventListener('resize', () => {
+    calculateCardWidth();
+    currentIndex = 0;
+    productGrid.style.transition = 'none';
+    productGrid.style.transform = 'translateX(0)';
+    void productGrid.offsetWidth; // force reflow
+    productGrid.style.transition = 'transform 0.5s ease';
+  });
 
-        return scrollSlider;
-      }
+  // Auto slide
+  let timer;
+  if (autoSlide) {
+    timer = setInterval(() => scrollSlider(1), interval);
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', () => {
+      timer = setInterval(() => scrollSlider(1), interval);
+    });
+  }
+
+  return scrollSlider;
+}
 
       // Gắn scroll cho từng slider
       window.scrollProducts = setupSlider('productSlider');
