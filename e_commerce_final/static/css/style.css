@@ -324,7 +324,7 @@ body {
 /* Virtual Skincare Analysis */
 .virtual-analysis-section {
   max-width: 1224px;
-  height: 281px;
+  height: 340px;
   margin: 0 auto;
   background: var(--dark-bg);
   display: flex;
@@ -355,8 +355,6 @@ body {
   right: 20px;
   width: 100px;
   height: 100px;
-  border: 1px solid white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .scan-options {
@@ -523,8 +521,8 @@ body {
 }
 
 .special-offers-image img {
-  width: 575px;
-  height: 382px;
+  width: 769px;
+  height: 511px;
   display: block;
 }
 

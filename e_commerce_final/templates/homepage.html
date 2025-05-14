@@ -165,12 +165,11 @@
       <p>{{ analysis.description|linebreaksbr }}</p>
 
       <div class="scan-options" style="margin: 20px 0;">
-        <div class="scan-text">Scan with your phone to get started or</div>
       </div>
 
       <!-- Nút mở popup -->
       <a href="javascript:void(0);" onclick="openQuizModal()" class="button button-outline">
-        Answer a few questions
+        Tìm hiểu ngay về da của bạn
       </a>
 
       <div style="margin-top: 20px;">
@@ -628,7 +627,7 @@
       lazyImages.forEach(img => imageObserver.observe(img));
 
       // Slider logic dùng transform
-      function setupSlider(sliderId, visibleCards = 4) {
+      function setupSlider(sliderId, visibleCards = 3) {
         const slider = document.getElementById(sliderId);
         const productGrid = slider.querySelector('.product-grid');
         const cards = productGrid.querySelectorAll('.product-card');
