@@ -200,26 +200,25 @@
       <!-- Product Slider -->
       <div class="product-slider" id="productSlider">
         <div class="product-grid">
-{% for product in new_products %}
-<a href="{% url 'product_detail' product.id %}" class="product-card">
-  <img src="{{ product.image.url }}" alt="{{ product.name }}" />
-  <div class="product-info">
-    <div class="product-title">{{ product.name }}</div>
-    <div class="product-description">{{ product.description|truncatewords:10 }}</div>
-    <div class="product-price">
-      <span class="price-number">
-        {{ product.price|floatformat:0|intcomma }}<span class="currency">đ</span>
-      </span>
-      {% if product.original_price and product.original_price > product.price %}
-      <span class="original-price">
-        {{ product.original_price|floatformat:0|intcomma }}<span class="currency">đ</span>
-      </span>
-      {% endif %}
-    </div>
-  </div>
-</a>
-{% endfor %}
-
+          {% for product in new_products %}
+          <a href="{% url 'product_detail' product.id %}" class="product-card">
+            <img data-src="{{ product.image.url }}" alt="{{ product.name }}" class="lazy-image" />
+            <div class="product-info">
+              <div class="product-title">{{ product.name }}</div>
+              <div class="product-description">{{ product.description|truncatewords:10 }}</div>
+              <div class="product-price">
+                <span class="price-number">
+                  {{ product.price|floatformat:0|intcomma }}<span class="currency">đ</span>
+                </span>
+                {% if product.original_price and product.original_price > product.price %}
+                <span class="original-price">
+                  {{ product.original_price|floatformat:0|intcomma }}<span class="currency">đ</span>
+                </span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          {% endfor %}
         </div>
       </div>
 
@@ -230,6 +229,7 @@
     </div>
   </section>
 
+  <!-- New In -->
   <section class="product-section dark-bg">
     <h2 class="section-header" style="color: white">New In</h2>
 
@@ -241,14 +241,14 @@
       <div class="product-slider" id="newProductSlider">
         <div class="product-grid">
           {% for product in new_products %}
-          <div class="product-card">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          <a href="{% url 'product_detail' product.id %}" class="product-card">
+            <img data-src="{{ product.image.url }}" alt="{{ product.name }}" class="lazy-image" />
             <div class="product-info">
-              <h3 class="product-title">{{ product.name }}</h3>
-              <p>{{ product.description|truncatewords:15 }}</p>
+              <div class="product-title">{{ product.name }}</div>
+              <div class="product-description">{{ product.description|truncatewords:15 }}</div>
               <div class="product-price">₫{{ product.price }}</div>
             </div>
-          </div>
+          </a>
           {% endfor %}
         </div>
       </div>
@@ -258,6 +258,7 @@
       </button>
     </div>
   </section>
+
 
 
   <!-- Special Offers -->
@@ -570,6 +571,7 @@
 
   <script src="include.js"></script>
   <script>
+
     // Hero Slider functionality
     let slideIndex = 0;
     const slides = document.querySelectorAll(".slide");
@@ -610,46 +612,70 @@
     // Initialize
     showSlide(slideIndex);
 
-    // Slider functionality for both Best Sellers and New In
-    function setupSlider(sliderId) {
-      const slider = document.getElementById(sliderId);
-      const productGrid = slider.querySelector('.product-grid');
-      const cards = productGrid.querySelectorAll('.product-card');
-      const cardWidth = cards[0].offsetWidth + 24; // card width + gap
-      const visibleCards = 4;
-      let currentIndex = 0;
-      const totalCards = cards.length;
+    document.addEventListener('DOMContentLoaded', function () {
+      // Lazy-load hình ảnh
+      const lazyImages = document.querySelectorAll('img.lazy-image');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy-image');
+            observer.unobserve(img);
+          }
+        });
+      });
+      lazyImages.forEach(img => imageObserver.observe(img));
 
-      function scrollSlider(direction) {
-        currentIndex += direction;
+      // Slider logic dùng transform
+      function setupSlider(sliderId, visibleCards = 4) {
+        const slider = document.getElementById(sliderId);
+        const productGrid = slider.querySelector('.product-grid');
+        const cards = productGrid.querySelectorAll('.product-card');
 
-        // Handle wrapping around
-        if (currentIndex >= totalCards - visibleCards + 1) {
-          currentIndex = 0;
-        } else if (currentIndex < 0) {
-          currentIndex = totalCards - visibleCards;
+        let cardWidth = 0;
+        let currentIndex = 0;
+
+        function calculateCardWidth() {
+          if (cards.length > 0) {
+            const style = window.getComputedStyle(cards[0]);
+            const gap = parseInt(style.marginRight) || 24;
+            cardWidth = cards[0].offsetWidth + gap;
+          }
         }
 
-        productGrid.style.transition = 'transform 0.5s ease';
-        productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        calculateCardWidth();
+
+        function scrollSlider(direction) {
+          currentIndex += direction;
+          const totalCards = cards.length;
+
+          if (currentIndex >= totalCards - visibleCards + 1) {
+            currentIndex = 0;
+          } else if (currentIndex < 0) {
+            currentIndex = totalCards - visibleCards;
+          }
+
+          productGrid.style.transition = 'transform 0.5s ease';
+          productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        // Recalculate width on resize
+        window.addEventListener('resize', () => {
+          calculateCardWidth();
+          currentIndex = 0;
+          productGrid.style.transition = 'none';
+          productGrid.style.transform = 'translateX(0)';
+          void productGrid.offsetWidth;
+          productGrid.style.transition = 'transform 0.5s ease';
+        });
+
+        return scrollSlider;
       }
 
-      return scrollSlider;
-    }
-
-    const scrollProducts = setupSlider('productSlider');
-    const scrollNewProducts = setupSlider('newProductSlider');
-
-    // Make sliders responsive
-    window.addEventListener('resize', function () {
-      // Reset sliders on resize
-      document.querySelectorAll('.product-grid').forEach(grid => {
-        grid.style.transition = 'none';
-        grid.style.transform = 'translateX(0)';
-        // Force reflow
-        void grid.offsetWidth;
-        grid.style.transition = 'transform 0.5s ease';
-      });
+      // Gắn scroll cho từng slider
+      window.scrollProducts = setupSlider('productSlider');
+      window.scrollNewProducts = setupSlider('newProductSlider');
     });
 
     // Newsletter form submission
