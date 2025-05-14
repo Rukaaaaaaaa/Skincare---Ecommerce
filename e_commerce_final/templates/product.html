@@ -410,13 +410,30 @@
       <div class="sort-box">
         <label for="sort"><b>Sắp xếp theo:</b>&nbsp;&nbsp;</label>
         <select id="sort">
-          <option>Đề xuất</option>
-          <option>Giá Thấp-Cao</option>
-          <option>Giá Cao-Thấp</option>
-          <option>Mới nhất</option>
-          <option>Bán chạy</option>
+          <option value="recommended" {% if request.GET.sort == "recommended" or not request.GET.sort %}selected{% endif %}>Đề xuất</option>
+          <option value="price_asc" {% if request.GET.sort == "price_asc" %}selected{% endif %}>Giá Thấp-Cao</option>
+          <option value="price_desc" {% if request.GET.sort == "price_desc" %}selected{% endif %}>Giá Cao-Thấp</option>
+          <option value="newest" {% if request.GET.sort == "newest" %}selected{% endif %}>Mới nhất</option>
+          <option value="best_selling" {% if request.GET.sort == "best_selling" %}selected{% endif %}>Bán chạy</option>
         </select>
       </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              const sortSelect = document.getElementById('sort');
+              sortSelect.addEventListener('change', function () {
+                const selectedValue = this.value;
+
+                // Lấy URL hiện tại
+                const currentUrl = new URL(window.location.href);
+
+                // Cập nhật hoặc thêm tham số sort
+                currentUrl.searchParams.set('sort', selectedValue);
+
+                // Điều hướng lại URL mới
+                window.location.href = currentUrl.toString();
+              });
+            });
+          </script>
 
       <div class="products-grid">
         {% for product in products %}
