@@ -13,6 +13,7 @@ class Product(models.Model):
         ('best_seller', 'Best Seller'),
         ('new', 'New Arrival'),
         ('other', 'Other'),
+        ('models', 'Models'),
     ]
 
     name = models.CharField(max_length=255)

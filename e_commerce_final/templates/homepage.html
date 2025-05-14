@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load humanize %}
+
 
 <head>
   <title>Beautya - Skincare & Makeup</title>
@@ -166,16 +168,26 @@
       <!-- Product Slider -->
       <div class="product-slider" id="productSlider">
         <div class="product-grid">
-          {% for product in best_sellers %}
-          <div class="product-card">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            <div class="product-info">
-              <h3 class="product-title">{{ product.name }}</h3>
-              <p>{{ product.description|truncatewords:15 }}</p>
-              <div class="product-price">₫{{ product.price }}</div>
-            </div>
-          </div>
-          {% endfor %}
+{% for product in new_products %}
+<a href="{% url 'product_detail' product.id %}" class="product-card">
+  <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+  <div class="product-info">
+    <div class="product-title">{{ product.name }}</div>
+    <div class="product-description">{{ product.description|truncatewords:10 }}</div>
+    <div class="product-price">
+      <span class="price-number">
+        {{ product.price|floatformat:0|intcomma }}<span class="currency">đ</span>
+      </span>
+      {% if product.original_price and product.original_price > product.price %}
+      <span class="original-price">
+        {{ product.original_price|floatformat:0|intcomma }}<span class="currency">đ</span>
+      </span>
+      {% endif %}
+    </div>
+  </div>
+</a>
+{% endfor %}
+
         </div>
       </div>
 

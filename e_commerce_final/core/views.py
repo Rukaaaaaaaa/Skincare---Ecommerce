@@ -18,7 +18,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Trang chủ
 def home(request):
     context = {
-        'hero_slides': Product.objects.filter(label='new')[:3],
+        'hero_slides': Product.objects.filter(label='models')[:3],
         'categories': Category.objects.all(),
         'best_sellers': Product.objects.filter(label='best_seller')[:8],
         'new_products': Product.objects.filter(label='new')[:6],

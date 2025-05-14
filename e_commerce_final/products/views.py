@@ -4,7 +4,7 @@ from .models import Product, Category
 
 
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.exclude(label='models')
     categories = Category.objects.all()
 
     category_ids = request.GET.getlist('category')
