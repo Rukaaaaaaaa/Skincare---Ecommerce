@@ -98,47 +98,109 @@
       margin: 16px 0 8px;
     }
 
-    /* Sidebar */
+    /* ==== Sidebar Container ==== */
     .sidebar {
-      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+      border-left: 1px solid #eee;
     }
 
+    /* ==== Sidebar Title ==== */
     .sidebar-title {
-      font-size: 24px;
-      font-weight: 700;
-      text-transform: capitalize;
-      line-height: 33.6px;
-      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #222;
     }
 
+    /* ==== Danh sách bài viết ==== */
     .latest-posts {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 15px;
     }
 
+    /* ==== Mỗi bài viết nhỏ ==== */
     .latest-post {
-      width: 100%;
-      height: 105px;
-      background: white;
-      border: 1px solid #dfdfdf;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding-right: 8px;
+      gap: 12px;
+      padding: 8px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background-color: #fafafa;
+      transition: all 0.2s ease-in-out;
     }
 
+    .latest-post:hover {
+      background-color: #f2f2f2;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* ==== Ảnh bài viết ==== */
     .latest-post img {
-      width: 136px;
-      height: 105px;
+      width: 70px;
+      height: 70px;
       object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #ddd;
     }
 
+    /* ==== Tiêu đề bài viết ==== */
     .latest-post-title {
       font-size: 14px;
-      font-weight: 600;
-      line-height: 25.2px;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.4;
+      transition: color 0.2s ease;
     }
+
+    .latest-post-title:hover {
+      color: #d63384;
+      /* Đổi theo brand nếu muốn */
+      text-decoration: underline;
+    }
+
+    /* ==== Responsive ==== */
+    @media (max-width: 992px) {
+      .sidebar {
+        padding-top: 30px;
+        border-left: none;
+        border-top: 1px solid #ddd;
+        margin-top: 40px;
+      }
+
+      .latest-post {
+        gap: 10px;
+        padding: 6px;
+      }
+
+      .latest-post-title {
+        font-size: 13px;
+      }
+
+      .latest-post img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar-title {
+        font-size: 16px;
+      }
+
+      .latest-post-title {
+        font-size: 12.5px;
+      }
+
+      .latest-post img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
     .search-bar-wrapper {
       display: none;
       position: fixed;
@@ -182,193 +244,197 @@
 
 <body>
 
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-      <span class="shop-name">BEAUTYA</span>
-    </div>
-
-    <nav class="nav-menu">
-      <a href="{% url 'home' %}" class="nav-link">Home</a>
-      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-      <a href="{% url 'about' %}" class="nav-link">About Us</a>
-      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-
-      {% if not request.user.is_authenticated %}
-      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-      {% else %}
-      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-      {% endif %}
-    </nav>
-
-    <div class="header-actions">
-      <div class="cart-wrapper">
-        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-        <span class="cart-count">0</span>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+        <span class="shop-name">BEAUTYA</span>
       </div>
-      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
 
-      {% if request.user.is_authenticated %}
-      <a href="{% url 'profile' %}" class="user-name">
-        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
-      </a>
-      {% endif %}
+      <nav class="nav-menu">
+        <a href="{% url 'home' %}" class="nav-link">Home</a>
+        <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+        <a href="{% url 'about' %}" class="nav-link">About Us</a>
+        <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+        {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+        {% else %}
+        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+        {% endif %}
+      </nav>
+
+      <div class="header-actions">
+        <div class="cart-wrapper">
+          <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+          <span class="cart-count">0</span>
+        </div>
+        <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="user-name">
+          <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+        </a>
+        {% endif %}
+      </div>
+    </header>
+
+
+    <!-- Search Bar dính cố định ngay dưới header -->
+    <div id="search-bar-wrapper" class="search-bar-wrapper">
+      <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+        <button type="submit">Tìm</button>
+      </form>
     </div>
-  </header>
 
+    <script>
+      function goToCart() {
+        window.location.href = "{% url 'cart' %}";
+      }
 
-  <!-- Search Bar dính cố định ngay dưới header -->
-  <div id="search-bar-wrapper" class="search-bar-wrapper">
-    <form method="get" action="{% url 'search' %}">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
-      <button type="submit">Tìm</button>
-    </form>
-  </div>
+      function toggleSearchBar() {
+        const wrapper = document.getElementById('search-bar-wrapper');
+        wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+      }
+    </script>
 
-  <script>
-    function goToCart() {
-      window.location.href = "{% url 'cart' %}";
-    }
-
-    function toggleSearchBar() {
-      const wrapper = document.getElementById('search-bar-wrapper');
-      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
-    }
-  </script>
-
-<!-- Main Content -->
-<div class="main-content">
-    <!-- Article -->
-    <div class="article">
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Article -->
+      <div class="article">
         <img class="article-image" src="{{ blog.image.url }}" alt="{{ blog.title }}" />
         <div class="article-content">
-            <h1 class="article-title">{{ blog.title }}</h1>
-            <div class="article-meta">
-                <span class="meta-item">{{ blog.date|date:"M d, Y" }}</span>
-                <div class="meta-divider"></div>
-                <span class="meta-item">{{ blog.author }}</span>
-                <div class="meta-divider"></div>
-                <span class="meta-item">{{ blog.category }}</span>
-            </div>
-            <div class="article-intro">
-                <span class="drop-cap">{{ blog.content|slice:":1" }}</span>
-                <p class="intro-text">{{ blog.content|slice:"1:300" }}...</p>
-            </div>
-            <p class="article-body">{{ blog.content }}</p>
+          <h1 class="article-title">{{ blog.title }}</h1>
+          <div class="article-meta">
+            <span class="meta-item">{{ blog.date|date:"M d, Y" }}</span>
+            <div class="meta-divider"></div>
+            <span class="meta-item">{{ blog.author }}</span>
+            <div class="meta-divider"></div>
+            <span class="meta-item">{{ blog.category }}</span>
+          </div>
+          <div class="article-intro">
+            <span class="drop-cap">{{ blog.content|slice:":1" }}</span>
+            <p class="intro-text">{{ blog.content|slice:"1:300" }}...</p>
+          </div>
+          <p class="article-body">{{ blog.content }}</p>
         </div>
-    </div>
+      </div>
 
 
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2 class="sidebar-title">Related Posts</h2>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2 class="sidebar-title">Latest</h2>
         <div class="latest-posts">
-            {% for post in related_posts %}
-            <div class="latest-post">
-                <a href="{% url 'blog_detail' post.id %}">
-                    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
-                    <div class="latest-post-title">{{ post.title }}</div>
-                </a>
-            </div>
-            {% endfor %}
+          {% for post in related_posts %}
+          <div class="latest-post">
+            <a href="{% url 'blog_detail' post.id %}">
+              <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            </a>
+            <a href="{% url 'blog_detail' post.id %}">
+              <div class="latest-post-title">{{ post.title }}</div>
+            </a>
+          </div>
+          {% endfor %}
         </div>
-    </div>
-</div> <!-- End of .main-content -->
-
-
-
-  <!-- Footer -->
-  <footer>
-    <!-- Footer Top -->
-    <div class="footer-top">
-      <div class="benefit-item">
-        <i class="fas fa-paw benefit-icon"></i>
-        <span class="benefit-text">Không thử nghiệm trên động vật</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-leaf benefit-icon"></i>
-        <span class="benefit-text">Không có thành phần từ động vật</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-bread-slice benefit-icon"></i>
-        <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-recycle benefit-icon"></i>
-        <span class="benefit-text">Bao bì có thể tái chế</span>
-      </div>
-    </div>
-
-    <!-- Footer Main -->
-    <div class="footer-main">
-      <div class="footer-column">
-        <h3>Chúng tôi có thể giúp gì?</h3>
-        <ul>
-          <li><a href="#">Beautya branches</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="FAQ.html">FAQ</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Products</h3>
-        <ul>
-          <li><a href="#">Chính Sách Bảo Mật</a></li>
-          <li><a href="#">Chính Sách Bảo Hành</a></li>
-          <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Giữ liên lạc với Beautya</h3>
-        <p style="color: white; margin-bottom: 24px">
-          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
-        </p>
-
-        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
-          {% csrf_token %}
-          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
-
-          <label class="consent-text" style="display: block; margin-top: 12px;">
-            <input type="checkbox" name="consent" required />
-            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-          </label>
-
-          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
-        </form>
       </div>
 
-    </div>
-    </div>
+    </div> <!-- End of .main-content -->
 
-    <div class="footer-contact-row">
-      <div class="footer-contact-group">
-        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-        <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
-      </div>
-      <div class="footer-social-group">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-pinterest"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-      </div>
-    </div>
 
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-      <div class="legal-links">
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-    </div>
-  </footer>
 
-</body>
+    <!-- Footer -->
+    <footer>
+      <!-- Footer Top -->
+      <div class="footer-top">
+        <div class="benefit-item">
+          <i class="fas fa-paw benefit-icon"></i>
+          <span class="benefit-text">Không thử nghiệm trên động vật</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-leaf benefit-icon"></i>
+          <span class="benefit-text">Không có thành phần từ động vật</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-bread-slice benefit-icon"></i>
+          <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-recycle benefit-icon"></i>
+          <span class="benefit-text">Bao bì có thể tái chế</span>
+        </div>
+      </div>
+
+      <!-- Footer Main -->
+      <div class="footer-main">
+        <div class="footer-column">
+          <h3>Chúng tôi có thể giúp gì?</h3>
+          <ul>
+            <li><a href="#">Beautya branches</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Products</h3>
+          <ul>
+            <li><a href="#">Chính Sách Bảo Mật</a></li>
+            <li><a href="#">Chính Sách Bảo Hành</a></li>
+            <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Giữ liên lạc với Beautya</h3>
+          <p style="color: white; margin-bottom: 24px">
+            Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc
+            da.
+          </p>
+
+          <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+            <label class="consent-text" style="display: block; margin-top: 12px;">
+              <input type="checkbox" name="consent" required />
+              Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+            </label>
+
+            <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+          </form>
+        </div>
+
+      </div>
+      </div>
+
+      <div class="footer-contact-row">
+        <div class="footer-contact-group">
+          <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+          <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+        </div>
+        <div class="footer-social-group">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+        <div class="legal-links">
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+  </body>
 
 </html>
