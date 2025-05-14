@@ -31,9 +31,12 @@ class SpecialOfferAdmin(admin.ModelAdmin):
 
 @admin.register(NewsletterSubscriber)
 class NewsletterSubscriberAdmin(admin.ModelAdmin):
-    list_display = ('email', 'subscribed_at')
-    search_fields = ('email',)
+    list_display = ('email', 'subscribed_at', 'consent')
+    list_editable = ('consent',)
+    search_fields = ('email', 'consent')
     readonly_fields = ('subscribed_at',)
+    list_filter = ('consent',)
+
 
 
 @admin.register(VirtualAnalysis)

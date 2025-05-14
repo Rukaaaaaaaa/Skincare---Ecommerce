@@ -73,10 +73,11 @@ class AnalysisResult(models.Model):
         return f"AI Result #{self.id} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
 
 
-# Người đăng ký nhận bản tin
 class NewsletterSubscriber(models.Model):
     email = models.EmailField(unique=True)
     subscribed_at = models.DateTimeField(auto_now_add=True)
+    consent = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
+

@@ -360,15 +360,20 @@
         <p style="color: white; margin-bottom: 24px">
           Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
         </p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Email" class="newsletter-input" />
-          <button type="submit" class="newsletter-submit">Subscribe</button>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
         </form>
-        <label class="consent-text">
-          <input type="checkbox" required>
-          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-        </label>
       </div>
+
     </div>
     </div>
 

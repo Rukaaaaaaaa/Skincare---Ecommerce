@@ -10,6 +10,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.contrib import messages
+
 
 load_dotenv()
 
@@ -60,7 +62,6 @@ def user_logout(request):
     return redirect('home') 
 
 
-# Đăng ký nhận bản tin
 def subscribe_newsletter(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -68,11 +69,18 @@ def subscribe_newsletter(request):
             subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
             if created:
                 subscriber.subscribed_at = timezone.now()
+                consent = request.POST.get('consent') == 'on'
+                subscriber.consent = consent
                 subscriber.save()
-                return JsonResponse({'status': 'success', 'message': 'Đăng ký thành công!'})
+                messages.success(request, "Đăng ký thành công! ❤️")
             else:
-                return JsonResponse({'status': 'info', 'message': 'Email đã tồn tại!'})
-    return JsonResponse({'status': 'error', 'message': 'Yêu cầu không hợp lệ.'})
+                messages.info(request, "Email đã tồn tại! 💌")
+        else:
+            messages.error(request, "Vui lòng nhập email hợp lệ.")
+        return redirect(request.META.get('HTTP_REFERER', 'home'))  # quay về trang gốc
+    else:
+        return redirect('home')
+
 
 
 # Tìm kiếm sản phẩm
