@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 {% load static %}
 {% load socialaccount %}
 
@@ -133,12 +133,51 @@
     .alert-warning {
       background-color: #ff9800;
     }
+    .search-bar-wrapper {
+      display: none;
+      position: fixed;
+      top: 80px;
+      /* Giả sử header cao 80px – chỉnh theo thực tế */
+      width: 100%;
+      z-index: 9999;
+      background-color: #f3f3f3;
+      padding: 12px 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-bar-wrapper form {
+      display: inline-flex;
+      gap: 10px;
+    }
+
+    .search-bar-wrapper input[type="text"] {
+      padding: 8px 12px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .search-bar-wrapper button {
+      padding: 8px 16px;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .search-bar-wrapper button:hover {
+      background-color: #a05a2c;
+    }
   </style>
 
 </head>
 
 <body>
 
+<body>
   <!-- Header -->
   <header class="header">
     <div class="logo">
@@ -174,19 +213,15 @@
     </div>
   </header>
 
-  <!-- Hidden Search Bar (will be shown on icon click) -->
-  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-      <button type="submit"
-        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-        Tìm
-      </button>
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
     </form>
   </div>
 
-  <!-- Scripts -->
   <script>
     function goToCart() {
       window.location.href = "{% url 'cart' %}";
@@ -194,11 +229,7 @@
 
     function toggleSearchBar() {
       const wrapper = document.getElementById('search-bar-wrapper');
-      if (wrapper.style.display === 'none') {
-        wrapper.style.display = 'block';
-      } else {
-        wrapper.style.display = 'none';
-      }
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
     }
   </script>
 
@@ -221,9 +252,6 @@
     <div class="form-group">
       {{ field.label_tag }}
       {{ field }}
-      {% if field.errors %}
-      <div class="form-error">{{ field.errors }}</div>
-      {% endif %}
     </div>
     {% endfor %}
     <button type="submit" class="create-account-btn">Tạo tài khoản</button>
@@ -267,7 +295,7 @@
         <ul>
           <li><a href="#">Beautya branches</a></li>
           <li><a href="#">Contact Us</a></li>
-          <li><a href="#">FAQ</a></li>
+          <li><a href="FAQ.html">FAQ</a></li>
           <li><a href="#">About Us</a></li>
           <li><a href="#">Blog</a></li>
         </ul>
@@ -283,18 +311,22 @@
       <div class="footer-column">
         <h3>Giữ liên lạc với Beautya</h3>
         <p style="color: white; margin-bottom: 24px">
-          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc
-          da.
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
         </p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Email" class="newsletter-input" />
-          <button type="submit" class="newsletter-submit">Subscribe</button>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
         </form>
-        <label class="consent-text">
-          <input type="checkbox" required>
-          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-        </label>
       </div>
+
     </div>
     </div>
 
@@ -322,6 +354,7 @@
       </div>
     </div>
   </footer>
+
 </body>
 
 </html>
