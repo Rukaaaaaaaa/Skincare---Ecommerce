@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 {% load static %}
 
 
@@ -572,469 +572,492 @@
 {% load static %}
 
 <body>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-      <span class="shop-name">BEAUTYA</span>
-    </div>
 
-    <nav class="nav-menu">
-      <a href="{% url 'home' %}" class="nav-link">Home</a>
-      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-      <a href="{% url 'about' %}" class="nav-link">About Us</a>
-      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-
-      {% if not request.user.is_authenticated %}
-      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-      {% else %}
-      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-      {% endif %}
-    </nav>
-
-    <div class="header-actions">
-      <div class="cart-wrapper">
-        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-        <span class="cart-count">0</span>
-      </div>
-      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-
-      {% if request.user.is_authenticated %}
-      <a href="{% url 'profile' %}" class="user-name">
-        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
-      </a>
-      {% endif %}
-    </div>
-  </header>
-
-
-  <!-- Search Bar dính cố định ngay dưới header -->
-  <div id="search-bar-wrapper" class="search-bar-wrapper">
-    <form method="get" action="{% url 'search' %}">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
-      <button type="submit">Tìm</button>
-    </form>
-  </div>
-
-  <script>
-    function goToCart() {
-      window.location.href = "{% url 'cart' %}";
-    }
-
-    function toggleSearchBar() {
-      const wrapper = document.getElementById('search-bar-wrapper');
-      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
-    }
-  </script>
-
-
-    {% load static %}
-    {% load humanize %}
-
-    <main class="main-container">
-        <div class="product-container">
-
-            <!-- Ảnh sản phẩm -->
-            <div class="product-gallery">
-                <div class="main-image">
-                    <img src="{{ product.image.url }}" id="currentImage" alt="{{ product.name }}">
-                </div>
-                <div class="thumbnail-list">
-                    <img src="{{ product.image.url }}" class="thumbnail active" alt="{{ product.name }}">
-                </div>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+                <span class="shop-name">BEAUTYA</span>
             </div>
 
-            <!-- Chi tiết sản phẩm -->
-            <div class="product-details">
-                <h1 class="product-title">{{ product.name }}</h1>
-                <p class="product-subtitle">{{ product.description }}</p>
+            <nav class="nav-menu">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+                <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+                <a href="{% url 'about' %}" class="nav-link">About Us</a>
+                <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
 
-                <!-- Đánh giá -->
-                <div class="product-rating">
-                    <div class="stars">
-                        ⭐⭐⭐⭐⭐
-                        <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh giá)</span>
-                        <span class="sold-count"> | Đã bán {{ product.sold_count }}</span>
-                    </div>
-                </div>
-
-                <!-- Giá -->
-                <div class="price-container">
-                    <span class="current-price">₫{{ product.price|floatformat:0|intcomma }}</span>
-                    {% if product.original_price %}
-                    <span class="original-price">₫{{ product.original_price|floatformat:0|intcomma }}</span>
-                    {% endif %}
-                </div>
-
-                {% if vouchers %}
-                <div class="voucher-section">
-                    <span class="voucher-label">Mã giảm giá:</span>
-                    {% for v in vouchers %}
-                    <span class="voucher-code">{{ v }}</span>
-                    {% endfor %}
-                </div>
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+                {% else %}
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
                 {% endif %}
+            </nav>
 
-                <!-- Combo khuyến mãi -->
-                {% if product.combo %}
-                <div class="combo-section">
-                    <strong>Combo:</strong> {{ product.combo }}
+            <div class="header-actions">
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+                    <span class="cart-count">0</span>
                 </div>
+                <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="user-name">
+                    <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+                </a>
                 {% endif %}
-
-                <!-- Vận chuyển -->
-                {% if product.shipping %}
-                <div class="shipping-section">
-                    <strong>Vận chuyển:</strong> {{ product.shipping }}
-                </div>
-                {% endif %}
-
-                <!-- Số lượng -->
-                <div class="quantity-section">
-                    <label for="quantity">Số lượng:</label>
-                    <div class="quantity-controls">
-                        <button type="button" class="qty-btn" onclick="updateQuantity(-1)">–</button>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1">
-                        <button type="button" class="qty-btn" onclick="updateQuantity(1)">+</button>
-                    </div>
-                </div>
-
-                <!-- Popup xác nhận -->
-                <div id="cart-popup" class="cart-popup" style="display: none;">✔️ Đã thêm vào giỏ hàng!</div>
-
-                <!-- Tính năng nổi bật -->
-                {% if product.features %}
-                <ul class="product-features">
-                    {% for feature in product.features.splitlines %}
-                    <li>{{ feature }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-
-                <!-- Nút mua -->
-                <div class="action-buttons">
-                    <button class="add-to-cart" data-product-id="{{ product.id }}" onclick="addToCart(this)">Thêm vào
-                        giỏ hàng</button>
-                    <button class="buy-now" data-product-id="{{ product.id }}" onclick="buyNow(this)">Mua ngay</button>
-
-                </div>
             </div>
+        </header>
+
+
+        <!-- Search Bar dính cố định ngay dưới header -->
+        <div id="search-bar-wrapper" class="search-bar-wrapper">
+            <form method="get" action="{% url 'search' %}">
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+                <button type="submit">Tìm</button>
+            </form>
         </div>
 
-        <!-- Tabs chi tiết -->
-        <div class="tabs-container">
-            <div class="tab">
-                <button class="tablinks active" onclick="openTab(event, 'Description')">Mô tả</button>
-                <button class="tablinks" onclick="openTab(event, 'Ingredients')">Thành phần</button>
-                <button class="tablinks" onclick="openTab(event, 'HowToUse')">Cách sử dụng</button>
-                <button class="tablinks" onclick="openTab(event, 'Reviews')">Đánh giá</button>
-            </div>
-
-            <div id="Description" class="tabcontent" style="display: block;">
-                <div class="tab-content-wrapper">
-                    {% if product.detail %}
-                    <p>{{ product.detail|linebreaks }}</p>
-                    {% else %}
-                    <p>Chưa có mô tả chi tiết.</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div id="Ingredients" class="tabcontent">
-                <div class="tab-content-wrapper">
-                    {% if product.ingredients %}
-                    <p>{{ product.ingredients|linebreaks }}</p>
-                    {% else %}
-                    <p>Chưa cập nhật thành phần sản phẩm.</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div id="HowToUse" class="tabcontent">
-                <div class="tab-content-wrapper">
-                    {% if product.how_to_use %}
-                    <p>{{ product.how_to_use|linebreaks }}</p>
-                    {% else %}
-                    <p>Chưa có hướng dẫn sử dụng.</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div id="Reviews" class="tabcontent">
-                <div class="tab-content-wrapper">
-                    {% if product.reviews %}
-                    <p>{{ product.reviews|linebreaks }}</p>
-                    {% else %}
-                    <p>Chưa có đánh giá nào cho sản phẩm này.</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        {% if product.faqs %}
-        <div class="faq-section">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            {% for item in product.faqs %}
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleAnswer(this)">
-                    {{ item.question }}
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="faq-answer" style="display: none;">
-                    {{ item.answer }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- Recommendations section -->
-        <section class="recommendations">
-            {% if product.recommendations.all|length > 0 %}
-            <div class="related-products">
-                <h2 class="section-title">Recommended Skincare Routine</h2>
-                <div class="product-grid-wrapper">
-                    <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
-                    <div class="product-grid" id="recommendedGrid">
-                        {% for p in product.recommendations.all %}
-                        <div class="product-card">
-                            <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
-                            <div class="product-card-details">
-                                <h3 class="product-card-title">{{ p.name }}</h3>
-                                <p class="product-card-description">{{ p.description }}</p>
-                                <div class="product-card-price">₫{{ p.price }}</div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
-                </div>
-            </div>
-            {% endif %}
-        </section>
-
-        <!-- You may also like section -->
-        <section class="you-may-also-like-section">
-            {% if product.related_products.all|length > 0 %}
-            <div class="you-may-also-like">
-                <h2 class="section-title">You May Also Like</h2>
-                <div class="product-grid-wrapper">
-                    <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
-                    <div class="product-grid" id="alsoLikeGrid">
-                        {% for p in product.related_products.all %}
-                        <div class="product-card">
-                            <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
-                            <div class="product-card-details">
-                                <h3 class="product-card-title">{{ p.name }}</h3>
-                                <p class="product-card-description">{{ p.description }}</p>
-                                <div class="product-card-price">₫{{ p.price }}</div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
-                </div>
-            </div>
-            {% endif %}
-        </section>
-    </main>
-
-    <script>
-        function toggleAnswer(element) {
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.toggle-icon');
-            const isOpen = answer.style.display === "block";
-
-            answer.style.display = isOpen ? "none" : "block";
-            icon.innerText = isOpen ? "+" : "-";
-        }
-
-        function openTab(evt, tabName) {
-            document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
-            document.querySelectorAll(".tablinks").forEach(btn => btn.classList.remove("active"));
-
-            const target = document.getElementById(tabName);
-            if (target) {
-                target.style.display = "block";
-                evt.currentTarget.classList.add("active");
+        <script>
+            function goToCart() {
+                window.location.href = "{% url 'cart' %}";
             }
-        }
 
-        function initThumbnails() {
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            const mainImage = document.querySelector('.main-image img');
+            function toggleSearchBar() {
+                const wrapper = document.getElementById('search-bar-wrapper');
+                wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
 
-            thumbnails.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function () {
-                    if (mainImage) {
-                        mainImage.src = this.src;
-                        thumbnails.forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
+
+        {% load static %}
+        {% load humanize %}
+
+        <main class="main-container">
+            <div class="product-container">
+
+                <!-- Ảnh sản phẩm -->
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="{{ product.image.url }}" id="currentImage" alt="{{ product.name }}">
+                    </div>
+                    <div class="thumbnail-list">
+                        <img src="{{ product.image.url }}" class="thumbnail active" alt="{{ product.name }}">
+                    </div>
+                </div>
+
+                <!-- Chi tiết sản phẩm -->
+                <div class="product-details">
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <p class="description" onclick="toggleFullDescription(this)">
+                        <span class="short">{{ product.description|truncatechars:60 }}</span>
+                        <span class="full" style="display: none;">{{ product.description }}</span>
+                        <span class="more-indicator">... thêm</span>
+                    </p>
+
+
+                    <!-- Đánh giá -->
+                    <div class="product-rating">
+                        <div class="stars">
+                            ⭐⭐⭐⭐⭐
+                            <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh
+                                giá)</span>
+                            <span class="sold-count"> | Đã bán {{ product.sold_count }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Giá -->
+                    <div class="price-container">
+                        <span class="current-price">₫{{ product.price|floatformat:0|intcomma }}</span>
+                        {% if product.original_price %}
+                        <span class="original-price">₫{{ product.original_price|floatformat:0|intcomma }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if vouchers %}
+                    <div class="voucher-section">
+                        <span class="voucher-label">Mã giảm giá:</span>
+                        {% for v in vouchers %}
+                        <span class="voucher-code">{{ v }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Combo khuyến mãi -->
+                    {% if product.combo %}
+                    <div class="combo-section">
+                        <strong>Combo:</strong> {{ product.combo }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Vận chuyển -->
+                    {% if product.shipping %}
+                    <div class="shipping-section">
+                        <strong>Vận chuyển:</strong> {{ product.shipping }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Số lượng -->
+                    <div class="quantity-section">
+                        <label for="quantity">Số lượng:</label>
+                        <div class="quantity-controls">
+                            <button type="button" class="qty-btn" onclick="updateQuantity(-1)">–</button>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1">
+                            <button type="button" class="qty-btn" onclick="updateQuantity(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Popup xác nhận -->
+                    <div id="cart-popup" class="cart-popup" style="display: none;">✔️ Đã thêm vào giỏ hàng!</div>
+
+                    <!-- Tính năng nổi bật -->
+                    {% if product.features %}
+                    <ul class="product-features">
+                        {% for feature in product.features.splitlines %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- Nút mua -->
+                    <div class="action-buttons">
+                        <button class="add-to-cart" data-product-id="{{ product.id }}" onclick="addToCart(this)">Thêm
+                            vào
+                            giỏ hàng</button>
+                        <button class="buy-now" data-product-id="{{ product.id }}" onclick="buyNow(this)">Mua
+                            ngay</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs chi tiết -->
+            <div class="tabs-container">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'Description')">Mô tả</button>
+                    <button class="tablinks" onclick="openTab(event, 'Ingredients')">Thành phần</button>
+                    <button class="tablinks" onclick="openTab(event, 'HowToUse')">Cách sử dụng</button>
+                    <button class="tablinks" onclick="openTab(event, 'Reviews')">Đánh giá</button>
+                </div>
+
+                <div id="Description" class="tabcontent" style="display: block;">
+                    <div class="tab-content-wrapper">
+                        {% if product.detail %}
+                        <p>{{ product.detail|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có mô tả chi tiết.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="Ingredients" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.ingredients %}
+                        <p>{{ product.ingredients|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa cập nhật thành phần sản phẩm.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="HowToUse" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.how_to_use %}
+                        <p>{{ product.how_to_use|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có hướng dẫn sử dụng.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="Reviews" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.reviews %}
+                        <p>{{ product.reviews|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if product.faqs %}
+            <div class="faq-section">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                {% for item in product.faqs %}
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        {{ item.question }}
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        {{ item.answer }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Recommendations section -->
+            <section class="recommendations">
+                {% if product.recommendations.all|length > 0 %}
+                <div class="related-products">
+                    <h2 class="section-title">Recommended Skincare Routine</h2>
+                    <div class="product-grid-wrapper">
+                        <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
+                        <div class="product-grid" id="recommendedGrid">
+                            {% for p in product.recommendations.all %}
+                            <div class="product-card">
+                                <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                                <div class="product-card-details">
+                                    <h3 class="product-card-title">{{ p.name }}</h3>
+                                    <p class="product-card-description">{{ p.description }}</p>
+                                    <div class="product-card-price">₫{{ p.price }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
+                    </div>
+                </div>
+                {% endif %}
+            </section>
+
+            <!-- You may also like section -->
+            <section class="you-may-also-like-section">
+                {% if product.related_products.all|length > 0 %}
+                <div class="you-may-also-like">
+                    <h2 class="section-title">You May Also Like</h2>
+                    <div class="product-grid-wrapper">
+                        <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
+                        <div class="product-grid" id="alsoLikeGrid">
+                            {% for p in product.related_products.all %}
+                            <div class="product-card">
+                                <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                                <div class="product-card-details">
+                                    <h3 class="product-card-title">{{ p.name }}</h3>
+                                    <p class="product-card-description">{{ p.description }}</p>
+                                    <div class="product-card-price">₫{{ p.price }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
+                    </div>
+                </div>
+                {% endif %}
+            </section>
+        </main>
+
+        <script>
+
+            function toggleFullDescription(elem) {
+                const shortSpan = elem.querySelector('.short');
+                const fullSpan = elem.querySelector('.full');
+                const moreIndicator = elem.querySelector('.more-indicator');
+
+                const isExpanded = fullSpan.style.display === 'inline';
+
+                shortSpan.style.display = isExpanded ? 'inline' : 'none';
+                fullSpan.style.display = isExpanded ? 'none' : 'inline';
+                moreIndicator.innerText = isExpanded ? '... thêm' : ' thu gọn';
+            }
+
+
+            function toggleAnswer(element) {
+                const answer = element.nextElementSibling;
+                const icon = element.querySelector('.toggle-icon');
+                const isOpen = answer.style.display === "block";
+
+                answer.style.display = isOpen ? "none" : "block";
+                icon.innerText = isOpen ? "+" : "-";
+            }
+
+            function openTab(evt, tabName) {
+                document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
+                document.querySelectorAll(".tablinks").forEach(btn => btn.classList.remove("active"));
+
+                const target = document.getElementById(tabName);
+                if (target) {
+                    target.style.display = "block";
+                    evt.currentTarget.classList.add("active");
+                }
+            }
+
+            function initThumbnails() {
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                const mainImage = document.querySelector('.main-image img');
+
+                thumbnails.forEach(thumbnail => {
+                    thumbnail.addEventListener('click', function () {
+                        if (mainImage) {
+                            mainImage.src = this.src;
+                            thumbnails.forEach(t => t.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            function scrollGrid(gridId, direction) {
+                const grid = document.getElementById(gridId);
+                if (!grid) return;
+
+                const scrollAmount = 270;
+                grid.scrollLeft += direction * scrollAmount;
+
+                const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+                const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+
+                if (leftArrow && rightArrow) {
+                    leftArrow.disabled = grid.scrollLeft <= 0;
+                    rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+                }
+            }
+
+            function showCartPopup() {
+                const popup = document.getElementById('cart-popup');
+                if (!popup) return;
+                popup.style.display = 'block';
+                setTimeout(() => popup.style.display = 'none', 2000);
+            }
+
+            function updateQuantity(change) {
+                const input = document.getElementById('quantity');
+                let qty = parseInt(input.value) || 1;
+                qty += change;
+                if (qty < 1) qty = 1;
+                input.value = qty;
+            }
+
+            function validateQuantity() {
+                const input = document.getElementById('quantity');
+                if (input && input.value < 1) input.value = 1;
+            }
+
+            function addToCart(button) {
+                const productId = button.dataset.productId;
+                const quantity = parseInt(document.getElementById('quantity').value) || 1;
+                window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}`;
+            }
+
+            function buyNow(button) {
+                const productId = button.dataset.productId;
+                const quantity = parseInt(document.getElementById('quantity').value) || 1;
+                window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}&next=/orders/checkout`;
+            }
+
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const firstTab = document.querySelector('.tablinks');
+                if (firstTab) firstTab.click();
+
+                initThumbnails();
+
+                if (typeof initFAQToggles === 'function') initFAQToggles();
+
+                const buyButton = document.querySelector('.buy-button');
+                if (buyButton) {
+                    buyButton.addEventListener('mouseover', () => buyButton.style.backgroundColor = '#b50e69');
+                    buyButton.addEventListener('mouseout', () => buyButton.style.backgroundColor = '#d8127d');
+                }
+
+                const qtyInput = document.getElementById('quantity');
+                if (qtyInput) qtyInput.addEventListener('input', validateQuantity);
+
+                document.querySelectorAll('.product-grid').forEach(grid => {
+                    const left = grid.parentElement.querySelector('.nav-arrow.left');
+                    const right = grid.parentElement.querySelector('.nav-arrow.right');
+
+                    if (left && right) {
+                        left.disabled = grid.scrollLeft <= 0;
+                        right.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
                     }
                 });
             });
-        }
-
-        function scrollGrid(gridId, direction) {
-            const grid = document.getElementById(gridId);
-            if (!grid) return;
-
-            const scrollAmount = 270;
-            grid.scrollLeft += direction * scrollAmount;
-
-            const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
-            const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
-
-            if (leftArrow && rightArrow) {
-                leftArrow.disabled = grid.scrollLeft <= 0;
-                rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
-            }
-        }
-
-        function showCartPopup() {
-            const popup = document.getElementById('cart-popup');
-            if (!popup) return;
-            popup.style.display = 'block';
-            setTimeout(() => popup.style.display = 'none', 2000);
-        }
-
-        function updateQuantity(change) {
-            const input = document.getElementById('quantity');
-            let qty = parseInt(input.value) || 1;
-            qty += change;
-            if (qty < 1) qty = 1;
-            input.value = qty;
-        }
-
-        function validateQuantity() {
-            const input = document.getElementById('quantity');
-            if (input && input.value < 1) input.value = 1;
-        }
-
-        function addToCart(button) {
-            const productId = button.dataset.productId;
-            const quantity = parseInt(document.getElementById('quantity').value) || 1;
-            window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}`;
-        }
-
-        function buyNow(button) {
-            const productId = button.dataset.productId;
-            const quantity = parseInt(document.getElementById('quantity').value) || 1;
-            window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}&next=/orders/checkout`;
-        }
-
-    
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const firstTab = document.querySelector('.tablinks');
-            if (firstTab) firstTab.click();
-
-            initThumbnails();
-
-            if (typeof initFAQToggles === 'function') initFAQToggles();
-
-            const buyButton = document.querySelector('.buy-button');
-            if (buyButton) {
-                buyButton.addEventListener('mouseover', () => buyButton.style.backgroundColor = '#b50e69');
-                buyButton.addEventListener('mouseout', () => buyButton.style.backgroundColor = '#d8127d');
-            }
-
-            const qtyInput = document.getElementById('quantity');
-            if (qtyInput) qtyInput.addEventListener('input', validateQuantity);
-
-            document.querySelectorAll('.product-grid').forEach(grid => {
-                const left = grid.parentElement.querySelector('.nav-arrow.left');
-                const right = grid.parentElement.querySelector('.nav-arrow.right');
-
-                if (left && right) {
-                    left.disabled = grid.scrollLeft <= 0;
-                    right.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
-                }
-            });
-        });
-    </script>
+        </script>
 
 
 
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div class="benefit-item">
-                <i class="fas fa-paw benefit-icon"></i>
-                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-top">
+                <div class="benefit-item">
+                    <i class="fas fa-paw benefit-icon"></i>
+                    <span class="benefit-text">Không thử nghiệm trên động vật</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-leaf benefit-icon"></i>
+                    <span class="benefit-text">Không có thành phần từ động vật</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-bread-slice benefit-icon"></i>
+                    <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-recycle benefit-icon"></i>
+                    <span class="benefit-text">Bao bì có thể tái chế</span>
+                </div>
             </div>
-            <div class="benefit-item">
-                <i class="fas fa-leaf benefit-icon"></i>
-                <span class="benefit-text">Không có thành phần từ động vật</span>
+            <div class="footer-main">
+                <div class="footer-column">
+                    <h3>Chúng tôi có thể giúp gì?</h3>
+                    <ul>
+                        <li><a href="#">Beautya branches</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Chính Sách Bảo Mật</a></li>
+                        <li><a href="#">Chính Sách Bảo Hành</a></li>
+                        <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Giữ liên lạc với Beautya</h3>
+                    <p style="color: white; margin-bottom: 24px">
+                        Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên
+                        chăm sóc da.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email" class="newsletter-input" />
+                        <button type="submit" class="newsletter-submit">Subscribe</button>
+                    </form>
+                    <label class="consent-text">
+                        <input type="checkbox" required>
+                        Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                    </label>
+                </div>
             </div>
-            <div class="benefit-item">
-                <i class="fas fa-bread-slice benefit-icon"></i>
-                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+            <div class="footer-contact-row">
+                <div class="footer-contact-group">
+                    <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                    <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+                </div>
+                <div class="footer-social-group">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
-            <div class="benefit-item">
-                <i class="fas fa-recycle benefit-icon"></i>
-                <span class="benefit-text">Bao bì có thể tái chế</span>
+            <div class="footer-bottom">
+                <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+                <div class="legal-links">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
             </div>
-        </div>
-        <div class="footer-main">
-            <div class="footer-column">
-                <h3>Chúng tôi có thể giúp gì?</h3>
-                <ul>
-                    <li><a href="#">Beautya branches</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Products</h3>
-                <ul>
-                    <li><a href="#">Chính Sách Bảo Mật</a></li>
-                    <li><a href="#">Chính Sách Bảo Hành</a></li>
-                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Giữ liên lạc với Beautya</h3>
-                <p style="color: white; margin-bottom: 24px">
-                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên
-                    chăm sóc da.
-                </p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Email" class="newsletter-input" />
-                    <button type="submit" class="newsletter-submit">Subscribe</button>
-                </form>
-                <label class="consent-text">
-                    <input type="checkbox" required>
-                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-                </label>
-            </div>
-        </div>
-        <div class="footer-contact-row">
-            <div class="footer-contact-group">
-                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
-            </div>
-            <div class="footer-social-group">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-            <div class="legal-links">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
-</body>
+        </footer>
+    </body>
 
 </html>
