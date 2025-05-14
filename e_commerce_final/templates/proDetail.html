@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
+{% load static %}
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Natural Prestige Lip Glow Treatment</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Main Container */
@@ -285,11 +287,14 @@
             color: #444;
         }
 
-        .tab-content-wrapper p, .tab-content-wrapper ul, .tab-content-wrapper ol {
+        .tab-content-wrapper p,
+        .tab-content-wrapper ul,
+        .tab-content-wrapper ol {
             margin-bottom: 15px;
         }
 
-        .tab-content-wrapper ul, .tab-content-wrapper ol {
+        .tab-content-wrapper ul,
+        .tab-content-wrapper ol {
             padding-left: 25px;
         }
 
@@ -358,7 +363,8 @@
         }
 
         /* Recommended Skincare Routine và You May Also Like Section */
-        .related-products, .you-may-also-like {
+        .related-products,
+        .you-may-also-like {
             margin-top: 60px;
             position: relative;
         }
@@ -467,26 +473,27 @@
             .product-container {
                 flex-direction: column;
             }
-            
-            .product-images, .product-details {
+
+            .product-images,
+            .product-details {
                 width: 100%;
             }
-            
+
             .tab {
                 flex-direction: row;
                 overflow-x: auto;
             }
-            
+
             .tablinks {
                 flex: none;
                 padding: 12px 15px;
                 font-size: 14px;
             }
-            
+
             .product-grid {
                 justify-content: flex-start;
             }
-            
+
             .product-card {
                 flex: 0 0 45%;
             }
@@ -504,19 +511,19 @@
             .product-title {
                 font-size: 20px;
             }
-            
+
             .section-title {
                 font-size: 18px;
             }
-            
+
             .product-card {
                 flex: 0 0 80%;
             }
-            
+
             .faq-section {
                 padding: 20px 15px;
             }
-            
+
             .tab {
                 overflow-x: auto;
                 white-space: nowrap;
@@ -526,66 +533,109 @@
             .product-grid-wrapper {
                 padding: 0 20px;
             }
+
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qty-btn {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .qty-btn:hover {
+            background-color: #ddd;
+        }
+
+        .cart-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #5cb85c;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
         }
     </style>
 </head>
 {% load static %}
+
 <body>
     <!-- Header -->
-   <!-- Header -->
-<header class="header">
-  <div class="logo">
-    <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-    <span class="shop-name">BEAUTYA</span>
-  </div>
+    <header class="header">
+        <div class="logo">
+            <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+            <span class="shop-name">BEAUTYA</span>
+        </div>
 
-  <nav class="nav-menu">
-    <a href="{% url 'home' %}" class="nav-link">Home</a>
-    <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-    <a href="{% url 'about' %}" class="nav-link">About Us</a>
-    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-    <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-  </nav>
+        <nav class="nav-menu">
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+            <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+            <a href="{% url 'about' %}" class="nav-link">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
 
-  <div class="header-actions">
-    <div class="cart-wrapper">
-      <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-      <span class="cart-count">0</span>
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+            {% else %}
+            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            {% endif %}
+        </nav>
+
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+        </div>
+    </header>
+
+    <!-- Hidden Search Bar (will be shown on icon click) -->
+    <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
+        <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
+            <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
+                style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+            <button type="submit"
+                style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
+                Tìm
+            </button>
+        </form>
     </div>
-    <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-  </div>
-</header>
 
-<!-- Hidden Search Bar (will be shown on icon click) -->
-<div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-  <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-           style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-    <button type="submit" style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-      Tìm
-    </button>
-  </form>
-</div>
+    <!-- Scripts -->
+    <script>
+        function goToCart() {
+            window.location.href = "{% url 'cart' %}";
+        }
 
-<!-- Scripts -->
-<script>
-  function goToCart() {
-    window.location.href = "{% url 'cart' %}";
-  }
+        function toggleSearchBar() {
+            const wrapper = document.getElementById('search-bar-wrapper');
+            if (wrapper.style.display === 'none') {
+                wrapper.style.display = 'block';
+            } else {
+                wrapper.style.display = 'none';
+            }
+        }
+    </script>
 
-  function toggleSearchBar() {
-    const wrapper = document.getElementById('search-bar-wrapper');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'block';
-    } else {
-      wrapper.style.display = 'none';
-    }
-  }
-</script>
 
+    {% load static %}
+    {% load humanize %}
 
     <main class="main-container">
         <div class="product-container">
+
             <!-- Ảnh sản phẩm -->
             <div class="product-gallery">
                 <div class="main-image">
@@ -604,22 +654,26 @@
                 <!-- Đánh giá -->
                 <div class="product-rating">
                     <div class="stars">
-                        ⭐⭐⭐⭐⭐ <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh giá)</span>
+                        ⭐⭐⭐⭐⭐
+                        <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh giá)</span>
                         <span class="sold-count"> | Đã bán {{ product.sold_count }}</span>
                     </div>
                 </div>
 
                 <!-- Giá -->
                 <div class="price-container">
-                    <span class="current-price">₫{{ product.price }}</span>
-                    {% if product.original_price %}<span class="original-price">₫{{ product.original_price }}</span>{% endif %}
+                    <span class="current-price">₫{{ product.price|floatformat:0|intcomma }}</span>
+                    {% if product.original_price %}
+                    <span class="original-price">₫{{ product.original_price|floatformat:0|intcomma }}</span>
+                    {% endif %}
                 </div>
 
-                <!-- Mã giảm giá -->
-                {% if product.vouchers %}
+                {% if vouchers %}
                 <div class="voucher-section">
                     <span class="voucher-label">Mã giảm giá:</span>
-                    {% for v in product.vouchers.split(',') %}<span class="voucher-code">{{ v }}</span>{% endfor %}
+                    {% for v in vouchers %}
+                    <span class="voucher-code">{{ v }}</span>
+                    {% endfor %}
                 </div>
                 {% endif %}
 
@@ -640,22 +694,31 @@
                 <!-- Số lượng -->
                 <div class="quantity-section">
                     <label for="quantity">Số lượng:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" value="1">
+                    <div class="quantity-controls">
+                        <button type="button" class="qty-btn" onclick="updateQuantity(-1)">–</button>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1">
+                        <button type="button" class="qty-btn" onclick="updateQuantity(1)">+</button>
+                    </div>
                 </div>
+
+                <!-- Popup xác nhận -->
+                <div id="cart-popup" class="cart-popup" style="display: none;">✔️ Đã thêm vào giỏ hàng!</div>
 
                 <!-- Tính năng nổi bật -->
                 {% if product.features %}
                 <ul class="product-features">
-                    {% for feature in product.features.split('\n') %}
-                        <li>{{ feature }}</li>
+                    {% for feature in product.features.splitlines %}
+                    <li>{{ feature }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
 
                 <!-- Nút mua -->
                 <div class="action-buttons">
-                    <button class="add-to-cart">Thêm vào giỏ hàng</button>
-                    <button class="buy-now">Mua ngay</button>
+                    <button class="add-to-cart" data-product-id="{{ product.id }}" onclick="addToCart(this)">Thêm vào
+                        giỏ hàng</button>
+                    <button class="buy-now" data-product-id="{{ product.id }}" onclick="buyNow(this)">Mua ngay</button>
+
                 </div>
             </div>
         </div>
@@ -663,183 +726,238 @@
         <!-- Tabs chi tiết -->
         <div class="tabs-container">
             <div class="tab">
-                <button class="tablinks active" onclick="openTab(event, 'Description')">Description</button>
-                <button class="tablinks" onclick="openTab(event, 'Ingredients')">Ingredients</button>
-                <button class="tablinks" onclick="openTab(event, 'HowToUse')">How to Use</button>
-                <button class="tablinks" onclick="openTab(event, 'Reviews')">Reviews</button>
+                <button class="tablinks active" onclick="openTab(event, 'Description')">Mô tả</button>
+                <button class="tablinks" onclick="openTab(event, 'Ingredients')">Thành phần</button>
+                <button class="tablinks" onclick="openTab(event, 'HowToUse')">Cách sử dụng</button>
+                <button class="tablinks" onclick="openTab(event, 'Reviews')">Đánh giá</button>
             </div>
 
             <div id="Description" class="tabcontent" style="display: block;">
                 <div class="tab-content-wrapper">
-                    <p>{{ product.detail }}</p>
+                    {% if product.detail %}
+                    <p>{{ product.detail|linebreaks }}</p>
+                    {% else %}
+                    <p>Chưa có mô tả chi tiết.</p>
+                    {% endif %}
                 </div>
             </div>
 
             <div id="Ingredients" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <p>{{ product.ingredients }}</p>
+                    {% if product.ingredients %}
+                    <p>{{ product.ingredients|linebreaks }}</p>
+                    {% else %}
+                    <p>Chưa cập nhật thành phần sản phẩm.</p>
+                    {% endif %}
                 </div>
             </div>
 
             <div id="HowToUse" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <p>{{ product.how_to_use }}</p>
+                    {% if product.how_to_use %}
+                    <p>{{ product.how_to_use|linebreaks }}</p>
+                    {% else %}
+                    <p>Chưa có hướng dẫn sử dụng.</p>
+                    {% endif %}
                 </div>
             </div>
 
             <div id="Reviews" class="tabcontent">
                 <div class="tab-content-wrapper">
-                    <p>{{ product.reviews }}</p>
+                    {% if product.reviews %}
+                    <p>{{ product.reviews|linebreaks }}</p>
+                    {% else %}
+                    <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- FAQ Section -->
         {% if product.faqs %}
         <div class="faq-section">
             <h2 class="section-title">Frequently Asked Questions</h2>
             {% for item in product.faqs %}
             <div class="faq-item">
-                <div class="faq-question">{{ item.question }} <span class="toggle-icon">+</span></div>
-                <div class="faq-answer">{{ item.answer }}</div>
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    {{ item.question }}
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer" style="display: none;">
+                    {{ item.answer }}
+                </div>
             </div>
             {% endfor %}
         </div>
         {% endif %}
 
-        <!-- Recommended Skincare Routine Section -->
-        {% if product.recommendations %}
-        <div class="related-products">
-            <h2 class="section-title">Recommended Skincare Routine</h2>
-            <div class="product-grid-wrapper">
-                <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
-                <div class="product-grid" id="recommendedGrid">
-                    {% for p in product.recommendations %}
-                    <div class="product-card">
-                        <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">{{ p.name }}</h3>
-                            <p class="product-card-description">{{ p.description }}</p>
-                            <div class="product-card-price">₫{{ p.price }}</div>
+        <!-- Recommendations section -->
+        <section class="recommendations">
+            {% if product.recommendations.all|length > 0 %}
+            <div class="related-products">
+                <h2 class="section-title">Recommended Skincare Routine</h2>
+                <div class="product-grid-wrapper">
+                    <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
+                    <div class="product-grid" id="recommendedGrid">
+                        {% for p in product.recommendations.all %}
+                        <div class="product-card">
+                            <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                            <div class="product-card-details">
+                                <h3 class="product-card-title">{{ p.name }}</h3>
+                                <p class="product-card-description">{{ p.description }}</p>
+                                <div class="product-card-price">₫{{ p.price }}</div>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                    <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
                 </div>
-                <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
+        </section>
 
-        <!-- You May Also Like Section -->
-        {% if product.related_products %}
-        <div class="you-may-also-like">
-            <h2 class="section-title">You May Also Like</h2>
-            <div class="product-grid-wrapper">
-                <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
-                <div class="product-grid" id="alsoLikeGrid">
-                    {% for p in product.related_products %}
-                    <div class="product-card">
-                        <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
-                        <div class="product-card-details">
-                            <h3 class="product-card-title">{{ p.name }}</h3>
-                            <p class="product-card-description">{{ p.description }}</p>
-                            <div class="product-card-price">₫{{ p.price }}</div>
+        <!-- You may also like section -->
+        <section class="you-may-also-like-section">
+            {% if product.related_products.all|length > 0 %}
+            <div class="you-may-also-like">
+                <h2 class="section-title">You May Also Like</h2>
+                <div class="product-grid-wrapper">
+                    <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
+                    <div class="product-grid" id="alsoLikeGrid">
+                        {% for p in product.related_products.all %}
+                        <div class="product-card">
+                            <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                            <div class="product-card-details">
+                                <h3 class="product-card-title">{{ p.name }}</h3>
+                                <p class="product-card-description">{{ p.description }}</p>
+                                <div class="product-card-price">₫{{ p.price }}</div>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                    <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
                 </div>
-                <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
+        </section>
     </main>
 
     <script>
-        // Function to handle tab switching
-        function openTab(evt, tabName) {
-            const tabcontent = document.getElementsByClassName("tabcontent");
-            for (let i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            const tablinks = document.getElementsByClassName("tablinks");
-            for (let i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            const isOpen = answer.style.display === "block";
+
+            answer.style.display = isOpen ? "none" : "block";
+            icon.innerText = isOpen ? "+" : "-";
         }
 
-        // Function to handle thumbnail image clicks
+        function openTab(evt, tabName) {
+            document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
+            document.querySelectorAll(".tablinks").forEach(btn => btn.classList.remove("active"));
+
+            const target = document.getElementById(tabName);
+            if (target) {
+                target.style.display = "block";
+                evt.currentTarget.classList.add("active");
+            }
+        }
+
         function initThumbnails() {
             const thumbnails = document.querySelectorAll('.thumbnail');
             const mainImage = document.querySelector('.main-image img');
-            thumbnails.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function() {
-                    mainImage.src = this.src;
-                    thumbnails.forEach(thumb => {
-                        thumb.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
-        }
 
-        // Function to handle FAQ toggles
-        function initFAQToggles() {
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', function() {
-                    const answer = this.nextElementSibling;
-                    const toggleIcon = this.querySelector('.toggle-icon');
-                    if (answer.style.display === 'block') {
-                        answer.style.display = 'none';
-                        toggleIcon.textContent = '+';
-                    } else {
-                        answer.style.display = 'block';
-                        toggleIcon.textContent = '-';
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function () {
+                    if (mainImage) {
+                        mainImage.src = this.src;
+                        thumbnails.forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
                     }
                 });
             });
         }
 
-        // Function to handle product grid scrolling
         function scrollGrid(gridId, direction) {
             const grid = document.getElementById(gridId);
-            const scrollAmount = 270; // Width of each product card (250px) + gap (20px)
+            if (!grid) return;
+
+            const scrollAmount = 270;
             grid.scrollLeft += direction * scrollAmount;
 
-            // Disable/enable arrows based on scroll position
             const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
             const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
-            leftArrow.disabled = grid.scrollLeft <= 0;
-            rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
-        }
 
-        // Initialize everything when DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.tablinks').click();
-            initThumbnails();
-            initFAQToggles();
-            const buyButton = document.querySelector('.buy-button');
-            if (buyButton) {
-                buyButton.addEventListener('mouseover', function() {
-                    this.style.backgroundColor = '#b50e69';
-                });
-                buyButton.addEventListener('mouseout', function() {
-                    this.style.backgroundColor = '#d8127d';
-                });
-            }
-
-            // Initialize scroll arrows
-            const grids = document.querySelectorAll('.product-grid');
-            grids.forEach(grid => {
-                const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
-                const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+            if (leftArrow && rightArrow) {
                 leftArrow.disabled = grid.scrollLeft <= 0;
                 rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+            }
+        }
+
+        function showCartPopup() {
+            const popup = document.getElementById('cart-popup');
+            if (!popup) return;
+            popup.style.display = 'block';
+            setTimeout(() => popup.style.display = 'none', 2000);
+        }
+
+        function updateQuantity(change) {
+            const input = document.getElementById('quantity');
+            let qty = parseInt(input.value) || 1;
+            qty += change;
+            if (qty < 1) qty = 1;
+            input.value = qty;
+        }
+
+        function validateQuantity() {
+            const input = document.getElementById('quantity');
+            if (input && input.value < 1) input.value = 1;
+        }
+
+        function addToCart(button) {
+            const productId = button.dataset.productId;
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}`;
+        }
+
+        function buyNow(button) {
+            const productId = button.dataset.productId;
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}&next=/orders/checkout`;
+        }
+
+    
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const firstTab = document.querySelector('.tablinks');
+            if (firstTab) firstTab.click();
+
+            initThumbnails();
+
+            if (typeof initFAQToggles === 'function') initFAQToggles();
+
+            const buyButton = document.querySelector('.buy-button');
+            if (buyButton) {
+                buyButton.addEventListener('mouseover', () => buyButton.style.backgroundColor = '#b50e69');
+                buyButton.addEventListener('mouseout', () => buyButton.style.backgroundColor = '#d8127d');
+            }
+
+            const qtyInput = document.getElementById('quantity');
+            if (qtyInput) qtyInput.addEventListener('input', validateQuantity);
+
+            document.querySelectorAll('.product-grid').forEach(grid => {
+                const left = grid.parentElement.querySelector('.nav-arrow.left');
+                const right = grid.parentElement.querySelector('.nav-arrow.right');
+
+                if (left && right) {
+                    left.disabled = grid.scrollLeft <= 0;
+                    right.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+                }
             });
         });
     </script>
+
+
+
 
     <!-- Footer -->
     <footer>
@@ -883,7 +1001,8 @@
             <div class="footer-column">
                 <h3>Giữ liên lạc với Beautya</h3>
                 <p style="color: white; margin-bottom: 24px">
-                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên
+                    chăm sóc da.
                 </p>
                 <form class="newsletter-form">
                     <input type="email" placeholder="Email" class="newsletter-input" />
@@ -918,4 +1037,5 @@
         </div>
     </footer>
 </body>
+
 </html>

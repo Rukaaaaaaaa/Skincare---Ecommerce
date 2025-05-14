@@ -12,67 +12,76 @@
 </head>
 
 <body>
-<!-- Header -->
-<header class="header">
-  <div class="logo">
-    <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-    <span class="shop-name">BEAUTYA</span>
-  </div>
-
-  <nav class="nav-menu">
-    <a href="{% url 'home' %}" class="nav-link">Home</a>
-    <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-    <a href="{% url 'about' %}" class="nav-link">About Us</a>
-    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-    <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-  </nav>
-
-  <div class="header-actions">
-    <div class="cart-wrapper">
-      <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-      <span class="cart-count">0</span>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+      <span class="shop-name">BEAUTYA</span>
     </div>
-    <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+      <a href="{% url 'about' %}" class="nav-link">About Us</a>
+      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Hidden Search Bar (will be shown on icon click) -->
+  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
+    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
+        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit"
+        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
+        Tìm
+      </button>
+    </form>
   </div>
-</header>
 
-<!-- Hidden Search Bar (will be shown on icon click) -->
-<div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-  <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-           style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-    <button type="submit" style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-      Tìm
-    </button>
-  </form>
-</div>
-
-<!-- Scripts -->
-<script>
-  function goToCart() {
-    window.location.href = "{% url 'cart' %}";
-  }
-
-  function toggleSearchBar() {
-    const wrapper = document.getElementById('search-bar-wrapper');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'block';
-    } else {
-      wrapper.style.display = 'none';
+  <!-- Scripts -->
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
     }
-  }
-</script>
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      if (wrapper.style.display === 'none') {
+        wrapper.style.display = 'block';
+      } else {
+        wrapper.style.display = 'none';
+      }
+    }
+  </script>
 
   <!-- Hero Slider -->
   <section class="hero-slider">
     <div class="slideshow-wrapper">
-      {% for slide in slides %}
+      {% for slide in hero_slides %}
       <div class="slide">
-        {% if slide.image|slice:":4" == "http" %}
-        <img src="{{ slide.image }}" alt="{{ slide.alt }}">
-        {% else %}
-        <img src="{% static slide.image %}" alt="{{ slide.alt }}">
-        {% endif %}
+        <img src="{{ slide.image.url }}" alt="{{ slide.name }}">
       </div>
       {% endfor %}
     </div>
@@ -93,10 +102,11 @@
 
   <!-- Dots navigation -->
   <div class="slider-dots-outside">
-    {% for slide in slides %}
+    {% for slide in hero_slides %}
     <span class="dot {% if forloop.first %}active{% endif %}" onclick="currentSlide('{{ forloop.counter0 }}')"></span>
     {% endfor %}
   </div>
+
 
 
   <!-- Categories -->
@@ -104,33 +114,44 @@
     <h2 class="section-header">Danh Mục Sản Phẩm</h2>
     <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
       {% for category in categories %}
-      <div class="category-card">
+      <a href="{% url 'product_by_category' category.id %}" class="category-card"
+        style="text-align: center; text-decoration: none; color: inherit;">
         <img src="{{ category.image.url }}" alt="{{ category.name }}">
         <div class="category-name">{{ category.name }}</div>
-      </div>
+      </a>
       {% endfor %}
     </div>
   </section>
-  <!-- Virtual Skincare Analysis -->
+
   {% if analysis %}
-  <section class="virtual-analysis-section">
-    <div class="analysis-content">
+  <section class="virtual-analysis-section" style="display: flex; gap: 40px; padding: 40px;">
+    <!-- Phần nội dung -->
+    <div class="analysis-content" style="flex: 1;">
       <h3>{{ analysis.title }}</h3>
-      <br>
       <p>{{ analysis.description|linebreaksbr }}</p>
-      <br>
-      <div class="scan-options">
+
+      <div class="scan-options" style="margin: 20px 0;">
         <div class="scan-text">Scan with your phone to get started or</div>
       </div>
-      <a href="#" class="button button-outline">Answer a few questions</a>
-      <img src="{{ analysis.qr_code.url }}" alt="QR Code" class="qr-code">
+
+      <!-- Nút mở popup -->
+      <a href="javascript:void(0);" onclick="openQuizModal()" class="button button-outline">
+        Answer a few questions
+      </a>
+
+      <div style="margin-top: 20px;">
+        <img src="{{ analysis.qr_code.url }}" alt="QR Code" class="qr-code" style="width: 150px;">
+      </div>
     </div>
 
-    <div class="analysis-image-wrapper">
-      <img src="{{ analysis.image.url }}" alt="Virtual Skincare" class="main-image">
+    <!-- Phần hình ảnh -->
+    <div class="analysis-image-wrapper" style="flex: 1;">
+      <img src="{{ analysis.image.url }}" alt="Virtual Skincare" class="main-image"
+        style="width: 100%; border-radius: 10px;">
     </div>
   </section>
   {% endif %}
+
 
   <!-- Best Sellers -->
   <section class="product-section">
@@ -196,25 +217,25 @@
 
 
   <!-- Special Offers -->
-  {% if offer %}
+  {% if special_offer %}
   <section class="special-offers-section">
     <div class="special-offers-container">
       <!-- Right: Image -->
       <div class="special-offers-image">
-        <img src="{{ offer.image.url }}" alt="Special Offer" />
+        <img src="{{ special_offer.image.url }}" alt="Special Offer" />
       </div>
 
       <!-- Left: Text -->
       <div class="special-offers-content">
-        <h3 class="special-offers-subtitle">{{ offer.subtitle }}</h3>
-        <h2 class="special-offers-title">{{ offer.title }}</h2>
+        <h3 class="special-offers-subtitle">{{ special_offer.subtitle }}</h3>
+        <h2 class="special-offers-title">{{ special_offer.title }}</h2>
 
         <p class="special-offers-text">
-          {{ offer.content|linebreaksbr }}
+          {{ special_offer.description|linebreaksbr }}
         </p>
 
         <p class="special-offers-highlight">
-          {{ offer.highlight }}
+          {{ special_offer.highlight }}
         </p>
         <br />
       </div>
@@ -223,30 +244,41 @@
   {% endif %}
 
 
+
   <section class="blog-section">
     <div class="blog-header">
-      <h2 class="section-header">Our Blog</h2>
-      <a href="{% url 'blog_list' %}" class="button">Xem Thêm</a>
+      <h2 class="section-header">Blog Làm Đẹp</h2>
+      <a href="{% url 'blog_list' %}" class="button">Xem thêm</a>
     </div>
+
     <div class="blog-grid">
       {% for post in latest_posts %}
       <div class="blog-card">
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% else %}
+        <img src="{% static 'images/default-blog.jpg' %}" alt="No image">
+        {% endif %}
+
         <div class="blog-content">
           <div class="blog-meta">
-            <span>{{ post.category }}</span>
+            {% if post.category %}<span>{{ post.category }}</span>{% endif %}
             <span>•</span>
             <span>{{ post.author }}</span>
             <span>•</span>
-            <span>{{ post.created_at|date:"M d, Y" }}</span>
+            <span>{{ post.date|date:"d/m/Y" }}</span> {# Sửa từ created_at → date #}
           </div>
           <h3 class="blog-title">{{ post.title }}</h3>
-          <p class="blog-excerpt">{{ post.excerpt }}</p>
+          <p class="blog-excerpt">
+            {{ post.content|truncatechars:120 }} {# Không có excerpt nên dùng content #}
+          </p>
         </div>
       </div>
       {% endfor %}
     </div>
   </section>
+
+
 
 
   <!-- Footer -->
@@ -332,6 +364,160 @@
       </div>
     </div>
   </footer>
+
+  <!-- Modal HTML -->
+  <div id="quizModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeQuizModal()">&times;</span>
+      <h2>Skincare Quiz</h2>
+      <form id="quizForm" method="post">
+        {% csrf_token %}
+
+        <!-- Câu 1 -->
+        <label for="skin_type">Your Skin Type:</label>
+        <select name="q1_skin_type" id="skin_type" required>
+          <option value="">--Select--</option>
+          <option value="normal">Normal</option>
+          <option value="oily">Oily</option>
+          <option value="dry">Dry</option>
+          <option value="combination">Combination</option>
+          <option value="sensitive">Sensitive</option>
+        </select>
+
+        <!-- Câu 2 -->
+        <label for="concern">Main Skin Concern:</label>
+        <select name="q2_concern" id="concern" required>
+          <option value="">--Select--</option>
+          <option value="acne">Acne</option>
+          <option value="dark spots">Dark Spots</option>
+          <option value="aging">Aging</option>
+          <option value="redness">Redness/Irritation</option>
+          <option value="dullness">Dull Skin</option>
+        </select>
+
+        <!-- Câu 3 -->
+        <label for="cleanse_frequency">How often do you cleanse your face daily?</label>
+        <select name="q3_cleanse_frequency" id="cleanse_frequency" required>
+          <option value="">--Select--</option>
+          <option value="once">Once</option>
+          <option value="twice">Twice</option>
+          <option value="more">More than twice</option>
+          <option value="rarely">Rarely</option>
+        </select>
+
+        <!-- Câu 4 -->
+        <label for="sunscreen">Do you wear sunscreen daily?</label>
+        <select name="q4_sunscreen" id="sunscreen" required>
+          <option value="">--Select--</option>
+          <option value="yes">Yes</option>
+          <option value="sometimes">Sometimes</option>
+          <option value="no">No</option>
+        </select>
+
+        <!-- Câu 5 -->
+        <label for="fragrance_free">Do you prefer fragrance-free products?</label>
+        <select name="q5_fragrance_free" id="fragrance_free" required>
+          <option value="">--Select--</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="no_preference">No Preference</option>
+        </select>
+
+        <!-- Câu 6 -->
+        <label for="active_ingredients">Do you currently use any active ingredients?</label>
+        <select name="q6_active_ingredients" id="active_ingredients" required>
+          <option value="">--Select--</option>
+          <option value="retinol">Retinol</option>
+          <option value="aha_bha">AHA/BHA</option>
+          <option value="vitamin_c">Vitamin C</option>
+          <option value="niacinamide">Niacinamide</option>
+          <option value="none">None</option>
+        </select>
+
+        <!-- Câu 7 -->
+        <label for="routine_level">How would you describe your current skincare routine?</label>
+        <select name="q7_routine_level" id="routine_level" required>
+          <option value="">--Select--</option>
+          <option value="beginner">Beginner</option>
+          <option value="basic">Basic (Cleanser + Moisturizer)</option>
+          <option value="intermediate">Intermediate (Includes actives)</option>
+          <option value="advanced">Advanced (Full multi-step routine)</option>
+        </select>
+
+        <button type="submit">Get My AI Recommendation</button>
+      </form>
+
+      <!-- AI output -->
+      <div id="quizResult"></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("quizForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+
+      const answers = [
+        form.q1_skin_type.value,
+        form.q2_concern.value,
+        form.q3_cleanse_frequency.value,
+        form.q4_sunscreen.value,
+        form.q5_fragrance_free.value,
+        form.q6_active_ingredients.value,
+        form.q7_routine_level.value
+      ];
+
+      // Kiểm tra nếu thiếu câu trả lời nào
+      if (answers.includes("")) {
+        document.getElementById("quizResult").innerHTML = "<p style='color:red;'>Please answer all questions before submitting.</p>";
+        return;
+      }
+
+      fetch("{% url 'virtual_quiz_ajax' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ answers: answers })
+      })
+        .then(response => response.json())
+        .then(data => {
+          const resultDiv = document.getElementById("quizResult");
+
+          if (data.error) {
+            resultDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+            return;
+          }
+
+          // Hiển thị phản hồi từ AI
+          let html = `<h3>AI Recommendation</h3><p>${data.recommendation}</p>`;
+
+          if (data.products && data.products.length > 0) {
+            html += `<h4>Recommended Products:</h4><div class="product-list" style="display: flex; gap: 1rem; flex-wrap: wrap;">`;
+
+            data.products.forEach(p => {
+              html += `
+          <div class="product-card" style="border: 1px solid #ccc; padding: 10px; width: 160px; text-align: center;">
+            <img src="${p.image}" alt="${p.name}" style="width: 100px; height: 100px; object-fit: cover;">
+            <p><strong>${p.name}</strong></p>
+            <p>${p.price} VND</p>
+          </div>
+        `;
+            });
+
+            html += `</div>`;
+          }
+
+          resultDiv.innerHTML = html;
+        })
+        .catch(error => {
+          document.getElementById("quizResult").innerHTML = `<p style="color:red;">An error occurred: ${error}</p>`;
+        });
+    });
+  </script>
+
+
 
   <script src="include.js"></script>
   <script>
@@ -451,6 +637,40 @@
       });
     }
     document.addEventListener('DOMContentLoaded', includeHTML);
+
+    function openQuizModal() {
+      document.getElementById("quizModal").style.display = "block";
+    }
+    function closeQuizModal() {
+      document.getElementById("quizModal").style.display = "none";
+    }
+
+    // Gửi form qua AJAX
+    document.getElementById('quizForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      fetch("{% url 'virtual_quiz_ajax' %}", {
+        method: "POST",
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: data
+      })
+        .then(response => response.json())
+        .then(data => {
+          const resultDiv = document.getElementById('quizResult');
+          if (data.recommended && data.recommended.length > 0) {
+            resultDiv.innerHTML = "<h4>Recommended Products:</h4><ul>" +
+              data.recommended.map(p => `<li><a href="/product/${p.id}/">${p.name}</a></li>`).join('') +
+              "</ul>";
+          } else {
+            resultDiv.innerHTML = "<p>No matching products found.</p>";
+          }
+        });
+    });
+
 
   </script>
 </body>

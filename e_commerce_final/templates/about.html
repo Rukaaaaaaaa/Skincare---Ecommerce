@@ -1,383 +1,432 @@
 <!DOCTYPE html>
 <html lang="vi">
-    {% load static %}
-    {% load socialaccount %}
+{% load static %}
+{% load socialaccount %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Về Chúng Tôi - Beautya</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Về Chúng Tôi - Beautya</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        /* Hero Section */
-        .hero-section {
-            width: 100%;
-            background-color: #510228;
-            padding: 32px 212px;
-            text-align: left;
-        }
-
-        .hero-title {
-            color: white;
-            font-size: 32px;
-            font-weight: 700;
-            text-transform: capitalize;
-            line-height: 44.8px;
-            margin-bottom: 24px;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 482px;
-            background: #c4c4c4;
-            margin-bottom: 24px;
-        }
-
-        .hero-text {
-            color: white;
-            font-size: 18px;
-            font-weight: 400;
-            text-transform: capitalize;
-            line-height: 32.4px;
-            max-width: 1016px;
-        }
-
-        /* Content Sections */
-        .content-section {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 40px 212px;
-        }
-
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: capitalize;
-            line-height: 33.6px;
-            margin-bottom: 8px;
-        }
-
-        .section-text {
-            font-size: 18px;
-            font-weight: 400;
-            text-transform: capitalize;
-            line-height: 32.4px;
-            margin-bottom: 16px;
-        }
-
-        .highlight {
-            color: #a10550;
-            font-weight: 400;
-        }
-
-        .sub-section-title {
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 28px;
-            margin-bottom: 8px;
-        }
-
-        /* Heritage Section */
-        .heritage-section {
-            display: flex;
-            gap: 32px;
-            align-items: flex-start;
-        }
-
-        .heritage-content {
-            flex: 1;
-            max-width: 496px;
-        }
-
-        .heritage-image {
-            flex: 1;
-            width: 392px;
-            height: 407px;
-            background: #c4c4c4;
-        }
-
-        /* Diversity Section */
-        .diversity-section {
-            position: relative;
-            padding-top: 201px; /* Match the height of the overlay */
-        }
-
-        .diversity-overlay {
-            width: 100%;
-            height: 200px;
-            background-color: #510228;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .diversity-container {
-            display: flex;
-            gap: 32px;
-            align-items: flex-start;
-            position: relative;
-            z-index: 2;
-            margin-bottom: 80px;
-        }
-
-        .diversity-image {
-            flex: 1;
-            width: 600px;
-            height: 402px;
-            background: #c4c4c4;
-            position: absolute;
-            top: -50px;
-            left: 0;
-        }
-
-        .diversity-content {
-            flex: 1;
-            margin-top: 20px;
-            max-width: 392px;
-            margin-left: 632px; /* Shift content to the right of the image (image width 600px + gap 32px) */
-        }
-
-        .diversity-content .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: uppercase;
-            line-height: 33.6px;
-            margin-bottom: 20px;
-            color: black; /* Adjust to match image */
-        }
-
-        .diversity-content .section-text {
-            color: black; /* Adjust to match image */
-        }
-        
-        .hero-image img,
-        .heritage-image img,
-        .diversity-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-<!-- Header -->
-<header class="header">
-  <div class="logo">
-    <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-    <span class="shop-name">BEAUTYA</span>
-  </div>
-
-  <nav class="nav-menu">
-    <a href="{% url 'home' %}" class="nav-link">Home</a>
-    <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-    <a href="{% url 'about' %}" class="nav-link">About Us</a>
-    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-    <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-  </nav>
-
-  <div class="header-actions">
-    <div class="cart-wrapper">
-      <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-      <span class="cart-count">0</span>
-    </div>
-    <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-  </div>
-</header>
-
-<!-- Hidden Search Bar (will be shown on icon click) -->
-<div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-  <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-           style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-    <button type="submit" style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-      Tìm
-    </button>
-  </form>
-</div>
-
-<!-- Scripts -->
-<script>
-  function goToCart() {
-    window.location.href = "{% url 'cart' %}";
-  }
-
-  function toggleSearchBar() {
-    const wrapper = document.getElementById('search-bar-wrapper');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'block';
-    } else {
-      wrapper.style.display = 'none';
+  <style>
+    /* Hero Section */
+    .hero-section {
+      width: 100%;
+      background-color: #510228;
+      padding: 32px 212px;
+      text-align: left;
     }
-  }
-</script>
+
+    .hero-title {
+      color: white;
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: capitalize;
+      line-height: 44.8px;
+      margin-bottom: 24px;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 482px;
+      background: #c4c4c4;
+      margin-bottom: 24px;
+    }
+
+    .hero-text {
+      color: white;
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+      max-width: 1016px;
+    }
+
+    /* Content Sections */
+    .content-section {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 40px 212px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: capitalize;
+      line-height: 33.6px;
+      margin-bottom: 8px;
+    }
+
+    .section-text {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+      margin-bottom: 16px;
+    }
+
+    .highlight {
+      color: #a10550;
+      font-weight: 400;
+    }
+
+    .sub-section-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      margin-bottom: 8px;
+    }
+
+    /* Heritage Section */
+    .heritage-section {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    .heritage-content {
+      flex: 1;
+      max-width: 496px;
+    }
+
+    .heritage-image {
+      flex: 1;
+      width: 392px;
+      height: 407px;
+      background: #c4c4c4;
+    }
+
+    /* Diversity Section */
+    .diversity-section {
+      position: relative;
+      padding-top: 201px;
+      /* Match the height of the overlay */
+    }
+
+    .diversity-overlay {
+      width: 100%;
+      height: 200px;
+      background-color: #510228;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .diversity-container {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 80px;
+    }
+
+    .diversity-image {
+      flex: 1;
+      width: 600px;
+      height: 402px;
+      background: #c4c4c4;
+      position: absolute;
+      top: -50px;
+      left: 0;
+    }
+
+    .diversity-content {
+      flex: 1;
+      margin-top: 20px;
+      max-width: 392px;
+      margin-left: 632px;
+      /* Shift content to the right of the image (image width 600px + gap 32px) */
+    }
+
+    .diversity-content .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 33.6px;
+      margin-bottom: 20px;
+      color: black;
+      /* Adjust to match image */
+    }
+
+    .diversity-content .section-text {
+      color: black;
+      /* Adjust to match image */
+    }
+
+    .hero-image img,
+    .heritage-image img,
+    .diversity-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+      <span class="shop-name">BEAUTYA</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+      <a href="{% url 'about' %}" class="nav-link">About Us</a>
+      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Hidden Search Bar (will be shown on icon click) -->
+  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
+    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
+        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit"
+        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
+        Tìm
+      </button>
+    </form>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      if (wrapper.style.display === 'none') {
+        wrapper.style.display = 'block';
+      } else {
+        wrapper.style.display = 'none';
+      }
+    }
+  </script>
 
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <h1 class="hero-title">Thương Hiệu Của Chúng Tôi</h1>
-        <div class="hero-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
-        <p class="hero-text">
-            Chúng tôi tin rằng vẻ đẹp phát triển mạnh mẽ trong sự đa dạng và khám phá. Mục tiêu của chúng tôi là mở rộng cách nhìn nhận về vẻ đẹp của thế giới, bằng cách trao quyền cho những điều Phi Thường trong mỗi người.
-        </p>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h1 class="hero-title">Thương Hiệu Của Chúng Tôi</h1>
+    <div class="hero-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
+    <p class="hero-text">
+      Chúng tôi tin rằng vẻ đẹp phát triển mạnh mẽ trong sự đa dạng và khám phá. Mục tiêu của chúng tôi là mở rộng cách
+      nhìn nhận về vẻ đẹp của thế giới, bằng cách trao quyền cho những điều Phi Thường trong mỗi người.
+    </p>
+  </section>
 
-    <!-- Heritage Section -->
-    <section class="content-section heritage-section">
-        <div class="heritage-content">
-            <h2 class="section-title">Hành Trình Của Chúng Tôi</h2>
-            <p class="section-text">
-                Từ những ngày đầu tiên, người sáng lập của chúng tôi đã tin rằng <span class="highlight">Beautya</span> không chỉ có thể thay đổi ngành bán lẻ mỹ phẩm mà còn tạo ra tác động tích cực đến thế giới. <br/>
-                Câu chuyện của chúng tôi bắt đầu vào năm 2015, khi người sáng lập Jane nhận ra rằng có rất ít thương hiệu mỹ phẩm phù hợp với loại da của cô. Jane bắt đầu thử nghiệm các thành phần và công thức khác nhau ngay tại căn bếp của mình. Chẳng bao lâu, bạn bè và gia đình cô đã không ngừng khen ngợi các sản phẩm đó. Được khích lệ bởi những phản hồi tích cực, Jane quyết định biến sở thích của mình thành một doanh nghiệp. <br/>
-                Hôm nay, đội ngũ chuyên gia của chúng tôi không ngừng nỗ lực để tạo ra các sản phẩm mỹ phẩm không chỉ hiệu quả mà còn bền vững và đạo đức.
-            </p>
-        </div>
-        <div class="heritage-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
-    </section>
+  <!-- Heritage Section -->
+  <section class="content-section heritage-section">
+    <div class="heritage-content">
+      <h2 class="section-title">Hành Trình Của Chúng Tôi</h2>
+      <p class="section-text">
+        Từ những ngày đầu tiên, người sáng lập của chúng tôi đã tin rằng <span class="highlight">Beautya</span> không
+        chỉ có thể thay đổi ngành bán lẻ mỹ phẩm mà còn tạo ra tác động tích cực đến thế giới. <br />
+        Câu chuyện của chúng tôi bắt đầu vào năm 2015, khi người sáng lập Jane nhận ra rằng có rất ít thương hiệu mỹ
+        phẩm phù hợp với loại da của cô. Jane bắt đầu thử nghiệm các thành phần và công thức khác nhau ngay tại căn bếp
+        của mình. Chẳng bao lâu, bạn bè và gia đình cô đã không ngừng khen ngợi các sản phẩm đó. Được khích lệ bởi những
+        phản hồi tích cực, Jane quyết định biến sở thích của mình thành một doanh nghiệp. <br />
+        Hôm nay, đội ngũ chuyên gia của chúng tôi không ngừng nỗ lực để tạo ra các sản phẩm mỹ phẩm không chỉ hiệu quả
+        mà còn bền vững và đạo đức.
+      </p>
+    </div>
+    <div class="heritage-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
+  </section>
 
-    <!-- Ethical and Sustainable Beauty Section -->
-    <section class="content-section">
-        <h2 class="section-title">Vẻ Đẹp Đạo Đức và Bền Vững</h2>
+  <!-- Ethical and Sustainable Beauty Section -->
+  <section class="content-section">
+    <h2 class="section-title">Vẻ Đẹp Đạo Đức và Bền Vững</h2>
+    <p class="section-text">
+      Tại công ty mỹ phẩm <span class="highlight">Beautya</span>, chúng tôi tin rằng vẻ đẹp không bao giờ nên đánh đổi
+      bằng động vật, môi trường hay sức khỏe của khách hàng. Vì vậy, chúng tôi đảm bảo rằng các sản phẩm của mình thuần
+      chay, không thử nghiệm trên động vật, không chứa gluten và được đóng gói bằng vật liệu tái chế.
+    </p>
+    <div>
+      <h3 class="sub-section-title">Thuần Chay, Không Thử Nghiệm Trên Động Vật</h3>
+      <p class="section-text">
+        Khi nói rằng sản phẩm của chúng tôi là thuần chay, chúng tôi có nghĩa là không bao giờ sử dụng bất kỳ thành phần
+        hoặc sản phẩm phụ nào từ động vật trong công thức của mình. Chúng tôi tin rằng vẻ đẹp không thử nghiệm trên động
+        vật là xu hướng của tương lai, và chúng tôi tự hào là một phần của phong trào đó.
+      </p>
+    </div>
+    <div>
+      <h3 class="sub-section-title">Sản Phẩm Không Chứa Gluten</h3>
+      <p class="section-text">
+        Đối với những người có làn da nhạy cảm hoặc dị ứng với gluten, chúng tôi đảm bảo rằng sản phẩm của mình hoàn
+        toàn không chứa gluten 100%. Bạn có thể yên tâm sử dụng sản phẩm của chúng tôi, biết rằng chúng an toàn và dịu
+        nhẹ với làn da của bạn.
+      </p>
+    </div>
+    <div>
+      <h3 class="sub-section-title">Bao Bì Tái Chế</h3>
+      <p class="section-text">
+        Cuối cùng, chúng tôi cam kết bảo vệ môi trường, đó là lý do tại sao chúng tôi sử dụng vật liệu tái chế để đóng
+        gói sản phẩm. Khi lựa chọn sản phẩm của chúng tôi, bạn đang góp phần tạo ra tác động tích cực cho hành tinh và
+        giảm thiểu dấu chân môi trường của mình. <br />
+        Chúng tôi tận tâm mang đến cho bạn các giải pháp làm đẹp chất lượng cao, có nguồn gốc đạo đức mà bạn có thể tự
+        tin sử dụng.
+      </p>
+    </div>
+  </section>
+
+  <!-- Diversity Equity & Inclusion Section -->
+  <section class="content-section diversity-section">
+    <div class="diversity-overlay"></div>
+    <div class="diversity-container">
+      <div class="diversity-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
+      <div class="diversity-content">
+        <h2 class="section-title">Diversity Equity & Inclusion</h2>
         <p class="section-text">
-            Tại công ty mỹ phẩm <span class="highlight">Beautya</span>, chúng tôi tin rằng vẻ đẹp không bao giờ nên đánh đổi bằng động vật, môi trường hay sức khỏe của khách hàng. Vì vậy, chúng tôi đảm bảo rằng các sản phẩm của mình thuần chay, không thử nghiệm trên động vật, không chứa gluten và được đóng gói bằng vật liệu tái chế.
+          We believe that beauty is a form of self-expression and should be inclusive of all cultures and traditions,
+          which is why we offer products that are inspired by diverse beauty rituals from around the world.
         </p>
-        <div>
-            <h3 class="sub-section-title">Thuần Chay, Không Thử Nghiệm Trên Động Vật</h3>
-            <p class="section-text">
-                Khi nói rằng sản phẩm của chúng tôi là thuần chay, chúng tôi có nghĩa là không bao giờ sử dụng bất kỳ thành phần hoặc sản phẩm phụ nào từ động vật trong công thức của mình. Chúng tôi tin rằng vẻ đẹp không thử nghiệm trên động vật là xu hướng của tương lai, và chúng tôi tự hào là một phần của phong trào đó.
-            </p>
-        </div>
-        <div>
-            <h3 class="sub-section-title">Sản Phẩm Không Chứa Gluten</h3>
-            <p class="section-text">
-                Đối với những người có làn da nhạy cảm hoặc dị ứng với gluten, chúng tôi đảm bảo rằng sản phẩm của mình hoàn toàn không chứa gluten 100%. Bạn có thể yên tâm sử dụng sản phẩm của chúng tôi, biết rằng chúng an toàn và dịu nhẹ với làn da của bạn.
-            </p>
-        </div>
-        <div>
-            <h3 class="sub-section-title">Bao Bì Tái Chế</h3>
-            <p class="section-text">
-                Cuối cùng, chúng tôi cam kết bảo vệ môi trường, đó là lý do tại sao chúng tôi sử dụng vật liệu tái chế để đóng gói sản phẩm. Khi lựa chọn sản phẩm của chúng tôi, bạn đang góp phần tạo ra tác động tích cực cho hành tinh và giảm thiểu dấu chân môi trường của mình. <br/>
-                Chúng tôi tận tâm mang đến cho bạn các giải pháp làm đẹp chất lượng cao, có nguồn gốc đạo đức mà bạn có thể tự tin sử dụng.
-            </p>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Diversity Equity & Inclusion Section -->
-    <section class="content-section diversity-section">
-        <div class="diversity-overlay"></div>
-        <div class="diversity-container">
-            <div class="diversity-image"><img src="img/unsplash_HvkDYluePqw.png" alt=""></div>
-            <div class="diversity-content">
-                <h2 class="section-title">Diversity Equity & Inclusion</h2>
-                <p class="section-text">
-                    We believe that beauty is a form of self-expression and should be inclusive of all cultures and traditions, which is why we offer products that are inspired by diverse beauty rituals from around the world.
-                </p>
-            </div>
-        </div>
-    </section>
+  <!-- Our Commitments Section -->
+  <section class="content-section">
+    <h2 class="section-title">Cam Kết Của Chúng Tôi</h2>
+    <p class="section-text">
+      Chào mừng bạn đến với <span class="highlight">Beautya</span>, nơi mang đến những giải pháp chăm sóc da an toàn và
+      hiệu quả, giúp bạn tự tin tỏa sáng với làn da khỏe đẹp. Ra đời vào năm 2020, chúng tôi được xây dựng với sứ mệnh:
+      lan tỏa vẻ đẹp tự nhiên thông qua các sản phẩm skincare chất lượng cao, phù hợp với mọi loại da, đặc biệt là làn
+      da người Việt. <br />
+      Chúng tôi hiểu rằng mỗi làn da đều có câu chuyện riêng. Vì vậy, chúng tôi không ngừng tìm kiếm và cung cấp các sản
+      phẩm được nghiên cứu kỹ lưỡng, sử dụng thành phần tự nhiên, không chứa hóa chất độc hại, và không thử nghiệm trên
+      động vật. Sức khỏe làn da của bạn luôn là ưu tiên hàng đầu của chúng tôi. <br />
+      Hành trình của chúng tôi bắt đầu từ niềm đam mê làm đẹp của người sáng lập, Nguyễn Lan Anh – một chuyên gia chăm
+      sóc da với hơn 5 năm kinh nghiệm. Nhận thấy nhiều người gặp khó khăn trong việc tìm kiếm sản phẩm phù hợp với làn
+      da nhạy cảm, Lan Anh đã quyết tâm xây dựng một thương hiệu skincare minh bạch, đáng tin cậy, và gần gũi với khách
+      hàng Việt Nam. <br />
+      Chúng tôi cam kết mang đến không chỉ những sản phẩm chất lượng mà còn là dịch vụ tận tâm. Từ các dòng sữa rửa mặt
+      dịu nhẹ, kem dưỡng ẩm sâu, đến mặt nạ phục hồi – mỗi sản phẩm đều được kiểm định kỹ lưỡng trước khi đến tay bạn.
+    </p>
+  </section>
 
-    <!-- Our Commitments Section -->
-    <section class="content-section">
-        <h2 class="section-title">Cam Kết Của Chúng Tôi</h2>
-        <p class="section-text">
-            Chào mừng bạn đến với <span class="highlight">Beautya</span>, nơi mang đến những giải pháp chăm sóc da an toàn và hiệu quả, giúp bạn tự tin tỏa sáng với làn da khỏe đẹp. Ra đời vào năm 2020, chúng tôi được xây dựng với sứ mệnh: lan tỏa vẻ đẹp tự nhiên thông qua các sản phẩm skincare chất lượng cao, phù hợp với mọi loại da, đặc biệt là làn da người Việt. <br/>
-            Chúng tôi hiểu rằng mỗi làn da đều có câu chuyện riêng. Vì vậy, chúng tôi không ngừng tìm kiếm và cung cấp các sản phẩm được nghiên cứu kỹ lưỡng, sử dụng thành phần tự nhiên, không chứa hóa chất độc hại, và không thử nghiệm trên động vật. Sức khỏe làn da của bạn luôn là ưu tiên hàng đầu của chúng tôi. <br/>
-            Hành trình của chúng tôi bắt đầu từ niềm đam mê làm đẹp của người sáng lập, Nguyễn Lan Anh – một chuyên gia chăm sóc da với hơn 5 năm kinh nghiệm. Nhận thấy nhiều người gặp khó khăn trong việc tìm kiếm sản phẩm phù hợp với làn da nhạy cảm, Lan Anh đã quyết tâm xây dựng một thương hiệu skincare minh bạch, đáng tin cậy, và gần gũi với khách hàng Việt Nam. <br/>
-            Chúng tôi cam kết mang đến không chỉ những sản phẩm chất lượng mà còn là dịch vụ tận tâm. Từ các dòng sữa rửa mặt dịu nhẹ, kem dưỡng ẩm sâu, đến mặt nạ phục hồi – mỗi sản phẩm đều được kiểm định kỹ lưỡng trước khi đến tay bạn.
+  <!-- Global Branches & Satisfied Customers Section -->
+  <section class="content-section">
+    <h2 class="section-title">Chi Nhánh Toàn Cầu & Khách Hàng Hài Lòng</h2>
+    <p class="section-text">
+      Tại <span class="highlight">Beautya</span>, chúng tôi tự hào có mặt trên toàn cầu với các chi nhánh tại nhiều quốc
+      gia. Sứ mệnh của chúng tôi là cung cấp các sản phẩm mỹ phẩm chất lượng cao, phù hợp với nhiều loại da và tông màu
+      da khác nhau, đồng thời mang đến dịch vụ khách hàng xuất sắc. Đội ngũ của chúng tôi được đào tạo để lắng nghe
+      những mối quan tâm và sở thích của khách hàng, từ đó sử dụng chuyên môn để đề xuất các sản phẩm phù hợp với nhu
+      cầu cá nhân của từng người. Trong phần này, chúng tôi sẽ giới thiệu tổng quan về các chi nhánh của công ty và
+      những dịch vụ độc đáo mà họ cung cấp, cùng với một số phản hồi tích cực từ khách hàng hài lòng của chúng tôi.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <!-- Footer Top -->
+    <div class="footer-top">
+      <div class="benefit-item">
+        <i class="fas fa-paw benefit-icon"></i>
+        <span class="benefit-text">Không thử nghiệm trên động vật</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-leaf benefit-icon"></i>
+        <span class="benefit-text">Không có thành phần từ động vật</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-bread-slice benefit-icon"></i>
+        <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-recycle benefit-icon"></i>
+        <span class="benefit-text">Bao bì có thể tái chế</span>
+      </div>
+    </div>
+
+    <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="#">Beautya branches</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="#">Chính Sách Bảo Mật</a></li>
+          <li><a href="#">Chính Sách Bảo Hành</a></li>
+          <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
         </p>
-    </section>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email" class="newsletter-input" />
+          <button type="submit" class="newsletter-submit">Subscribe</button>
+        </form>
+        <label class="consent-text">
+          <input type="checkbox" required>
+          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
+      </div>
+    </div>
 
-    <!-- Global Branches & Satisfied Customers Section -->
-    <section class="content-section">
-        <h2 class="section-title">Chi Nhánh Toàn Cầu & Khách Hàng Hài Lòng</h2>
-        <p class="section-text">
-            Tại <span class="highlight">Beautya</span>, chúng tôi tự hào có mặt trên toàn cầu với các chi nhánh tại nhiều quốc gia. Sứ mệnh của chúng tôi là cung cấp các sản phẩm mỹ phẩm chất lượng cao, phù hợp với nhiều loại da và tông màu da khác nhau, đồng thời mang đến dịch vụ khách hàng xuất sắc. Đội ngũ của chúng tôi được đào tạo để lắng nghe những mối quan tâm và sở thích của khách hàng, từ đó sử dụng chuyên môn để đề xuất các sản phẩm phù hợp với nhu cầu cá nhân của từng người. Trong phần này, chúng tôi sẽ giới thiệu tổng quan về các chi nhánh của công ty và những dịch vụ độc đáo mà họ cung cấp, cùng với một số phản hồi tích cực từ khách hàng hài lòng của chúng tôi.
-        </p>
-    </section>
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <!-- Footer Top -->
-        <div class="footer-top">
-          <div class="benefit-item">
-            <i class="fas fa-paw benefit-icon"></i>
-            <span class="benefit-text">Không thử nghiệm trên động vật</span>
-          </div>
-          <div class="benefit-item">
-            <i class="fas fa-leaf benefit-icon"></i>
-            <span class="benefit-text">Không có thành phần từ động vật</span>
-          </div>
-          <div class="benefit-item">
-            <i class="fas fa-bread-slice benefit-icon"></i>
-            <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
-          </div>
-          <div class="benefit-item">
-            <i class="fas fa-recycle benefit-icon"></i>
-            <span class="benefit-text">Bao bì có thể tái chế</span>
-          </div>
-        </div>
-  
-        <!-- Footer Main -->
-        <div class="footer-main">
-          <div class="footer-column">
-            <h3>Chúng tôi có thể giúp gì?</h3>
-            <ul>
-              <li><a href="#">Beautya branches</a></li>
-              <li><a href="#">Contact Us</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Blog</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Products</h3>
-            <ul>
-              <li><a href="#">Chính Sách Bảo Mật</a></li>
-              <li><a href="#">Chính Sách Bảo Hành</a></li>
-              <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Giữ liên lạc với Beautya</h3>
-            <p style="color: white; margin-bottom: 24px">
-                Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
-            </p>
-            <form class="newsletter-form">
-              <input type="email" placeholder="Email" class="newsletter-input" />
-              <button type="submit" class="newsletter-submit">Subscribe</button>
-            </form>
-            <label class="consent-text">
-              <input type="checkbox" required>
-              Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-            </label>
-          </div>
-        </div>
-  
-        <div class="footer-contact-row">
-          <div class="footer-contact-group">
-            <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-            <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
-          </div>
-          <div class="footer-social-group">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-          </div>
-        </div>
-  
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-          <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-          <div class="legal-links">
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Privacy Policy</a>
-          </div>
-        </div>
-    </footer>
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+      <div class="legal-links">
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
 </body>
+
 </html>

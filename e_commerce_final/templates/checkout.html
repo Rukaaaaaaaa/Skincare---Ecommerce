@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <title>Beautya - Skincare & Makeup</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-
         .checkout-container {
             max-width: 1000px;
             margin: auto;
@@ -71,7 +71,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             padding: 15px;
             text-align: right;
             border-bottom: 1px solid #eee;
@@ -84,7 +85,8 @@
             color: #555;
         }
 
-        td:first-child, th:first-child {
+        td:first-child,
+        th:first-child {
             text-align: left;
         }
 
@@ -236,8 +238,9 @@
         .cart-summary p strong {
             color: #c80064;
         }
+
         .summary-total {
-          color: #c80064;
+            color: #c80064;
         }
 
         .cart-summary button {
@@ -329,394 +332,456 @@
                 max-width: 150px;
             }
         }
-
     </style>
 </head>
 {% load static %}
 {% load humanize %}
 <form method="post" action="{% url 'checkout' %}">
-{% csrf_token %}
-<body>
-  <!-- Header -->
-<header class="header">
-  <div class="logo">
-    <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-    <span class="shop-name">BEAUTYA</span>
-  </div>
+    {% csrf_token %}
 
-  <nav class="nav-menu">
-    <a href="{% url 'home' %}" class="nav-link">Home</a>
-    <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-    <a href="{% url 'about' %}" class="nav-link">About Us</a>
-    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-    <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-  </nav>
-
-  <div class="header-actions">
-    <div class="cart-wrapper">
-      <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-      <span class="cart-count">0</span>
-    </div>
-    <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-  </div>
-</header>
-
-<!-- Hidden Search Bar (will be shown on icon click) -->
-<div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-  <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-           style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-    <button type="submit" style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-      Tìm
-    </button>
-  </form>
-</div>
-
-<!-- Scripts -->
-<script>
-  function goToCart() {
-    window.location.href = "{% url 'cart' %}";
-  }
-
-  function toggleSearchBar() {
-    const wrapper = document.getElementById('search-bar-wrapper');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'block';
-    } else {
-      wrapper.style.display = 'none';
-    }
-  }
-</script>
-
-
-  <div class="checkout-container">
-    <h1>Thanh Toán</h1>
-    <div class="address-input">
-      <div><label>Họ và Tên</label><input type="text" name="fullname" required></div>
-      <div><label>Số điện thoại</label><input type="tel" name="phone" required></div>
-      <div><label>Tỉnh / Thành phố</label><input type="text" name="province" required></div>
-      <div><label>Quận / Huyện</label><input type="text" name="district" required></div>
-      <div class="full-width"><label>Xã / Phường / Thị trấn</label><input type="text" name="ward" required></div>
-      <div class="full-width"><label>Địa chỉ cụ thể</label><input type="text" name="detail-address" required></div>
-    </div>
-
-    <table>
-      <thead>
-        <tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th><th>Tổng</th></tr>
-      </thead>
-      <tbody>
-        {% for item in cart_items %}
-        <tr>
-          <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"> {{ item.product.name }}</td>
-          <td>{{ item.product.price|intcomma }}<small>đ</small></td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.subtotal|intcomma }}<small>đ</small></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <div class="shipping-method">
-      <h3>Phương thức vận chuyển</h3>
-      <label><input type="radio" name="shipping-method" value="20000" checked> Giao nhanh 20.000đ</label>
-      <label><input type="radio" name="shipping-method" value="100000"> Giao hỏa tốc 100.000đ</label>
-    </div>
-
-    <div class="coupon-section">
-      <select name="coupon">
-        <option value="">-- Chọn mã giảm giá --</option>
-        <option value="freeship">Miễn phí vận chuyển</option>
-        <option value="discount10k">Giảm 10.000đ</option>
-      </select>
-    </div>
-
-    <div class="payment-method">
-      <h3>Phương thức thanh toán</h3>
-      <label><input type="radio" name="payment-method" value="cod" checked> COD</label>
-      <label><input type="radio" name="payment-method" value="bank"> Ngân hàng</label>
-      <label><input type="radio" name="payment-method" value="momo"> MoMo</label>
-    </div>
-
-    <div class="cart-summary">
-      <h3>Tổng đơn hàng</h3>
-      <p><span>Tổng tiền hàng:</span><span>{{ total|intcomma }}đ</span></p>
-      <p><span>Phí vận chuyển:</span><span id="shipping_display">0đ</span></p>
-      <p><span>Giảm giá:</span><span id="discount_display">0đ</span></p>
-      <p><strong><span>Tổng cộng:</span><span id="total_display">{{ total|intcomma }}đ</span></strong></p>
-
-      <input type="hidden" name="shipping_fee" id="shipping_fee" value="20000">
-      <input type="hidden" name="discount" id="discount" value="0">
-      <input type="hidden" name="total" id="total_price" value="{{ total }}">
-
-      <button type="submit">Đặt hàng</button>
-    </div>
-  </div>
-
-    <!-- Modal for QR Code -->
-    <div id="qr-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <p id="modal-title">Quét mã QR để thanh toán</p>
-            <img id="qr-image" src="" alt="QR Code">
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div class="benefit-item">
-                <i class="fas fa-paw benefit-icon"></i>
-                <span class="benefit-text">Không thử nghiệm trên động vật</span>
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+                <span class="shop-name">BEAUTYA</span>
             </div>
-            <div class="benefit-item">
-                <i class="fas fa-leaf benefit-icon"></i>
-                <span class="benefit-text">Không có thành phần từ động vật</span>
+
+            <nav class="nav-menu">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+                <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+                <a href="{% url 'about' %}" class="nav-link">About Us</a>
+                <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+                {% else %}
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                {% endif %}
+            </nav>
+
+            <div class="header-actions">
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="user-name">
+                    <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+                </a>
+                {% endif %}
             </div>
-            <div class="benefit-item">
-                <i class="fas fa-bread-slice benefit-icon"></i>
-                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
-            </div>
-            <div class="benefit-item">
-                <i class="fas fa-recycle benefit-icon"></i>
-                <span class="benefit-text">Bao bì có thể tái chế</span>
-            </div>
+        </header>
+
+        <!-- Hidden Search Bar (will be shown on icon click) -->
+        <div id="search-bar-wrapper"
+            style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
+            <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
+                    style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+                <button type="submit"
+                    style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
+                    Tìm
+                </button>
+            </form>
         </div>
 
-        <div class="footer-main">
-            <div class="footer-column">
-                <h3>Chúng tôi có thể giúp gì?</h3>
-                <ul>
-                    <li><a href="#">Beautya branches</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Products</h3>
-                <ul>
-                    <li><a href="#">Chính Sách Bảo Mật</a></li>
-                    <li><a href="#">Chính Sách Bảo Hành</a></li>
-                    <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Giữ liên lạc với Beautya</h3>
-                <p style="color: white; margin-bottom: 24px">
-                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
-                </p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Email" class="newsletter-input" />
-                    <button type="submit" class="newsletter-submit">Subscribe</button>
-                </form>
-                <label class="consent-text">
-                    <input type="checkbox" required>
-                    Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-                </label>
-            </div>
-        </div>
-
-        <div class="footer-contact-row">
-            <div class="footer-contact-group">
-                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
-            </div>
-            <div class="footer-social-group">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-            <div class="legal-links">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        let appliedCoupon = null;
-
-        async function loadProvinces() {
-            const res = await fetch('https://provinces.open-api.vn/api/?depth=1');
-            const data = await res.json();
-            const select = document.getElementById('province');
-            select.innerHTML = '<option value="">-- Chọn Tỉnh / Thành phố --</option>';
-            data.forEach(p => {
-                const option = document.createElement('option');
-                option.value = p.code;
-                option.textContent = p.name;
-                option.dataset.name = p.name;
-                select.appendChild(option);
-            });
-        }
-
-        async function loadDistricts(provinceCode) {
-            const res = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
-            const data = await res.json();
-            const select = document.getElementById('district');
-            select.innerHTML = '<option value="">-- Chọn Quận / Huyện --</option>';
-            document.getElementById('ward').innerHTML = '<option value="">-- Chọn Phường / Xã --</option>';
-            data.districts.forEach(d => {
-                const option = document.createElement('option');
-                option.value = d.code;
-                option.textContent = d.name;
-                select.appendChild(option);
-            });
-        }
-
-        async function loadWards(districtCode) {
-            const res = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
-            const data = await res.json();
-            const select = document.getElementById('ward');
-            select.innerHTML = '<option value="">-- Chọn Phường / Xã --</option>';
-            data.wards.forEach(w => {
-                const option = document.createElement('option');
-                option.value = w.code;
-                option.textContent = w.name;
-                select.appendChild(option);
-            });
-        }
-
-        function applyCoupon() {
-            const couponSelect = document.getElementById('coupon-code');
-            const couponValue = couponSelect.value;
-            const validCoupons = {
-                'freeship': { type: 'freeship', value: 0 },
-                'discount10k': { type: 'discount', value: 10000 }
-            };
-
-            if (couponValue && validCoupons[couponValue]) {
-                appliedCoupon = validCoupons[couponValue];
-                alert('Áp dụng mã giảm giá thành công!');
-            } else {
-                appliedCoupon = null;
-                alert('Vui lòng chọn mã giảm giá hợp lệ.');
+        <!-- Scripts -->
+        <script>
+            function goToCart() {
+                window.location.href = "{% url 'cart' %}";
             }
 
-            updateTotal();
-        }
-
-        function updateTotal() {
-            let subtotal = 0;
-            document.querySelectorAll('tbody tr').forEach(row => {
-                const priceText = row.cells[1].textContent.replace('đ', '').replace('.', '');
-                const price = parseInt(priceText);
-                const qty = parseInt(row.querySelector('.qty-input').value);
-                const itemSubtotal = price * qty;
-                row.querySelector('.item-subtotal').textContent = itemSubtotal.toLocaleString() + 'đ';
-                subtotal += itemSubtotal;
-            });
-
-            const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
-            let shipping = selectedShipping ? parseInt(selectedShipping.value) : 0;
-
-            const provinceSelect = document.querySelector('#province');
-            const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
-            const provinceName = selectedOption?.dataset.name || '';
-
-            if (selectedShipping?.dataset.method === 'Hỏa Tốc' && provinceName !== 'Thành phố Hà Nội') {
-                alert('Phương thức giao hàng Hỏa Tốc chỉ áp dụng tại Hà Nội.');
-                selectedShipping.checked = false;
-                document.querySelector('input[name="shipping-method"][data-method="Nhanh"]').checked = true;
-                shipping = 20000;
-            }
-
-            let discount = 0;
-            if (appliedCoupon) {
-                if (appliedCoupon.type === 'freeship') {
-                    shipping = 0;
-                } else if (appliedCoupon.type === 'discount') {
-                    discount = appliedCoupon.value;
+            function toggleSearchBar() {
+                const wrapper = document.getElementById('search-bar-wrapper');
+                if (wrapper.style.display === 'none') {
+                    wrapper.style.display = 'block';
+                } else {
+                    wrapper.style.display = 'none';
                 }
             }
+        </script>
 
-            document.querySelector('.summary-subtotal').textContent = subtotal.toLocaleString() + 'đ';
-            document.querySelector('.summary-shipping').textContent = shipping.toLocaleString() + 'đ';
-            document.querySelector('.summary-discount').textContent = discount.toLocaleString() + 'đ';
-            document.querySelector('.summary-total').textContent = (subtotal + shipping - discount).toLocaleString() + 'đ';
-        }
 
-        function validateOrder() {
-            const name = document.getElementById('fullname').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const province = document.getElementById('province').value;
-            const district = document.getElementById('district').value;
-            const ward = document.getElementById('ward').value;
-            const detailAddress = document.getElementById('detail-address').value.trim();
-            const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
-            const qrModal = document.getElementById('qr-modal');
-            const qrImage = document.getElementById('qr-image');
-            const modalTitle = document.getElementById('modal-title');
+        <form method="POST" action="{% url 'checkout_submit' %}" onsubmit="return validateOrder()">
+            {% csrf_token %}
+            <div class="checkout-container">
+                <h1>Thanh Toán</h1>
 
-            if (!name || !phone || !province || !district || !ward || !detailAddress || !paymentMethod) {
-                alert("Vui lòng điền đầy đủ thông tin giao hàng và chọn phương thức thanh toán.");
-                return false;
+                <div class="address-input">
+                    <div><label>Họ và Tên</label><input type="text" name="fullname" value="{{ user.full_name }}"
+                            required></div>
+                    <div><label>Số điện thoại</label><input type="tel" name="phone" value="{{ user.phone }}" required>
+                    </div>
+
+                    <div><label>Tỉnh / Thành phố</label>
+                        <select name="province" id="province" required>
+                            <option value="">-- Chọn Tỉnh / Thành phố --</option>
+                        </select>
+                    </div>
+
+                    <div><label>Quận / Huyện</label>
+                        <select name="district" id="district" required>
+                            <option value="">-- Chọn Quận / Huyện --</option>
+                        </select>
+                    </div>
+
+                    <div class="full-width"><label>Xã / Phường / Thị trấn</label>
+                        <select name="ward" id="ward" required>
+                            <option value="">-- Chọn Phường / Xã --</option>
+                        </select>
+                    </div>
+
+                    <div class="full-width"><label>Địa chỉ cụ thể</label>
+                        <input type="text" name="detail_address" id="detail-address" required>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                {% if item.product %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                {{ item.product.name }}
+                                {% else %}
+                                <span class="text-muted">[Sản phẩm đã bị xóa]</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.product.price|default:0|intcomma }}<small>đ</small></td>
+                            <td class="qty">{{ item.quantity }}</td>
+                            <td class="item-subtotal">{{ item.subtotal|intcomma }}<small>đ</small></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <div class="shipping-method">
+                    <h3>Phương thức vận chuyển</h3>
+                    <label><input type="radio" name="shipping_method" value="20000" checked onchange="updateTotal()">
+                        Giao nhanh 20.000đ</label>
+                    <label><input type="radio" name="shipping_method" value="100000" onchange="updateTotal()"> Giao hỏa
+                        tốc 100.000đ</label>
+                </div>
+
+                <div class="coupon-section">
+                    <select name="coupon" onchange="applyCoupon()" id="coupon">
+                        <option value="">-- Chọn mã giảm giá --</option>
+                        <option value="freeship">Miễn phí vận chuyển</option>
+                        <option value="discount10k">Giảm 10.000đ</option>
+                    </select>
+                </div>
+
+                <div class="payment-method">
+                    <h3>Phương thức thanh toán</h3>
+                    <label><input type="radio" name="payment_method" value="cod" checked> COD</label>
+                    <label><input type="radio" name="payment_method" value="bank"> Ngân hàng</label>
+                    <label><input type="radio" name="payment_method" value="momo"> MoMo</label>
+                </div>
+
+                <div class="cart-summary">
+                    <h3>Tổng đơn hàng</h3>
+                    <p><span>Tổng tiền hàng:</span><span class="summary-subtotal">{{ total|default:0|intcomma }}đ</span>
+                    </p>
+                    <p><span>Phí vận chuyển:</span><span class="summary-shipping">20,000đ</span></p>
+                    <p><span>Giảm giá:</span><span class="summary-discount">0đ</span></p>
+                    <p><strong><span>Tổng cộng:</span><span class="summary-total">{{ total|default:0|add:20000|intcomma
+                                }}đ</span></strong></p>
+
+                    <input type="hidden" name="shipping_fee" id="shipping_fee" value="20000">
+                    <input type="hidden" name="discount" id="discount" value="0">
+                    <input type="hidden" name="total" id="total_price" value="{{ total|default:0|add:20000 }}">
+
+                    <button type="submit" id="submit-order">Đặt hàng</button>
+                </div>
+            </div>
+
+            <!-- Modal QR -->
+            <div id="qr-modal" class="modal" style="display:none">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal()">&times;</span>
+                    <p id="modal-title">Quét mã QR để thanh toán</p>
+                    <img id="qr-image" src="/static/images/momo_qr.png" alt="QR Code">
+                </div>
+            </div>
+        </form>
+
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-top">
+                <div class="benefit-item">
+                    <i class="fas fa-paw benefit-icon"></i>
+                    <span class="benefit-text">Không thử nghiệm trên động vật</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-leaf benefit-icon"></i>
+                    <span class="benefit-text">Không có thành phần từ động vật</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-bread-slice benefit-icon"></i>
+                    <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-recycle benefit-icon"></i>
+                    <span class="benefit-text">Bao bì có thể tái chế</span>
+                </div>
+            </div>
+
+            <div class="footer-main">
+                <div class="footer-column">
+                    <h3>Chúng tôi có thể giúp gì?</h3>
+                    <ul>
+                        <li><a href="#">Beautya branches</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Chính Sách Bảo Mật</a></li>
+                        <li><a href="#">Chính Sách Bảo Hành</a></li>
+                        <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Giữ liên lạc với Beautya</h3>
+                    <p style="color: white; margin-bottom: 24px">
+                        Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên
+                        chăm sóc da.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email" class="newsletter-input" />
+                        <button type="submit" class="newsletter-submit">Subscribe</button>
+                    </form>
+                    <label class="consent-text">
+                        <input type="checkbox" required>
+                        Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                    </label>
+                </div>
+            </div>
+
+            <div class="footer-contact-row">
+                <div class="footer-contact-group">
+                    <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                    <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+                </div>
+                <div class="footer-social-group">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+                <div class="legal-links">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            let appliedCoupon = null;
+
+            async function loadProvinces() {
+                const res = await fetch('https://provinces.open-api.vn/api/?depth=1');
+                const data = await res.json();
+                const select = document.getElementById('province');
+                data.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.code;
+                    option.textContent = p.name;
+                    option.dataset.name = p.name;
+                    select.appendChild(option);
+                });
             }
 
-            const phonePattern = /^0\d{9}$/;
-            if (!phonePattern.test(phone)) {
-                alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 chữ số bắt đầu bằng 0.");
-                return false;
+            async function loadDistricts(provinceCode) {
+                const res = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+                const data = await res.json();
+                const select = document.getElementById('district');
+                select.innerHTML = '';
+                document.getElementById('ward').innerHTML = '';
+                data.districts.forEach(d => {
+                    const option = document.createElement('option');
+                    option.value = d.code;
+                    option.textContent = d.name;
+                    select.appendChild(option);
+                });
             }
 
-            if (paymentMethod.value === 'bank') {
-                modalTitle.textContent = "Quét mã QR để thanh toán qua MB Bank";
-                qrImage.src = 'img/QR-bank.jpg'; // MB Bank QR code
-                qrModal.style.display = 'flex';
-            } else if (paymentMethod.value === 'momo') {
-                modalTitle.textContent = "Quét mã QR để thanh toán qua MoMo";
-                qrImage.src = 'img/QR-momo.jpg'; // MoMo QR code
-                qrModal.style.display = 'flex';
-            } else if (paymentMethod.value === 'cod') {
-                alert("Đặt hàng thành công!");
+            async function loadWards(districtCode) {
+                const res = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+                const data = await res.json();
+                const select = document.getElementById('ward');
+                select.innerHTML = '';
+                data.wards.forEach(w => {
+                    const option = document.createElement('option');
+                    option.value = w.code;
+                    option.textContent = w.name;
+                    select.appendChild(option);
+                });
             }
 
-            return paymentMethod.value === 'cod'; // Chỉ return true khi là COD, còn lại giữ form mở để xem QR
-        }
-
-        function closeModal() {
-            const qrModal = document.getElementById('qr-modal');
-            qrModal.style.display = 'none';
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProvinces();
-
-            document.getElementById('province').addEventListener('change', function () {
-                loadDistricts(this.value);
+            function applyCoupon() {
+                const couponSelect = document.getElementById('coupon');
+                const value = couponSelect.value;
+                const validCoupons = {
+                    'freeship': { type: 'freeship', value: 0 },
+                    'discount10k': { type: 'discount', value: 10000 }
+                };
+                if (value && validCoupons[value]) {
+                    appliedCoupon = validCoupons[value];
+                    alert('Áp dụng mã thành công!');
+                } else {
+                    appliedCoupon = null;
+                    alert('Mã không hợp lệ hoặc không tồn tại.');
+                }
                 updateTotal();
-            });
+            }
 
-            document.getElementById('district').addEventListener('change', function () {
-                loadWards(this.value);
-            });
+            function updateTotal() {
+                let subtotal = 0;
+                document.querySelectorAll('tbody tr').forEach(row => {
+                    const priceText = row.cells[1].textContent.replace(/\D/g, '');
+                    const price = parseInt(priceText);
+                    const qty = parseInt(row.cells[2].textContent);
+                    const itemSubtotal = price * qty;
+                    row.cells[3].textContent = itemSubtotal.toLocaleString() + 'đ';
+                    subtotal += itemSubtotal;
+                });
 
-            document.querySelectorAll('.qty-input').forEach(input => {
-                input.addEventListener('input', updateTotal);
-            });
+                const shippingInput = document.querySelector('input[name="shipping_method"]:checked');
+                let shipping = shippingInput ? parseInt(shippingInput.value) : 0;
 
-            document.querySelectorAll('input[name="shipping-method"]').forEach(input => {
-                input.addEventListener('change', updateTotal);
-            });
+                const provinceSelect = document.getElementById('province');
+                const provinceName = provinceSelect.options[provinceSelect.selectedIndex]?.textContent || '';
 
-            updateTotal();
-
-            // Đóng modal khi nhấn ra ngoài vùng modal-content
-            window.onclick = function(event) {
-                const qrModal = document.getElementById('qr-modal');
-                if (event.target === qrModal) {
-                    qrModal.style.display = 'none';
+                // Hạn chế giao hỏa tốc ngoài Hà Nội
+                if (shippingInput?.value === "100000" && provinceName !== "Thành phố Hà Nội") {
+                    alert("Giao hỏa tốc chỉ hỗ trợ tại Hà Nội. Đã chuyển sang Giao nhanh.");
+                    document.querySelector('input[name="shipping_method"][value="20000"]').checked = true;
+                    shipping = 20000;
                 }
-            };
-        });
-    </script>
-</body>
+
+                let discount = 0;
+                if (appliedCoupon) {
+                    if (appliedCoupon.type === 'freeship') {
+                        shipping = 0;
+                    } else if (appliedCoupon.type === 'discount') {
+                        discount = appliedCoupon.value;
+                    }
+                }
+
+                const total = subtotal + shipping - discount;
+
+                document.querySelector('.summary-subtotal').textContent = subtotal.toLocaleString() + 'đ';
+                document.querySelector('.summary-shipping').textContent = shipping.toLocaleString() + 'đ';
+                document.querySelector('.summary-discount').textContent = discount.toLocaleString() + 'đ';
+                document.querySelector('.summary-total').textContent = total.toLocaleString() + 'đ';
+
+                document.getElementById('shipping_fee').value = shipping;
+                document.getElementById('discount').value = discount;
+                document.getElementById('total_price').value = total;
+            }
+
+            function validateOrder() {
+                const name = document.querySelector('input[name="fullname"]').value.trim();
+                const phone = document.querySelector('input[name="phone"]').value.trim();
+                const province = document.getElementById('province').value;
+                const district = document.getElementById('district').value;
+                const ward = document.getElementById('ward').value;
+                const address = document.getElementById('detail-address').value.trim();
+                const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+                const qrModal = document.getElementById('qr-modal');
+                const qrImage = document.getElementById('qr-image');
+                const modalTitle = document.getElementById('modal-title');
+
+                if (!name || !phone || !province || !district || !ward || !address || !paymentMethod) {
+                    alert("Vui lòng điền đầy đủ thông tin giao hàng và chọn phương thức thanh toán.");
+                    return false;
+                }
+
+                const phonePattern = /^0\d{9}$/;
+                if (!phonePattern.test(phone)) {
+                    alert("Số điện thoại không hợp lệ (bắt đầu bằng 0, đủ 10 số).");
+                    return false;
+                }
+
+                if (paymentMethod.value === 'bank') {
+                    modalTitle.textContent = "Quét mã QR để thanh toán qua Ngân hàng";
+                    qrImage.src = '/static/images/bank_qr.png';
+                    qrModal.style.display = 'flex';
+                    return false;
+                }
+
+                if (paymentMethod.value === 'momo') {
+                    modalTitle.textContent = "Quét mã QR để thanh toán qua MoMo";
+                    qrImage.src = '/static/images/momo_qr.png';
+                    qrModal.style.display = 'flex';
+                    return false;
+                }
+
+                alert("Đặt hàng thành công!");
+                return true;
+            }
+
+            function closeModal() {
+                document.getElementById('qr-modal').style.display = 'none';
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                loadProvinces();
+
+                document.getElementById('province').addEventListener('change', function () {
+                    loadDistricts(this.value);
+                    updateTotal();
+                });
+
+                document.getElementById('district').addEventListener('change', function () {
+                    loadWards(this.value);
+                });
+
+                document.querySelectorAll('input[name="shipping_method"]').forEach(input => {
+                    input.addEventListener('change', updateTotal);
+                });
+
+                document.getElementById('coupon').addEventListener('change', applyCoupon);
+
+                updateTotal();
+
+                // Đóng modal khi nhấn ra ngoài
+                window.onclick = function (event) {
+                    const modal = document.getElementById('qr-modal');
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+            });
+        </script>
+
+
+    </body>
+
 </html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{% load humanize %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ sơ người dùng - BEAUTYA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- FontAwesome (icon user) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS đơn giản -->
+    <style>
+        /* ===== Profile Page Styles (Không ảnh hưởng header) ===== */
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 32px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-left: 4px solid #ff7eb9;
+            padding-left: 12px;
+            color: #222;
+        }
+
+        .profile-info p {
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .profile-info p strong {
+            color: #555;
+            width: 160px;
+            display: inline-block;
+        }
+
+        .recent-orders {
+            margin-top: 40px;
+        }
+
+        .recent-orders h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .order-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .order-list li {
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: background 0.2s;
+            font-size: 15px;
+        }
+
+        .order-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .order-status {
+            font-weight: bold;
+            font-size: 14px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: white;
+            background-color: #999;
+        }
+
+        .order-status.pending {
+            background-color: #f0ad4e;
+        }
+
+        .order-status.processing {
+            background-color: #5bc0de;
+        }
+
+        .order-status.shipped {
+            background-color: #0275d8;
+        }
+
+        .order-status.done {
+            background-color: #5cb85c;
+        }
+
+        .order-status.cancelled {
+            background-color: #d9534f;
+        }
+
+        .text-muted {
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .profile-container {
+                padding: 20px;
+            }
+
+            .profile-info p strong {
+                width: auto;
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            .order-list li {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+            <span class="shop-name">BEAUTYA</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+            <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+            <a href="{% url 'about' %}" class="nav-link">About Us</a>
+            <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+            {% else %}
+            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            {% endif %}
+        </nav>
+
+        <div class="header-actions">
+            <div class="cart-wrapper">
+                <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="user-name">
+                <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+            </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <h2 class="section-title">Hồ sơ người dùng</h2>
+
+        <div class="profile-info">
+            <p><strong>Họ tên:</strong> {{ user.get_full_name|default:user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+        </div>
+
+        <hr>
+
+        <div class="recent-orders">
+            <h3>Đơn hàng gần đây</h3>
+            {% if orders %}
+            <ul class="order-list">
+                {% for order in orders %}
+                <li>
+                    <strong>Đơn #{{ order.id }}</strong> - {{ order.total|intcomma }}đ -
+                    {{ order.get_status_display }} - {{ order.created_at|date:"d/m/Y H:i" }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Bạn chưa có đơn hàng nào.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 BEAUTYA - All rights reserved.
+    </div>
+
+</body>
+
+</html>

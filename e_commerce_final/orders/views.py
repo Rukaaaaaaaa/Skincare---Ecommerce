@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import JsonResponse
+from django.utils.http import url_has_allowed_host_and_scheme
 from .models import CartItem, Order, OrderItem
 from products.models import Product
-from django.contrib import messages
+
 
 
 @login_required
@@ -13,30 +17,46 @@ def cart_view(request):
     total = sum(item.subtotal() for item in cart_items)
     return render(request, 'cart.html', {
         'cart_items': cart_items,
-        'total': total,
+        'total': total
     })
-
 
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    qty = request.GET.get('qty')
+    next_url = request.GET.get('next')
+
+    try:
+        quantity = int(qty)
+        if quantity < 1:
+            quantity = 1
+    except (ValueError, TypeError):
+        quantity = 1
+
     cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
     if not created:
-        cart_item.quantity += 1
-        cart_item.save()
+        cart_item.quantity += quantity
+    else:
+        cart_item.quantity = quantity
+    cart_item.save()
+
+    # Redirect theo next nếu có
+    if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts=None):
+        return redirect(next_url)
+
     return redirect('cart')
 
 
+
 @login_required
+@require_POST
 def update_cart_quantity(request):
-    if request.method == "POST":
-        item_id = request.POST.get('item_id')
-        quantity = int(request.POST.get('quantity'))
-        item = get_object_or_404(CartItem, id=item_id, user=request.user)
-        item.quantity = quantity
-        item.save()
-        return JsonResponse({'success': True, 'subtotal': item.subtotal()})
-    return JsonResponse({'success': False})
+    item_id = request.POST.get('item_id')
+    quantity = int(request.POST.get('quantity', 1))
+    item = get_object_or_404(CartItem, id=item_id, user=request.user)
+    item.quantity = quantity
+    item.save()
+    return JsonResponse({'success': True, 'subtotal': item.subtotal()})
 
 
 @login_required
@@ -47,26 +67,53 @@ def remove_cart_item(request, item_id):
 
 
 @login_required
+def checkout_page(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total = sum(item.subtotal() for item in cart_items)
+
+    if not cart_items.exists():
+        messages.warning(request, "Giỏ hàng của bạn đang trống.")
+        return redirect('cart')
+
+    return render(request, 'checkout.html', {
+        'cart_items': cart_items,
+        'total': total,
+    })
+
+
+@login_required
 @require_POST
 def checkout_view(request):
-    try:
-        cart_items = CartItem.objects.filter(user=request.user)
-        if not cart_items.exists():
-            messages.error(request, "Giỏ hàng trống!")
-            return redirect('cart')
+    cart_items = CartItem.objects.filter(user=request.user)
+    if not cart_items.exists():
+        messages.error(request, "Giỏ hàng trống!")
+        return redirect('cart')
 
-        full_name = request.POST['fullname']
-        phone = request.POST['phone']
-        province = request.POST['province']
-        district = request.POST['district']
-        ward = request.POST['ward']
-        address_detail = request.POST['detail-address']
-        payment_method = request.POST['payment-method']
+    try:
+        # Lấy dữ liệu từ form
+        full_name = request.POST.get('fullname', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        province = request.POST.get('province', '').strip()
+        district = request.POST.get('district', '').strip()
+        ward = request.POST.get('ward', '').strip()
+        address_detail = request.POST.get('detail_address', '').strip()
+        payment_method = request.POST.get('payment_method')
         shipping_fee = int(request.POST.get('shipping_fee', 0))
         discount = int(request.POST.get('discount', 0))
+        total = int(request.POST.get('total', 0))
 
-        total = sum(item.subtotal() for item in cart_items) + shipping_fee - discount
+        # Kiểm tra bắt buộc
+        if not (full_name and phone and province and district and ward and address_detail and payment_method):
+            messages.error(request, "Vui lòng điền đầy đủ thông tin giao hàng.")
+            return redirect('checkout')
 
+        # Kiểm tra số điện thoại hợp lệ
+        import re
+        if not re.match(r"^0\d{9}$", phone):
+            messages.error(request, "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 số.")
+            return redirect('checkout')
+
+        # Tạo đơn hàng
         order = Order.objects.create(
             user=request.user,
             full_name=full_name,
@@ -75,12 +122,13 @@ def checkout_view(request):
             district=district,
             ward=ward,
             address_detail=address_detail,
-            payment_method=payment_method,
             shipping_fee=shipping_fee,
             discount=discount,
-            total=total
+            total=total,
+            payment_method=payment_method
         )
 
+        # Thêm sản phẩm vào đơn hàng
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -88,9 +136,21 @@ def checkout_view(request):
                 quantity=item.quantity,
                 price=item.product.price
             )
+
+        # Xóa giỏ hàng
         cart_items.delete()
-        messages.success(request, "Đặt hàng thành công!")
-        return redirect('home')
+
+        # Gửi email xác nhận
+        send_mail(
+            subject="Xác nhận đơn hàng BEAUTYA",
+            message=f"Cảm ơn {full_name}, bạn đã đặt hàng thành công.\nMã đơn hàng: #{order.id}.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            fail_silently=True
+        )
+
+        messages.success(request, "Đặt hàng thành công! Vui lòng kiểm tra email để xác nhận.")
+        return redirect('cart')
 
     except Exception as e:
         messages.error(request, f"Đã xảy ra lỗi: {str(e)}")

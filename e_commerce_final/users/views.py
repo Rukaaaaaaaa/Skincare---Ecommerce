@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from orders.models import Order
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -27,3 +30,12 @@ def login_view(request):
         else:
             messages.error(request, "Sai tên đăng nhập hoặc mật khẩu.")
     return render(request, 'Login.html')
+@login_required
+def profile_view(request):
+    user = request.user
+    orders = Order.objects.filter(user=user).order_by('-created_at')[:5]  
+
+    return render(request, 'profile.html', {
+        'user': user,
+        'orders': orders
+    })

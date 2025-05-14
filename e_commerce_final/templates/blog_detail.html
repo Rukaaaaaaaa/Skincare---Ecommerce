@@ -1,347 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% load static %}
+{% load static %}
+
 <head>
-    <title>Beautya - Blog Detail</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>Beautya - Blog Detail</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
+  <style>
+    /* Main Content */
+    .main-content {
+      max-width: 1440px;
+      margin: auto 40px;
+      padding: 0 108px;
+      display: flex;
+      gap: 24px;
+    }
 
-        /* Main Content */
-        .main-content {
-            max-width: 1440px;
-            margin: auto 40px;
-            padding: 0 108px;
-            display: flex;
-            gap: 24px;
-        }
+    .article {
+      flex: 3;
+      margin-bottom: 50px;
+    }
 
-        .article {
-            flex: 3;
-            margin-bottom: 50px;
-        }
+    .article-image {
+      width: 100%;
+      height: 513px;
+      object-fit: cover;
+    }
 
-        .article-image {
-            width: 100%;
-            height: 513px;
-            object-fit: cover;
-        }
+    .article-content {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-        .article-content {
-            margin-top: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+    .article-title {
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: capitalize;
+      line-height: 44.8px;
+    }
 
-        .article-title {
-            font-size: 32px;
-            font-weight: 700;
-            text-transform: capitalize;
-            line-height: 44.8px;
-        }
+    .article-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
 
-        .article-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
+    .meta-item {
+      color: #606060;
+      font-size: 16px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 28.8px;
+    }
 
-        .meta-item {
-            color: #606060;
-            font-size: 16px;
-            font-weight: 400;
-            text-transform: capitalize;
-            line-height: 28.8px;
-        }
+    .meta-divider {
+      width: 24px;
+      height: 1px;
+      background-color: #606060;
+      transform: rotate(90deg);
+    }
 
-        .meta-divider {
-            width: 24px;
-            height: 1px;
-            background-color: #606060;
-            transform: rotate(90deg);
-        }
+    .article-intro {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
 
-        .article-intro {
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-        }
+    .drop-cap {
+      font-size: 96px;
+      font-weight: 700;
+      line-height: 96px;
+    }
 
-        .drop-cap {
-            font-size: 96px;
-            font-weight: 700;
-            line-height: 96px;
-        }
+    .intro-text {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+    }
 
-        .intro-text {
-            font-size: 18px;
-            font-weight: 400;
-            text-transform: capitalize;
-            line-height: 32.4px;
-        }
+    .article-body {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+    }
 
-        .article-body {
-            font-size: 18px;
-            font-weight: 400;
-            text-transform: capitalize;
-            line-height: 32.4px;
-        }
+    .article-section-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      margin: 16px 0 8px;
+    }
 
-        .article-section-title {
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 28px;
-            margin: 16px 0 8px;
-        }
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            flex: 1;
-        }
+    .sidebar-title {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: capitalize;
+      line-height: 33.6px;
+      margin-bottom: 12px;
+    }
 
-        .sidebar-title {
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: capitalize;
-            line-height: 33.6px;
-            margin-bottom: 12px;
-        }
+    .latest-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-        .latest-posts {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+    .latest-post {
+      width: 100%;
+      height: 105px;
+      background: white;
+      border: 1px solid #dfdfdf;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 8px;
+    }
 
-        .latest-post {
-            width: 100%;
-            height: 105px;
-            background: white;
-            border: 1px solid #dfdfdf;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-right: 8px;
-        }
+    .latest-post img {
+      width: 136px;
+      height: 105px;
+      object-fit: cover;
+    }
 
-        .latest-post img {
-            width: 136px;
-            height: 105px;
-            object-fit: cover;
-        }
-
-        .latest-post-title {
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 25.2px;
-        }
-    </style>
+    .latest-post-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 25.2px;
+    }
+  </style>
 </head>
+
 <body>
 
-        <!-- Header -->
-<!-- Header -->
+  <!-- Header -->
 <header class="header">
-  <div class="logo">
-    <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-    <span class="shop-name">BEAUTYA</span>
-  </div>
-
-  <nav class="nav-menu">
-    <a href="{% url 'home' %}" class="nav-link">Home</a>
-    <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-    <a href="{% url 'about' %}" class="nav-link">About Us</a>
-    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-    <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-  </nav>
-
-  <div class="header-actions">
-    <div class="cart-wrapper">
-      <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-      <span class="cart-count">0</span>
+    <div class="logo">
+        <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+        <span class="shop-name">BEAUTYA</span>
     </div>
-    <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-  </div>
+
+    <nav class="nav-menu">
+        <a href="{% url 'home' %}" class="nav-link">Home</a>
+        <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+        <a href="{% url 'about' %}" class="nav-link">About Us</a>
+        <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+        {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+        {% else %}
+            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+        {% endif %}
+    </nav>
+
+    <div class="header-actions">
+        <div class="cart-wrapper">
+            <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+            <span class="cart-count">0</span>
+        </div>
+        <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="user-name">
+                <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+            </a>
+        {% endif %}
+    </div>
 </header>
 
-<!-- Hidden Search Bar (will be shown on icon click) -->
-<div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-  <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-           style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-    <button type="submit" style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-      Tìm
-    </button>
-  </form>
-</div>
+  <!-- Hidden Search Bar (will be shown on icon click) -->
+  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
+    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
+        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit"
+        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
+        Tìm
+      </button>
+    </form>
+  </div>
 
-<!-- Scripts -->
-<script>
-  function goToCart() {
-    window.location.href = "{% url 'cart' %}";
-  }
-
-  function toggleSearchBar() {
-    const wrapper = document.getElementById('search-bar-wrapper');
-    if (wrapper.style.display === 'none') {
-      wrapper.style.display = 'block';
-    } else {
-      wrapper.style.display = 'none';
+  <!-- Scripts -->
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
     }
-  }
-</script>
 
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      if (wrapper.style.display === 'none') {
+        wrapper.style.display = 'block';
+      } else {
+        wrapper.style.display = 'none';
+      }
+    }
+  </script>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Article -->
-        <div class="article">
-            <img class="article-image" src="img/unsplash_HvkDYluePqw.png" alt="Article Image" />
-            <div class="article-content">
-                <h1 class="article-title">How to get clear skin fast</h1>
-                <div class="article-meta">
-                    <span class="meta-item">Jan 20, 2021</span>
-                    <div class="meta-divider"></div>
-                    <span class="meta-item">Dr. Wade Warren</span>
-                    <div class="meta-divider"></div>
-                    <span class="meta-item">Skincare</span>
-                </div>
-                <div class="article-intro">
-                    <span class="drop-cap">N</span>
-                    <p class="intro-text">
-                        umerous skin care tips exist for different skin types, and there are also general tips that people can try. Anyone uncertain about their skin care routine should consult a dermatologist for additional advice.
-                    </p>
-                </div>
-                <p class="article-body">
-                    Many people find it difficult to get clear skin. The methods for getting clear skin will vary, depending on the person’s skin type. In general, people struggling with acne or blemishes have skin that is dry, oily, or a combination of the two.
-                </p>
-                <h2 class="article-section-title">Avoid popping pimples</h2>
-                <p class="article-body">
-                    A pimple indicates trapped oil, sebum, and bacteria. It is also a sign that the body’s natural healing mechanism is working. <br/>
-                    Popping the pimple disrupts this healing process. Additionally, the released liquids expose the surrounding skin to similar bacteria, increasing the risk of additional pimples forming. <br/>
-                    The exposed pimple may also lead to permanent scarring. Whenever possible, avoid popping pimples. If they drain, keep the area clean.
-                </p>
-                <h2 class="article-section-title">Wash twice daily, and again after sweating</h2>
-                <p class="article-body">
-                    The American Academy of Dermatology recommend that people wash twice daily and then again after sweating. Leaving sweat on the skin and allowing it to dry can make acne worse, so it is best to wash the skin as soon as possible after sweating.
-                </p>
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Article -->
+    <div class="article">
+        <img class="article-image" src="{{ blog.image.url }}" alt="{{ blog.title }}" />
+        <div class="article-content">
+            <h1 class="article-title">{{ blog.title }}</h1>
+            <div class="article-meta">
+                <span class="meta-item">{{ blog.date|date:"M d, Y" }}</span>
+                <div class="meta-divider"></div>
+                <span class="meta-item">{{ blog.author }}</span>
+                <div class="meta-divider"></div>
+                <span class="meta-item">{{ blog.category }}</span>
             </div>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h2 class="sidebar-title">Latest</h2>
-            <div class="latest-posts">
-                <div class="latest-post">
-                    <img src="img/product1.png" alt="Latest Post Image" />
-                    <div class="latest-post-title">How to get clear skin fast</div>
-                </div>
-                <div class="latest-post">
-                    <img src="img/product2.png" alt="Latest Post Image" />
-                    <div class="latest-post-title">How to get clear skin fast</div>
-                </div>
-                <div class="latest-post">
-                    <img src="img/product3.png" alt="Latest Post Image" />
-                    <div class="latest-post-title">How to get clear skin fast</div>
-                </div>
-                <div class="latest-post">
-                    <img src="img/product4.png" alt="Latest Post Image" />
-                    <div class="latest-post-title">How to get clear skin fast</div>
-                </div>
+            <div class="article-intro">
+                <span class="drop-cap">{{ blog.content|slice:":1" }}</span>
+                <p class="intro-text">{{ blog.content|slice:"1:300" }}...</p>
             </div>
+            <p class="article-body">{{ blog.content }}</p>
         </div>
     </div>
 
-        <!-- Footer -->
-        <footer>
-            <!-- Footer Top -->
-            <div class="footer-top">
-              <div class="benefit-item">
-                <i class="fas fa-paw benefit-icon"></i>
-                <span class="benefit-text">Không thử nghiệm trên động vật</span>
-              </div>
-              <div class="benefit-item">
-                <i class="fas fa-leaf benefit-icon"></i>
-                <span class="benefit-text">Không có thành phần từ động vật</span>
-              </div>
-              <div class="benefit-item">
-                <i class="fas fa-bread-slice benefit-icon"></i>
-                <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
-              </div>
-              <div class="benefit-item">
-                <i class="fas fa-recycle benefit-icon"></i>
-                <span class="benefit-text">Bao bì có thể tái chế</span>
-              </div>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="sidebar-title">Related Posts</h2>
+        <div class="latest-posts">
+            {% for post in related_posts %}
+            <div class="latest-post">
+                <a href="{% url 'blog_detail' post.id %}">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+                    <div class="latest-post-title">{{ post.title }}</div>
+                </a>
             </div>
-      
-            <!-- Footer Main -->
-            <div class="footer-main">
-              <div class="footer-column">
-                <h3>Chúng tôi có thể giúp gì?</h3>
-                <ul>
-                  <li><a href="#">Beautya branches</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">FAQ</a></li>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Blog</a></li>
-                </ul>
-              </div>
-              <div class="footer-column">
-                <h3>Products</h3>
-                <ul>
-                  <li><a href="#">Chính Sách Bảo Mật</a></li>
-                  <li><a href="#">Chính Sách Bảo Hành</a></li>
-                  <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
-                </ul>
-              </div>
-              <div class="footer-column">
-                <h3>Giữ liên lạc với Beautya</h3>
-                <p style="color: white; margin-bottom: 24px">
-                    Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
-                </p>
-                <form class="newsletter-form">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    class="newsletter-input"
-                  />
-                  <button type="submit" class="newsletter-submit">Subscribe</button>
-                </form>
-                <label class="consent-text">
-                  <input type="checkbox" required>
-                  Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-                </label>
-                </div>
-              </div>
-            </div>
-      
-            <div class="footer-contact-row">
-              <div class="footer-contact-group">
-                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-                <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
-              </div>
-              <div class="footer-social-group">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-              </div>
-            </div>
-      
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-              <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-              <div class="legal-links">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-              </div>
-            </div>
-          </footer>
+            {% endfor %}
+        </div>
+    </div>
+</div> <!-- End of .main-content -->
+
+
+
+  <!-- Footer -->
+  <footer>
+    <!-- Footer Top -->
+    <div class="footer-top">
+      <div class="benefit-item">
+        <i class="fas fa-paw benefit-icon"></i>
+        <span class="benefit-text">Không thử nghiệm trên động vật</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-leaf benefit-icon"></i>
+        <span class="benefit-text">Không có thành phần từ động vật</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-bread-slice benefit-icon"></i>
+        <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-recycle benefit-icon"></i>
+        <span class="benefit-text">Bao bì có thể tái chế</span>
+      </div>
+    </div>
+
+    <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="#">Beautya branches</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="#">Chính Sách Bảo Mật</a></li>
+          <li><a href="#">Chính Sách Bảo Hành</a></li>
+          <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email" class="newsletter-input" />
+          <button type="submit" class="newsletter-submit">Subscribe</button>
+        </form>
+        <label class="consent-text">
+          <input type="checkbox" required>
+          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
+      </div>
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+      <div class="legal-links">
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
 </body>
+
 </html>
