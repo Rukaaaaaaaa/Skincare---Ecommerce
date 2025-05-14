@@ -9,6 +9,46 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .search-bar-wrapper {
+      display: none;
+      position: fixed;
+      top: 80px;
+      /* Giả sử header cao 80px – chỉnh theo thực tế */
+      width: 100%;
+      z-index: 9999;
+      background-color: #f3f3f3;
+      padding: 12px 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-bar-wrapper form {
+      display: inline-flex;
+      gap: 10px;
+    }
+
+    .search-bar-wrapper input[type="text"] {
+      padding: 8px 12px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .search-bar-wrapper button {
+      padding: 8px 16px;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .search-bar-wrapper button:hover {
+      background-color: #a05a2c;
+    }
+  </style>
 </head>
 
 <body>
@@ -48,19 +88,14 @@
   </header>
 
 
-  <!-- Hidden Search Bar (will be shown on icon click) -->
-  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-      <button type="submit"
-        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-        Tìm
-      </button>
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
     </form>
   </div>
 
-  <!-- Scripts -->
   <script>
     function goToCart() {
       window.location.href = "{% url 'cart' %}";
@@ -68,13 +103,10 @@
 
     function toggleSearchBar() {
       const wrapper = document.getElementById('search-bar-wrapper');
-      if (wrapper.style.display === 'none') {
-        wrapper.style.display = 'block';
-      } else {
-        wrapper.style.display = 'none';
-      }
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
     }
   </script>
+
 
   <!-- Hero Slider -->
   <section class="hero-slider">

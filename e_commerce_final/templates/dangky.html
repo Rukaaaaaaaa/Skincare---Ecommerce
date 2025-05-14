@@ -139,6 +139,7 @@
 
 <body>
 
+<body>
   <!-- Header -->
   <header class="header">
     <div class="logo">
@@ -174,19 +175,15 @@
     </div>
   </header>
 
-  <!-- Hidden Search Bar (will be shown on icon click) -->
-  <div id="search-bar-wrapper" style="display: none; padding: 12px; background-color: #f3f3f3; text-align: center;">
-    <form method="get" action="{% url 'search' %}" style="display: inline-flex; gap: 8px;">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required
-        style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-      <button type="submit"
-        style="padding: 8px 16px; background-color: #8B4513; color: white; border: none; border-radius: 4px;">
-        Tìm
-      </button>
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
     </form>
   </div>
 
-  <!-- Scripts -->
   <script>
     function goToCart() {
       window.location.href = "{% url 'cart' %}";
@@ -194,11 +191,7 @@
 
     function toggleSearchBar() {
       const wrapper = document.getElementById('search-bar-wrapper');
-      if (wrapper.style.display === 'none') {
-        wrapper.style.display = 'block';
-      } else {
-        wrapper.style.display = 'none';
-      }
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
     }
   </script>
 
@@ -221,9 +214,6 @@
     <div class="form-group">
       {{ field.label_tag }}
       {{ field }}
-      {% if field.errors %}
-      <div class="form-error">{{ field.errors }}</div>
-      {% endif %}
     </div>
     {% endfor %}
     <button type="submit" class="create-account-btn">Tạo tài khoản</button>

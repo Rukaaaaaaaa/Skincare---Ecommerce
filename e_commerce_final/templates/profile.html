@@ -12,197 +12,330 @@
     <!-- FontAwesome (icon user) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS đơn giản -->
-    <style>
-        /* ===== Profile Page Styles (Không ảnh hưởng header) ===== */
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    /* ===== Profile Page Styles (Không ảnh hưởng header) ===== */
+    body {
+        background-color: #f5f7fa;
+        color: #333;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
+    .profile-container {
+        padding: 30px;
+        max-width: 900px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        border-left: 5px solid #ff7eb9;
+        padding-left: 12px;
+        color: #222;
+    }
+
+    .section-subtitle {
+        font-size: 20px;
+        margin-bottom: 14px;
+        font-weight: 600;
+    }
+
+    .profile-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-avatar {
+        font-size: 70px;
+        margin-right: 24px;
+        color: #ccc;
+    }
+
+    .profile-details p {
+        margin: 6px 0;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .profile-details p strong {
+        color: #444;
+        display: inline-block;
+        width: 180px;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 30px 0;
+    }
+
+    .recent-orders {
+        margin-top: 20px;
+    }
+
+    .order-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .order-table th,
+    .order-table td {
+        padding: 12px 10px;
+        border: 1px solid #eee;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .order-table th {
+        background-color: #fafafa;
+        font-weight: 600;
+    }
+
+    .detail-link {
+        color: #a0004f;
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .order-status {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 3px 8px;
+        border-radius: 5px;
+        color: white;
+        background-color: #999;
+    }
+
+    .order-status.pending {
+        background-color: #f0ad4e;
+    }
+
+    .order-status.processing {
+        background-color: #5bc0de;
+    }
+
+    .order-status.shipped {
+        background-color: #0275d8;
+    }
+
+    .order-status.done {
+        background-color: #5cb85c;
+    }
+
+    .order-status.cancelled {
+        background-color: #d9534f;
+    }
+
+    .text-muted {
+        color: #888;
+        font-style: italic;
+    }
+
+    @media (max-width: 600px) {
         .profile-container {
-            max-width: 800px;
-            margin: 40px auto;
-            background-color: #fff;
-            padding: 32px 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            padding: 20px;
         }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 25px;
-            border-left: 4px solid #ff7eb9;
-            padding-left: 12px;
-            color: #222;
+        .profile-card {
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .profile-info p {
-            font-size: 16px;
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-
-        .profile-info p strong {
-            color: #555;
-            width: 160px;
-            display: inline-block;
-        }
-
-        .recent-orders {
-            margin-top: 40px;
-        }
-
-        .recent-orders h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #444;
-        }
-
-        .order-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .order-list li {
-            padding: 14px 18px;
+        .profile-avatar {
             margin-bottom: 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fafafa;
-            transition: background 0.2s;
-            font-size: 15px;
         }
 
-        .order-list li:hover {
-            background-color: #f1f1f1;
+        .profile-details p strong {
+            width: auto;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .order-status {
-            font-weight: bold;
-            font-size: 14px;
-            padding: 3px 8px;
-            border-radius: 5px;
-            color: white;
-            background-color: #999;
+        .order-table th,
+        .order-table td {
+            font-size: 13px;
+            padding: 8px;
         }
+    }
+</style>
 
-        .order-status.pending {
-            background-color: #f0ad4e;
-        }
-
-        .order-status.processing {
-            background-color: #5bc0de;
-        }
-
-        .order-status.shipped {
-            background-color: #0275d8;
-        }
-
-        .order-status.done {
-            background-color: #5cb85c;
-        }
-
-        .order-status.cancelled {
-            background-color: #d9534f;
-        }
-
-        .text-muted {
-            color: #888;
-            font-style: italic;
-        }
-
-        @media (max-width: 600px) {
-            .profile-container {
-                padding: 20px;
-            }
-
-            .profile-info p strong {
-                width: auto;
-                display: block;
-                margin-bottom: 4px;
-            }
-
-            .order-list li {
-                font-size: 14px;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="logo">
-            <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-            <span class="shop-name">BEAUTYA</span>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
+      <span class="shop-name">BEAUTYA</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+      <a href="{% url 'about' %}" class="nav-link">About Us</a>
+      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">0</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+<main class="profile-container">
+    <h2 class="section-title">👤 Hồ sơ cá nhân</h2>
+
+    <div class="profile-card">
+        <div class="profile-avatar">
+            <i class="fas fa-user-circle fa-5x"></i>
         </div>
-
-        <nav class="nav-menu">
-            <a href="{% url 'home' %}" class="nav-link">Home</a>
-            <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-            <a href="{% url 'about' %}" class="nav-link">About Us</a>
-            <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
-
-            {% if not request.user.is_authenticated %}
-            <a href="{% url 'login' %}" class="nav-link">Sign in</a>
-            {% else %}
-            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-            {% endif %}
-        </nav>
-
-        <div class="header-actions">
-            <div class="cart-wrapper">
-                <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-                <span class="cart-count">0</span>
-            </div>
-            <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
-
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'profile' %}" class="user-name">
-                <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
-            </a>
-            {% endif %}
+        <div class="profile-details">
+            <p><strong>👤 Tên người dùng:</strong> {{ user.username }}</p>
+            <p><strong>📛 Họ và tên:</strong> {{ user.full_name|default:"Chưa cập nhật" }}</p>
+            <p><strong>📧 Email:</strong> {{ user.email|default:"Chưa cập nhật" }}</p>
+            <p><strong>📱 Số điện thoại:</strong> {{ user.phone|default:"Chưa cập nhật" }}</p>
+            <p><strong>🕒 Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+            <p><strong>🛡 Vai trò:</strong> {% if user.is_staff %}<span style="color:red;">Quản trị viên</span>{% else %}Khách hàng{% endif %}</p>
         </div>
-    </header>
+    </div>
 
-    <div class="profile-container">
-        <h2 class="section-title">Hồ sơ người dùng</h2>
+    <hr class="divider">
 
-        <div class="profile-info">
-            <p><strong>Họ tên:</strong> {{ user.get_full_name|default:user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
-        </div>
-
-        <hr>
-
-        <div class="recent-orders">
-            <h3>Đơn hàng gần đây</h3>
-            {% if orders %}
-            <ul class="order-list">
+    <div class="recent-orders">
+        <h3 class="section-subtitle">🧾 Đơn hàng gần đây</h3>
+        {% if orders %}
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày</th>
+                    <th>Trạng thái</th>
+                    <th>Tổng tiền</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
                 {% for order in orders %}
-                <li>
-                    <strong>Đơn #{{ order.id }}</strong> - {{ order.total|intcomma }}đ -
-                    {{ order.get_status_display }} - {{ order.created_at|date:"d/m/Y H:i" }}
-                </li>
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.total|intcomma }}đ</td>
+                </tr>
                 {% endfor %}
-            </ul>
-            {% else %}
-            <p>Bạn chưa có đơn hàng nào.</p>
-            {% endif %}
-        </div>
+            </tbody>
+        </table>
+        {% else %}
+        <p>Bạn chưa có đơn hàng nào.</p>
+        {% endif %}
     </div>
+</main>
 
-    <div class="footer">
-        &copy; 2025 BEAUTYA - All rights reserved.
+<!-- Footer Main -->
+<div class="footer-main">
+    <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+            <li><a href="#">Beautya branches</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+        </ul>
     </div>
+    <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+            <li><a href="#">Chính Sách Bảo Mật</a></li>
+            <li><a href="#">Chính Sách Bảo Hành</a></li>
+            <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+            Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Email" class="newsletter-input" />
+            <button type="submit" class="newsletter-submit">Subscribe</button>
+        </form>
+        <label class="consent-text">
+            <input type="checkbox" required>
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
+    </div>
+</div>
+
+<div class="footer-contact-row">
+    <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i> 0-123-456-789</span>
+    </div>
+    <div class="footer-social-group">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+</div>
+
+<!-- Footer Bottom -->
+<div class="footer-bottom">
+    <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
+    <div class="legal-links">
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+</div>
 
 </body>
 

@@ -11,12 +11,15 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Đăng ký thành công. Vui lòng đăng nhập.")
+            messages.success(request, "🎉 Đăng ký thành công. Vui lòng đăng nhập.")
             return redirect('login')
         else:
-            messages.error(request, "Vui lòng kiểm tra lại thông tin đăng ký.")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{form.fields[field].label}: {error}")
     else:
         form = CustomUserCreationForm()
+
     return render(request, 'dangky.html', {'form': form})
 
 def login_view(request):
