@@ -58,6 +58,7 @@ def product_list(request):
         'current_label': label,
     }
     return render(request, 'product.html', context)
+    
 
 
     
