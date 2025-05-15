@@ -259,8 +259,8 @@
           <p><strong>📧 Email:</strong> {{ user.email|default:"Chưa cập nhật" }}</p>
           <p><strong>📱 Số điện thoại:</strong> {{ user.phone|default:"Chưa cập nhật" }}</p>
           <p><strong>🕒 Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
-          <p><strong>🛡 Vai trò:</strong> {% if user.is_staff %}<span style="color:red;margin-bottom: 100px;">Quản trị viên</span>{% else
-            %}Khách hàng{% endif %}</p>
+          <p><strong>🛡 Vai trò:</strong> {% if user.is_staff %}<span style="color:red;margin-bottom: 100px;">Quản trị viên</span>
+            {% else %}Khách hàng{% endif %}</p>
           {% if not is_google_connected %}
           <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-outline-primary"style="margin-top: 100px;">
             Liên kết với Google
