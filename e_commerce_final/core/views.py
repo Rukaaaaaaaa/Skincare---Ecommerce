@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.contrib import messages
-
+import random 
 
 load_dotenv()
 
@@ -19,11 +19,14 @@ OpenAI.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Trang chủ
 def home(request):
+    best_seller_list = list(Product.objects.filter(label='best_seller'))
+    best_seller_popup = random.choice(best_seller_list) if best_seller_list else None
     context = {
         'hero_slides': Product.objects.filter(label='models')[:3],
         'categories': Category.objects.all(),
-        'best_sellers': Product.objects.filter(label='best_seller')[:5],
-        'new_products': Product.objects.filter(label='new')[:5],
+        'best_sellers': best_seller_list[:4], 
+        'best_seller_popup': best_seller_popup,
+        'new_products': Product.objects.filter(label='new')[:4],
         'special_offer': SpecialOffer.objects.first(),
         'latest_posts': Blog.objects.order_by('-date')[:3],
         'analysis': VirtualAnalysis.objects.filter(is_active=True).first()

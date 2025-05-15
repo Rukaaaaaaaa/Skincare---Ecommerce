@@ -455,7 +455,7 @@
                                 <span class="text-muted">[Sản phẩm đã bị xóa]</span>
                                 {% endif %}
                             </td>
-                            <td>{{ item.product.price|default:0|intcomma }}<small>đ</small></td>
+                            <td>{{ item.product.price|floatformat:0|intcomma }}<small>đ</small></td>
                             <td class="qty">{{ item.quantity }}</td>
                             <td class="item-subtotal">{{ item.subtotal|intcomma }}<small>đ</small></td>
                         </tr>

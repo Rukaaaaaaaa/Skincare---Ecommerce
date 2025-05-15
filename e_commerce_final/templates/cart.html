@@ -1,169 +1,163 @@
 <!DOCTYPE html>
 <html lang="vi">
-  {% load static %} {% load humanize %}
+{% load static %} {% load humanize %}
 
-  <head>
-    <title>Beautya - Skincare & Makeup</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      .cart-item-detail {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        max-width: 500px;
-      }
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .cart-item-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 500px;
+    }
 
-      .cart-item-detail input[type="checkbox"] {
-        transform: scale(1.2);
-        margin-right: 8px;
-      }
+    .cart-item-detail input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 8px;
+    }
 
-      .cart-item-detail img {
-        width: 80px;
-        height: 80px;
-        border-radius: 5px;
-        object-fit: cover;
-        flex-shrink: 0;
-        margin: 0;
-      }
+    .cart-item-detail img {
+      width: 80px;
+      height: 80px;
+      border-radius: 5px;
+      object-fit: cover;
+      flex-shrink: 0;
+      margin: 0;
+    }
 
-      .cart-item-name {
-        font-size: 16px;
-        line-height: 1.4;
-        color: #333;
-        word-break: break-word;
-      }
+    .cart-item-name {
+      font-size: 16px;
+      line-height: 1.4;
+      color: #333;
+      word-break: break-word;
+    }
 
-      .cart-page {
-        max-width: 1200px;
-        padding: 0 20px;
-        margin: auto;
-      }
+    .cart-page {
+      max-width: 1200px;
+      padding: 0 20px;
+      margin: auto;
+    }
 
-      .cart-page h1 {
-        font-size: 28px;
-        color: #c80064;
-        margin: 20px 0 30px;
-        font-weight: 700;
-      }
+    .cart-page h1 {
+      font-size: 28px;
+      color: #c80064;
+      margin: 20px 0 30px;
+      font-weight: 700;
+    }
 
-      .cart-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 40px;
-      }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
 
-      .cart-table thead {
-        background-color: #f9f9f9;
-        font-weight: bold;
-      }
+    .cart-table thead {
+      background-color: #f9f9f9;
+      font-weight: bold;
+    }
 
-      .cart-table th,
-      .cart-table td {
-        text-align: left;
-        padding: 15px;
-        border-bottom: 1px solid #eee;
-      }
+    .cart-table th,
+    .cart-table td {
+      text-align: left;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
 
-      .cart-actions {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-      }
+    .cart-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
 
-      .cart-actions button {
-        padding: 10px 20px;
-        background-color: white;
-        color: #333;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        transition: 0.3s;
-      }
+    .cart-actions button {
+      padding: 10px 20px;
+      background-color: white;
+      color: #333;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-      .cart-actions button:hover {
-        background-color: #f2f2f2;
-      }
+    .cart-actions button:hover {
+      background-color: #f2f2f2;
+    }
 
-      .cart-summary {
-        width: 400px;
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin: auto;
-        margin-bottom: 20px;
-      }
+    .cart-summary {
+      width: 400px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: auto;
+      margin-bottom: 20px;
+    }
 
-      .cart-summary h3 {
-        margin-bottom: 15px;
-      }
+    .cart-summary h3 {
+      margin-bottom: 15px;
+    }
 
-      .qty-input {
-        width: 60px;
-        padding: 5px;
-        text-align: center;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
+    .qty-input {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-      .cart-summary p {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 0;
-      }
+    .cart-summary p {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
 
-      .cart-summary .price {
-        text-align: right;
-        font-weight: 600;
-      }
+    .cart-summary .price {
+      text-align: right;
+      font-weight: 600;
+    }
 
-      .cart-summary button {
-        margin-top: 15px;
-        width: 100%;
-        padding: 12px;
-        background-color: #c80064;
-        color: white;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: 0.3s;
-      }
+    .cart-summary button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: #c80064;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
 
-      .empty-cart {
-        text-align: center;
-        padding: 40px 0;
-        font-size: 18px;
-        color: #777;
-      }
+    .empty-cart {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 18px;
+      color: #777;
+    }
 
-      .empty-cart a.btn {
-        margin-top: 10px;
-      }
+    .empty-cart a.btn {
+      margin-top: 10px;
+    }
 
-      .cart-summary button:hover {
-        background-color: #a0004f;
-      }
-    </style>
-  </head>
+    .cart-summary button:hover {
+      background-color: #a0004f;
+    }
+  </style>
+</head>
 
-  <body>
-      <!-- Header -->
+<body>
+  <!-- Header -->
   <header class="header">
     <div class="logo">
       <a href="{% url 'home' %}" class="logo">
-  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
-  <span class="shop-name">BEAUTYA</span>
-</a>
+        <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </a>
     </div>
 
     <nav class="nav-menu">
@@ -194,229 +188,203 @@
     </div>
   </header>
 
-    <!-- Search Bar -->
-    <div id="search-bar-wrapper" class="search-bar-wrapper">
-      <form method="get" action="{% url 'search' %}">
-        <input
-          type="text"
-          name="q"
-          placeholder="Tìm kiếm sản phẩm..."
-          required
-        />
-        <button type="submit">Tìm</button>
-      </form>
-    </div>
+  <!-- Search Bar -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required />
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
 
-    <!-- Cart Content -->
-    <main class="cart-page">
-      <h1>Cart</h1>
-      <form method="post" action="{% url 'checkout' %}">
+<!-- Cart Content -->
+<main class="cart-page">
+  <h1>Cart</h1>
+
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Tổng tiền</th>
+        <th>Xoá</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if cart_items %}
+        {% for item in cart_items %}
+        <tr>
+          <td>
+            <input type="checkbox" class="select-item" onchange="updateTotal()" data-price="{{ item.product.price }}" />
+          </td>
+          <td>
+            <div class="cart-item-detail">
+              <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" />
+              <div class="cart-item-name">{{ item.product.name }}</div>
+            </div>
+          </td>
+          <td class="item-price" data-price="{{ item.product.price }}">
+            {{ item.product.price|floatformat:0|intcomma }}<small>đ</small>
+          </td>
+          <td>
+            <!-- Form riêng cho cập nhật số lượng -->
+            <form method="post" action="{% url 'update_cart' %}">
+              {% csrf_token %}
+              <input type="hidden" name="item_id" value="{{ item.id }}">
+              <input type="number" name="quantity" class="qty-input" min="1" value="{{ item.quantity }}"
+                onchange="this.form.submit()" />
+            </form>
+          </td>
+          <td class="item-subtotal">
+            {{ item.subtotal|floatformat:0|intcomma }}<small>đ</small>
+          </td>
+          <td>
+            <a href="{% url 'remove_cart_item' item.id %}" class="remove-btn"
+              style="color: #a0004f; font-size: medium">X</a>
+          </td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="6" class="empty-cart">
+            <p style="color: #c80064; margin-bottom: 100px">🛒 Giỏ hàng của bạn đang trống.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary" style="
+                margin-top: 100px;
+                width: 100%;
+                padding: 12px;
+                background-color: #c80064;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: 0.3s;
+              ">Tiếp tục mua sắm</a>
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <!-- Form checkout nên đặt riêng biệt -->
+  <div class="cart-summary">
+    <p>
+      <strong>Tổng:</strong>
+      <span class="price">{{ total|intcomma }}<small>đ</small></span>
+    </p>
+    {% if cart_items %}
+    <form method="post" action="{% url 'checkout' %}">
+      {% csrf_token %}
+      <button type="submit" class="checkout-btn">Thanh Toán</button>
+    </form>
+    {% else %}
+    <button class="checkout-btn" disabled style="opacity: 0.6; cursor: not-allowed">
+      Giỏ hàng trống
+    </button>
+    {% endif %}
+  </div>
+</main>
+
+
+  <!-- Footer Main -->
+  <div class="footer-main">
+    <div class="footer-column">
+      <h3>Chúng tôi có thể giúp gì?</h3>
+      <ul>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        <li><a href="{% url 'faq' %}">FAQ</a></li>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'blog_list' %}">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Products</h3>
+      <ul>
+        <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+        <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+        <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Giữ liên lạc với Beautya</h3>
+      <p style="color: white; margin-bottom: 24px">
+        Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+      </p>
+
+      <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
         {% csrf_token %}
-        <table class="cart-table">
-          <thead>
-            <tr>
-              <th></th>
-              <!-- Thêm cột chọn tất cả (nếu muốn) -->
-              <th>Sản phẩm</th>
-              <th>Giá</th>
-              <th>Số lượng</th>
-              <th>Tổng tiền</th>
-              <th>Xoá</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if cart_items %} {% for item in cart_items %}
-            <tr>
-              <td>
-                <input
-                  type="checkbox"
-                  class="select-item"
-                  onchange="updateTotal()"
-                  data-price="{{ item.product.price }}"
-                />
-              </td>
-              <td>
-                <div class="cart-item-detail">
-                  <img
-                    src="{{ item.product.image.url }}"
-                    alt="{{ item.product.name }}"
-                  />
-                  <div class="cart-item-name">{{ item.product.name }}</div>
-                </div>
-              </td>
-              <td class="item-price" data-price="{{ item.product.price }}">
-                {{ item.product.price|floatformat:0|intcomma }}<small>đ</small>
-              </td>
-              <td>
-                <input
-                  type="number"
-                  name="quantity"
-                  class="qty-input"
-                  min="1"
-                  value="{{ item.quantity }}"
-                  onchange="updateQty(this)"
-                />
-              </td>
-              <td class="item-subtotal">
-                {{ item.subtotal|floatformat:0|intcomma }}<small>đ</small>
-              </td>
-              <td>
-                <a
-                  href="{% url 'remove_cart_item' item.id %}"
-                  class="remove-btn"
-                  style="color: #a0004f; font-size: medium"
-                  >X</a
-                >
-              </td>
-            </tr>
-            {% endfor %} {% else %}
-            <tr>
-              <td colspan="6" class="empty-cart">
-                <p style="color: #c80064; margin-bottom: 100px">
-                  🛒 Giỏ hàng của bạn đang trống.
-                </p>
-                <a
-                  href="{% url 'home' %}"
-                  class="btn btn-primary"
-                  style="
-                    margin-top: 100px;
-                    width: 100%;
-                    padding: 12px;
-                    background-color: #c80064;
-                    color: white;
-                    border: none;
-                    border-radius: 3px;
-                    cursor: pointer;
-                    font-weight: 600;
-                    transition: 0.3s;
-                  "
-                  >Tiếp tục mua sắm</a
-                >
-              </td>
-            </tr>
-            {% endif %}
-          </tbody>
-        </table>
+        <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
 
-        <div class="cart-summary">
-          <p>
-            <strong>Tổng:</strong>
-            <span class="price">{{ total|intcomma }}<small>đ</small></span>
-          </p>
-          {% if cart_items %}
-          <button href="{% url 'checkout' %}" class="checkout-btn">
-            Thanh Toán
-          </button>
-          {% else %}
-          <button
-            class="checkout-btn"
-            disabled
-            style="opacity: 0.6; cursor: not-allowed"
-          >
-            Giỏ hàng trống
-          </button>
-          {% endif %}
-        </div>
+        <label class="consent-text" style="display: block; margin-top: 12px;">
+          <input type="checkbox" name="consent" required />
+          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
+
+        <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
       </form>
-    </main>
-
-    <!-- Footer Main -->
-    <div class="footer-main">
-      <div class="footer-column">
-        <h3>Chúng tôi có thể giúp gì?</h3>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact Us</a></li>
-          <li><a href="{% url 'faq' %}">FAQ</a></li>
-          <li><a href="{% url 'about' %}">About Us</a></li>
-          <li><a href="{% url 'blog_list' %}">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Products</h3>
-        <ul>
-          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
-          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
-          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Giữ liên lạc với Beautya</h3>
-        <p style="color: white; margin-bottom: 24px">
-          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
-        </p>
-
-        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
-          {% csrf_token %}
-          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
-
-          <label class="consent-text" style="display: block; margin-top: 12px;">
-            <input type="checkbox" name="consent" required />
-            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-          </label>
-
-          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
-        </form>
-      </div>
-
-    </div>
     </div>
 
-    <div class="footer-contact-row">
-      <div class="footer-contact-group">
-        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
-        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
-      </div>
-      <div class="footer-social-group">
-        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+  </div>
+  </div>
+
+  <div class="footer-contact-row">
+    <div class="footer-contact-group">
+      <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+      <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+      <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+    </div>
+    <div class="footer-social-group">
+      <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-facebook-f"></i>
-        </a>
+      </a>
 
-        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-youtube"></i>
-        </a>
+      </a>
 
-        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
+      </a>
     </div>
+  </div>
 
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
-    </div>
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+  </div>
   </footer>
 
-    <script>
-      function updateQty(input) {
-        if (parseInt(input.value) < 1) input.value = 1;
-        const row = input.closest("tr");
-        const price = parseInt(row.querySelector(".item-price").dataset.price);
-        const qty = parseInt(input.value);
-        const subtotal = price * qty;
-        row.querySelector(".item-subtotal").innerHTML =
-          subtotal.toLocaleString() + "<small>đ</small>";
-        updateTotal();
-      }
+  <script>
+    function updateQty(input) {
+      if (parseInt(input.value) < 1) input.value = 1;
+      const row = input.closest("tr");
+      const price = parseInt(row.querySelector(".item-price").dataset.price);
+      const qty = parseInt(input.value);
+      const subtotal = price * qty;
+      row.querySelector(".item-subtotal").innerHTML =
+        subtotal.toLocaleString() + "<small>đ</small>";
+      updateTotal();
+    }
 
-      function updateTotal() {
-        let total = 0;
-        document.querySelectorAll(".select-item").forEach((checkbox) => {
-          if (checkbox.checked) {
-            const row = checkbox.closest("tr");
-            const price = parseInt(checkbox.dataset.price);
-            const qty = parseInt(row.querySelector(".qty-input").value);
-            total += price * qty;
-          }
-        });
-        document.querySelector(".cart-summary .price").innerHTML =
-          "<strong>" + total.toLocaleString() + "<small>đ</small></strong>";
-      }
+    function updateTotal() {
+      let total = 0;
+      document.querySelectorAll(".select-item").forEach((checkbox) => {
+        if (checkbox.checked) {
+          const row = checkbox.closest("tr");
+          const price = parseInt(checkbox.dataset.price);
+          const qty = parseInt(row.querySelector(".qty-input").value);
+          total += price * qty;
+        }
+      });
+      document.querySelector(".cart-summary .price").innerHTML =
+        "<strong>" + total.toLocaleString() + "<small>đ</small></strong>";
+    }
 
-      window.onload = () => {
-        updateTotal();
-      };
-    </script>
-  </body>
+    window.onload = () => {
+      updateTotal();
+    };
+  </script>
+</body>
+
 </html>
