@@ -11,7 +11,7 @@ ALLOWED_HOSTS = ['beautya.io.vn', '103.142.26.45']
 SECRET_KEY = "django-insecure-fyrk4bhfj9r2*8^706005h4zo*e1=*t!$3dsx@@_ey4&$-6s%f"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
