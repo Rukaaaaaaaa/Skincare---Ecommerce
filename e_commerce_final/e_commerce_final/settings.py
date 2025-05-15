@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ALLOWED_HOSTS = ['beautya.io.vn', '103.142.26.45']
+ALLOWED_HOSTS = ['beautya.io.vn', 'www.beautya.io.vn']
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-fyrk4bhfj9r2*8^706005h4zo*e1=*t!$3dsx@@_ey4&$-6s%f"
