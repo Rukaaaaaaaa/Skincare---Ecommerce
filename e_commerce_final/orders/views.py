@@ -8,8 +8,27 @@ from django.http import JsonResponse
 from django.utils.http import url_has_allowed_host_and_scheme
 from .models import CartItem, Order, OrderItem
 from products.models import Product
+from django.db.models import Sum
 
 
+@require_POST
+@login_required
+def add_to_cart_ajax(request):
+    data = json.loads(request.body)
+    product_id = data.get("product_id")
+    quantity = int(data.get("quantity", 1))
+
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        return JsonResponse({"success": False, "error": "Product not found"}, status=404)
+
+    item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+    item.quantity += quantity
+    item.save()
+
+    total = CartItem.objects.filter(user=request.user).aggregate(total=Sum("quantity"))["total"] or 0
+    return JsonResponse({"success": True, "cart_count": total})
 
 @login_required
 def cart_view(request):
@@ -22,29 +41,21 @@ def cart_view(request):
 
 @login_required
 def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    qty = request.GET.get('qty')
-    next_url = request.GET.get('next')
-
-    try:
-        quantity = int(qty)
-        if quantity < 1:
-            quantity = 1
-    except (ValueError, TypeError):
-        quantity = 1
+    product = get_object_or_404(Product, pk=product_id)
+    quantity = int(request.GET.get('qty', 1))
 
     cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
-    if not created:
-        cart_item.quantity += quantity
-    else:
-        cart_item.quantity = quantity
+    cart_item.quantity += quantity
     cart_item.save()
 
-    # Redirect theo next nếu có
-    if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts=None):
-        return redirect(next_url)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        total_items = CartItem.objects.filter(user=request.user).aggregate(
+            total=Sum('quantity')
+        )['total'] or 0
+        return JsonResponse({'success': True, 'cart_count': total_items})
 
-    return redirect('cart')
+    next_url = request.GET.get('next') or reverse('cart')
+    return redirect(next_url)
 
 
 

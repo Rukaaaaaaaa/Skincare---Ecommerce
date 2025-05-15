@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import add_to_cart_ajax
 
 urlpatterns = [
     # Giỏ hàng
@@ -11,5 +12,8 @@ urlpatterns = [
     # Thanh toán
     path('checkout/', views.checkout_page, name='checkout'),
     path('checkout/submit/', views.checkout_view, name='checkout_submit'),
+
+    # Ajax
+    path('cart/ajax/add/', add_to_cart_ajax, name='add_to_cart_ajax'),
 
 ]

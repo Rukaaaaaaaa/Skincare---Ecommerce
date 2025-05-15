@@ -945,15 +945,11 @@
             function showCartPopup() {
   const popup = document.getElementById('cart-popup-overlay');
   if (!popup) return;
-
   popup.style.display = 'flex';
-
-  // Optional: auto-hide after 2s if user doesn't click
   setTimeout(() => {
-    hideCartPopup();
+    popup.style.display = 'none';
   }, 2000);
 }
-
 
 function hideCartPopup() {
   const popup = document.getElementById('cart-popup-overlay');
@@ -973,51 +969,37 @@ function hideCartPopup() {
                 if (input && input.value < 1) input.value = 1;
             }
 
-function addToCart(button) {
-  const productId = button.dataset.productId;
-  const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            function addToCart(button) {
+    const productId = button.dataset.productId;
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
 
-  fetch("{% url 'add_to_cart_ajax' %}", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken")
-    },
-    body: JSON.stringify({
-      product_id: productId,
-      quantity: quantity
+    fetch(`/orders/cart/add/${productId}/?qty=${quantity}`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     })
-  })
     .then(response => response.json())
     .then(data => {
-      if (data.success) {
-        document.querySelector(".cart-count").textContent = data.cart_count;
-        showCartPopup();
-      } else {
-        alert("Thêm vào giỏ hàng thất bại.");
-      }
+        if (data.success) {
+            showCartPopup();
+
+            // ✅ Update cart count dynamically
+            const cartCountEl = document.querySelector('.cart-count');
+            if (cartCountEl) {
+                cartCountEl.textContent = data.cart_count;
+            }
+        } else {
+            alert('Thêm vào giỏ hàng thất bại.');
+        }
     })
     .catch(error => {
-      console.error("Lỗi khi thêm vào giỏ:", error);
-      alert("Đã có lỗi xảy ra.");
+        console.error('Lỗi khi thêm vào giỏ:', error);
+        alert('Đã có lỗi xảy ra.');
     });
 }
 
-// Helper to get CSRF token from cookies
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+
 
             function buyNow(button) {
                 const productId = button.dataset.productId;
