@@ -30,6 +30,8 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('home/', include('core.urls')),
     path('blog/', include('blog.urls')),
+    path('oauth/', include('social_django.urls', namespace='social')),
+    path('oauth-error/', TemplateView.as_view(template_name='oauth_error.html'), name='oauth_error')
 ]
 
 

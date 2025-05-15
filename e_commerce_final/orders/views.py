@@ -59,15 +59,18 @@ def add_to_cart(request, product_id):
 
 
 
+
 @login_required
 @require_POST
 def update_cart_quantity(request):
     item_id = request.POST.get('item_id')
     quantity = int(request.POST.get('quantity', 1))
+
     item = get_object_or_404(CartItem, id=item_id, user=request.user)
     item.quantity = quantity
     item.save()
-    return JsonResponse({'success': True, 'subtotal': item.subtotal()})
+
+    return redirect('cart')
 
 
 @login_required

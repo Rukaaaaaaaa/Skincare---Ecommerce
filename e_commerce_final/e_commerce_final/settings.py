@@ -11,6 +11,8 @@ SECRET_KEY = "django-insecure-fyrk4bhfj9r2*8^706005h4zo*e1=*t!$3dsx@@_ey4&$-6s%f
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
 OPENAI_API_KEY = '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' 
 
@@ -31,13 +33,24 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
-
+    'social_django',
     "users.apps.UsersConfig",
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
     "core.apps.CoreConfig",
     "blog.apps.BlogConfig",
 ]
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'users.pipeline.prevent_duplicate_google_linkage',
+    'social_core.pipeline.social_auth.associate_user',
+    
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -125,8 +138,11 @@ LOGIN_URL = 'login'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-]
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 
+]
+SOCIAL_AUTH_AUTHENTICATION_ERROR_URL = '/oauth-error/'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'

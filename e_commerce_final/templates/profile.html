@@ -4,184 +4,198 @@
 {% load humanize %}
 
 <head>
-    <meta charset="UTF-8">
-    <title>Hồ sơ người dùng - BEAUTYA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8">
+  <title>Hồ sơ người dùng - BEAUTYA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- FontAwesome (icon user) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- FontAwesome (icon user) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
+  <style>
     /* ===== Profile Page Styles (Không ảnh hưởng header) ===== */
     body {
-        background-color: #f5f7fa;
-        color: #333;
-        font-family: 'Segoe UI', 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
+      background-color: #f5f7fa;
+      color: #333;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     .profile-container {
-        padding: 30px;
-        max-width: 900px;
-        margin: 40px auto;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
     }
 
     .section-title {
-        font-size: 26px;
-        font-weight: 600;
-        margin-bottom: 25px;
-        border-left: 5px solid #ff7eb9;
-        padding-left: 12px;
-        color: #222;
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      border-left: 5px solid #ff7eb9;
+      padding-left: 12px;
+      color: #222;
     }
 
     .section-subtitle {
-        font-size: 20px;
-        margin-bottom: 14px;
-        font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 14px;
+      font-weight: 600;
     }
 
     .profile-card {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
     }
 
     .profile-avatar {
-        font-size: 70px;
-        margin-right: 24px;
-        color: #ccc;
+      font-size: 70px;
+      margin-right: 24px;
+      color: #ccc;
     }
 
     .profile-details p {
-        margin: 6px 0;
-        font-size: 16px;
-        line-height: 1.5;
+      margin: 6px 0;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .profile-details p strong {
-        color: #444;
-        display: inline-block;
-        width: 180px;
+      color: #444;
+      display: inline-block;
+      width: 180px;
     }
 
     .divider {
-        border: none;
-        border-top: 1px solid #ddd;
-        margin: 30px 0;
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 30px 0;
     }
 
     .recent-orders {
-        margin-top: 20px;
+      margin-top: 20px;
     }
 
     .order-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
     }
 
     .order-table th,
     .order-table td {
-        padding: 12px 10px;
-        border: 1px solid #eee;
-        text-align: center;
-        font-size: 15px;
+      padding: 12px 10px;
+      border: 1px solid #eee;
+      text-align: center;
+      font-size: 15px;
     }
 
     .order-table th {
-        background-color: #fafafa;
-        font-weight: 600;
+      background-color: #fafafa;
+      font-weight: 600;
     }
 
     .detail-link {
-        color: #a0004f;
-        text-decoration: underline;
-        font-weight: 500;
-        font-size: 14px;
+      color: #a0004f;
+      text-decoration: underline;
+      font-weight: 500;
+      font-size: 14px;
     }
 
     .order-status {
-        font-weight: bold;
-        font-size: 14px;
-        padding: 3px 8px;
-        border-radius: 5px;
-        color: white;
-        background-color: #999;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      color: white;
+      background-color: #999;
     }
 
     .order-status.pending {
-        background-color: #f0ad4e;
+      background-color: #f0ad4e;
     }
 
     .order-status.processing {
-        background-color: #5bc0de;
+      background-color: #5bc0de;
     }
 
     .order-status.shipped {
-        background-color: #0275d8;
+      background-color: #0275d8;
     }
 
     .order-status.done {
-        background-color: #5cb85c;
+      background-color: #5cb85c;
     }
 
     .order-status.cancelled {
-        background-color: #d9534f;
+      background-color: #d9534f;
     }
 
     .text-muted {
-        color: #888;
-        font-style: italic;
+      color: #888;
+      font-style: italic;
     }
 
     @media (max-width: 600px) {
-        .profile-container {
-            padding: 20px;
-        }
+      .profile-container {
+        padding: 20px;
+      }
 
-        .profile-card {
-            flex-direction: column;
-            align-items: flex-start;
-        }
+      .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
-        .profile-avatar {
-            margin-bottom: 12px;
-        }
+      .profile-avatar {
+        margin-bottom: 12px;
+      }
 
-        .profile-details p strong {
-            width: auto;
-            display: block;
-            margin-bottom: 4px;
-        }
+      .profile-details p strong {
+        width: auto;
+        display: block;
+        margin-bottom: 4px;
+      }
 
-        .order-table th,
-        .order-table td {
-            font-size: 13px;
-            padding: 8px;
-        }
+      .order-table th,
+      .order-table td {
+        font-size: 13px;
+        padding: 8px;
+      }
     }
-    
-</style>
+
+    .btn-outline-primary {
+      padding: 10px 16px;
+      border: 2px solid #c80064;
+      color: #c80064;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #c80064;
+      color: white;
+    }
+  </style>
 
 </head>
 
 <body>
 
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <a href="{% url 'home' %}" class="logo">
-  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
-  <span class="shop-name">BEAUTYA</span>
-</a>
-    </div>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <a href="{% url 'home' %}" class="logo">
+          <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+          <span class="shop-name">BEAUTYA</span>
+        </a>
+      </div>
 
     <nav class="nav-menu">
       <a href="{% url 'home' %}" class="nav-link">Home</a>
@@ -196,92 +210,103 @@
       {% endif %}
     </nav>
 
-    <div class="header-actions">
-      <div class="cart-wrapper">
-        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-        <span class="cart-count">{{ cart_item_count }}</span>
+      <div class="header-actions">
+        <div class="cart-wrapper">
+          <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+          <span class="cart-count">{{ cart_item_count }}</span>
+        </div>
+        <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="user-name">
+          <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+        </a>
+        {% endif %}
       </div>
-      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+    </header>
 
-      {% if request.user.is_authenticated %}
-      <a href="{% url 'profile' %}" class="user-name">
-        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
-      </a>
-      {% endif %}
+
+    <!-- Search Bar dính cố định ngay dưới header -->
+    <div id="search-bar-wrapper" class="search-bar-wrapper">
+      <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+        <button type="submit">Tìm</button>
+      </form>
     </div>
-  </header>
+    <!-- Header end-->
 
+    <script>
+      function goToCart() {
+        window.location.href = "{% url 'cart' %}";
+      }
 
-  <!-- Search Bar dính cố định ngay dưới header -->
-  <div id="search-bar-wrapper" class="search-bar-wrapper">
-    <form method="get" action="{% url 'search' %}">
-      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
-      <button type="submit">Tìm</button>
-    </form>
-  </div>
-  <!-- Header end-->
+      function toggleSearchBar() {
+        const wrapper = document.getElementById('search-bar-wrapper');
+        wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+      }
+    </script>
 
-  <script>
-    function goToCart() {
-      window.location.href = "{% url 'cart' %}";
-    }
+    <main class="profile-container">
+      <h2 class="section-title">👤 Hồ sơ cá nhân</h2>
 
-    function toggleSearchBar() {
-      const wrapper = document.getElementById('search-bar-wrapper');
-      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
-    }
-  </script>
-
-<main class="profile-container">
-    <h2 class="section-title">👤 Hồ sơ cá nhân</h2>
-
-    <div class="profile-card">
+      <div class="profile-card">
         <div class="profile-avatar">
-            <i class="fas fa-user-circle fa-5x"></i>
+          <i class="fas fa-user-circle fa-5x"></i>
         </div>
         <div class="profile-details">
-            <p><strong>👤 Tên người dùng:</strong> {{ user.username }}</p>
-            <p><strong>📛 Họ và tên:</strong> {{ user.full_name|default:"Chưa cập nhật" }}</p>
-            <p><strong>📧 Email:</strong> {{ user.email|default:"Chưa cập nhật" }}</p>
-            <p><strong>📱 Số điện thoại:</strong> {{ user.phone|default:"Chưa cập nhật" }}</p>
-            <p><strong>🕒 Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
-            <p><strong>🛡 Vai trò:</strong> {% if user.is_staff %}<span style="color:red;">Quản trị viên</span>{% else %}Khách hàng{% endif %}</p>
+          <p><strong>👤 Tên người dùng:</strong> {{ user.username }}</p>
+          <p><strong>📛 Họ và tên:</strong> {{ user.full_name|default:"Chưa cập nhật" }}</p>
+          <p><strong>📧 Email:</strong> {{ user.email|default:"Chưa cập nhật" }}</p>
+          <p><strong>📱 Số điện thoại:</strong> {{ user.phone|default:"Chưa cập nhật" }}</p>
+          <p><strong>🕒 Ngày tham gia:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+          <p><strong>🛡 Vai trò:</strong> {% if user.is_staff %}<span style="color:red;margin-bottom: 100px;">Quản trị viên</span>{% else
+            %}Khách hàng{% endif %}</p>
+          {% if not is_google_connected %}
+          <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-outline-primary"style="margin-top: 100px;">
+            Liên kết với Google
+          </a>
+          {% else %}
+          <p class="text-success"style='margin-top: 100px'>✅ Đã liên kết với Google</p>
+          {% endif %}
+
+
+
         </div>
-    </div>
+      </div>
 
-    <hr class="divider">
+      <hr class="divider">
 
-    <div class="recent-orders">
+      <div class="recent-orders">
         <h3 class="section-subtitle">🧾 Đơn hàng gần đây</h3>
         {% if orders %}
         <table class="order-table">
-            <thead>
-                <tr>
-                    <th>Mã đơn</th>
-                    <th>Ngày</th>
-                    <th>Trạng thái</th>
-                    <th>Tổng tiền</th>
-                    <th>Chi tiết</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                <tr>
-                    <td>#{{ order.id }}</td>
-                    <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
-                    <td>{{ order.get_status_display }}</td>
-                    <td>{{ order.total|intcomma }}đ</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+          <thead>
+            <tr>
+              <th>Mã đơn</th>
+              <th>Ngày</th>
+              <th>Trạng thái</th>
+              <th>Tổng tiền</th>
+              <th>Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <td>#{{ order.id }}</td>
+              <td>{{ order.created_at|date:"d/m/Y H:i" }}</td>
+              <td>{{ order.get_status_display }}</td>
+              <td>{{ order.total|intcomma }}đ</td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
         {% else %}
         <p>Bạn chưa có đơn hàng nào.</p>
         {% endif %}
-    </div>
-</main>
+      </div>
+    </main>
 
-  <!-- Footer Main -->
+    <!-- Footer Main -->
     <div class="footer-main">
       <div class="footer-column">
         <h3>Chúng tôi có thể giúp gì?</h3>
@@ -329,15 +354,15 @@
       </div>
       <div class="footer-social-group">
         <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-facebook-f"></i>
         </a>
 
         <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-youtube"></i>
+          <i class="fab fa-youtube"></i>
         </a>
 
         <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-tiktok"></i>
+          <i class="fab fa-tiktok"></i>
         </a>
       </div>
     </div>
@@ -346,9 +371,9 @@
     <div class="footer-bottom">
       <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
     </div>
-  </footer>
+    </footer>
 
 
-</body>
+  </body>
 
 </html>

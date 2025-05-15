@@ -18,9 +18,9 @@
   <header class="header">
     <div class="logo">
       <a href="{% url 'home' %}" class="logo">
-  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
-  <span class="shop-name">BEAUTYA</span>
-</a>
+        <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </a>
     </div>
 
     <nav class="nav-menu">
@@ -59,7 +59,6 @@
       <button type="submit">Tìm</button>
     </form>
   </div>
-  <!-- Header -->
 
   <script>
     function goToCart() {
@@ -70,6 +69,7 @@
       const wrapper = document.getElementById('search-bar-wrapper');
       wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
     }
+
   </script>
 
 
@@ -84,8 +84,8 @@
     </div>
 
     <div class="hero-content">
-      <h1 class="hero-title">Unlock your natural glow</h1>
-      <a href="#" class="button button-outline">Xem Thêm</a>
+      <h1 class="hero-title">Mở khóa vẻ rạng rỡ tự nhiên của bạn</h1>
+      <a href="{% url 'product_list' %}" class="button button-outline">Xem Thêm</a>
     </div>
 
     <!-- Navigation arrows -->
@@ -208,7 +208,7 @@
             <div class="product-info">
               <div class="product-title">{{ product.name }}</div>
               <div class="product-description">{{ product.description|truncatewords:15 }}</div>
-              <div class="product-price">₫{{ product.price }}</div>
+              <div class="product-price">₫{{ product.price|floatformat:0|intcomma}}</div>
             </div>
           </a>
           {% endfor %}
@@ -252,41 +252,41 @@
 
 
 
-<section class="blog-section">
-  <div class="blog-header">
-    <h2 class="section-header">Blog Làm Đẹp</h2>
-    <a href="{% url 'blog_list' %}" class="button">Xem thêm</a>
-  </div>
+  <section class="blog-section">
+    <div class="blog-header">
+      <h2 class="section-header">Blog Làm Đẹp</h2>
+      <a href="{% url 'blog_list' %}" class="button">Xem thêm</a>
+    </div>
 
-  <div class="blog-grid">
-    {% for post in latest_posts %}
-    <div class="blog-card-wrapper">
-      <a href="{% url 'blog_detail' post.id %}" class="blog-card-link"></a>
-      <div class="blog-card">
-        {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
-        {% else %}
-        <img src="{% static 'images/default-blog.jpg' %}" alt="No image">
-        {% endif %}
+    <div class="blog-grid">
+      {% for post in latest_posts %}
+      <div class="blog-card-wrapper">
+        <a href="{% url 'blog_detail' post.id %}" class="blog-card-link"></a>
+        <div class="blog-card">
+          {% if post.image %}
+          <img src="{{ post.image.url }}" alt="{{ post.title }}">
+          {% else %}
+          <img src="{% static 'images/default-blog.jpg' %}" alt="No image">
+          {% endif %}
 
-        <div class="blog-content">
-          <div class="blog-meta">
-            {% if post.category %}<span>{{ post.category }}</span>{% endif %}
-            <span>•</span>
-            <span>{{ post.author }}</span>
-            <span>•</span>
-            <span>{{ post.date|date:"d/m/Y" }}</span>
+          <div class="blog-content">
+            <div class="blog-meta">
+              {% if post.category %}<span>{{ post.category }}</span>{% endif %}
+              <span>•</span>
+              <span>{{ post.author }}</span>
+              <span>•</span>
+              <span>{{ post.date|date:"d/m/Y" }}</span>
+            </div>
+            <h3 class="blog-title">{{ post.title }}</h3>
+            <p class="blog-excerpt">
+              {{ post.content|truncatechars:120 }}
+            </p>
           </div>
-          <h3 class="blog-title">{{ post.title }}</h3>
-          <p class="blog-excerpt">
-            {{ post.content|truncatechars:120 }}
-          </p>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-</section>
+  </section>
 
       <!-- Footer Main -->
     <div class="footer-main">
@@ -312,47 +312,47 @@
           Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
         </p>
 
-        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
-          {% csrf_token %}
-          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+      <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
 
-          <label class="consent-text" style="display: block; margin-top: 12px;">
-            <input type="checkbox" name="consent" required />
-            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
-          </label>
+        <label class="consent-text" style="display: block; margin-top: 12px;">
+          <input type="checkbox" name="consent" required />
+          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
 
-          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
-        </form>
-      </div>
-
-    </div>
+        <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+      </form>
     </div>
 
-    <div class="footer-contact-row">
-      <div class="footer-contact-group">
-        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
-        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
-      </div>
-      <div class="footer-social-group">
-        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+  </div>
+  </div>
+
+  <div class="footer-contact-row">
+    <div class="footer-contact-group">
+      <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+      <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+      <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+    </div>
+    <div class="footer-social-group">
+      <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-facebook-f"></i>
-        </a>
+      </a>
 
-        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-youtube"></i>
-        </a>
+      </a>
 
-        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
+      </a>
     </div>
+  </div>
 
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
-    </div>
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+  </div>
   </footer>
 
   <!-- Modal HTML -->
@@ -568,62 +568,62 @@
       lazyImages.forEach(img => imageObserver.observe(img));
 
       // Slider logic dùng transform
-function setupSlider(sliderId, visibleCards = 4, autoSlide = true, interval = 4000) {
-  const slider = document.getElementById(sliderId);
-  const productGrid = slider.querySelector('.product-grid');
-  const cards = productGrid.querySelectorAll('.product-card');
+      function setupSlider(sliderId, visibleCards = 4, autoSlide = true, interval = 4000) {
+        const slider = document.getElementById(sliderId);
+        const productGrid = slider.querySelector('.product-grid');
+        const cards = productGrid.querySelectorAll('.product-card');
 
-  let cardWidth = 0;
-  let currentIndex = 0;
+        let cardWidth = 0;
+        let currentIndex = 0;
 
-  function calculateCardWidth() {
-    if (cards.length > 0) {
-      const style = window.getComputedStyle(cards[0]);
-      const gap = parseInt(style.marginRight) || 24;
-      cardWidth = cards[0].offsetWidth + gap;
-    }
-  }
+        function calculateCardWidth() {
+          if (cards.length > 0) {
+            const style = window.getComputedStyle(cards[0]);
+            const gap = parseInt(style.marginRight) || 24;
+            cardWidth = cards[0].offsetWidth + gap;
+          }
+        }
 
-  calculateCardWidth();
+        calculateCardWidth();
 
-  function scrollSlider(direction) {
-    const totalCards = cards.length;
-    currentIndex += direction;
+        function scrollSlider(direction) {
+          const totalCards = cards.length;
+          currentIndex += direction;
 
-    if (currentIndex > totalCards - visibleCards) {
-      currentIndex = 0;
-    } else if (currentIndex < 0) {
-      currentIndex = totalCards - visibleCards;
-    }
+          if (currentIndex > totalCards - visibleCards) {
+            currentIndex = 0;
+          } else if (currentIndex < 0) {
+            currentIndex = totalCards - visibleCards;
+          }
 
-    productGrid.style.transition = 'transform 0.5s ease';
-    productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-  }
+          productGrid.style.transition = 'transform 0.5s ease';
+          productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
 
-  // Recalculate on resize
-  window.addEventListener('resize', () => {
-    calculateCardWidth();
-    currentIndex = 0;
-    productGrid.style.transition = 'none';
-    productGrid.style.transform = 'translateX(0)';
-    void productGrid.offsetWidth; // force reflow
-    productGrid.style.transition = 'transform 0.5s ease';
-  });
+        // Recalculate on resize
+        window.addEventListener('resize', () => {
+          calculateCardWidth();
+          currentIndex = 0;
+          productGrid.style.transition = 'none';
+          productGrid.style.transform = 'translateX(0)';
+          void productGrid.offsetWidth; // force reflow
+          productGrid.style.transition = 'transform 0.5s ease';
+        });
 
-  // Auto slide
-  let timer;
-  if (autoSlide) {
-    timer = setInterval(() => scrollSlider(1), interval);
+        // Auto slide
+        let timer;
+        if (autoSlide) {
+          timer = setInterval(() => scrollSlider(1), interval);
 
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => clearInterval(timer));
-    slider.addEventListener('mouseleave', () => {
-      timer = setInterval(() => scrollSlider(1), interval);
-    });
-  }
+          // Pause on hover
+          slider.addEventListener('mouseenter', () => clearInterval(timer));
+          slider.addEventListener('mouseleave', () => {
+            timer = setInterval(() => scrollSlider(1), interval);
+          });
+        }
 
-  return scrollSlider;
-}
+        return scrollSlider;
+      }
 
       // Gắn scroll cho từng slider
       window.scrollProducts = setupSlider('productSlider');
@@ -700,6 +700,145 @@ function setupSlider(sliderId, visibleCards = 4, autoSlide = true, interval = 40
 
 
   </script>
+  {% if best_seller_popup %}
+  <div id="popup" class="popup-overlay" style="display: none" onclick="closePopup(event)">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup(event)">×</button>
+      <h2>{{ best_seller_popup.name }}</h2>
+      <img src="{{ best_seller_popup.image.url }}" alt="{{ best_seller_popup.name }}" style="max-width: 120px;">
+      <p>Giá: {{ best_seller_popup.price|floatformat:0|intcomma }}đ</p>
+      {% if special_offer %}
+      <p style="color: red;">{{ special_offer.title }}</p>
+      {% endif %}
+      <a href="{% url 'product_detail' best_seller_popup.id %}" class="btn">Xem ngay</a>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const popup = document.querySelector('.popup-overlay');
+      if (popup) {
+        popup.style.display = 'flex';
+      }
+    };
+
+    function closePopup(event) {
+      const popup = document.querySelector('.popup-overlay');
+      if (
+        event.target.classList.contains('popup-overlay') ||
+        event.target.classList.contains('close-btn')
+      ) {
+        popup.style.display = 'none';
+      }
+    }
+  </script>
+  {% endif %}
+
+
+
+  <style>
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: popupFadeIn 0.3s ease-out;
+    }
+
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .popup-content h2 {
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .popup-content p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .popup-content img {
+      width: 140px;
+      height: auto;
+      border-radius: 8px;
+      margin: 10px 0;
+      object-fit: cover;
+    }
+
+    .popup-content .btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 24px;
+      background-color: #c80064;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .popup-content .btn:hover {
+      background-color: #a00050;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      background: #eee;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #666;
+      padding: 5px 10px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background-color: #ddd;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-left: 8px;
+      font-size: 13px;
+    }
+  </style>
+
+
 </body>
 
 </html>

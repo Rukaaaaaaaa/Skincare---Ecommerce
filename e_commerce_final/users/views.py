@@ -4,6 +4,7 @@ from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from orders.models import Order
+from social_django.models import UserSocialAuth
 
 
 def register_view(request):
@@ -36,9 +37,12 @@ def login_view(request):
 @login_required
 def profile_view(request):
     user = request.user
+    is_google_connected = UserSocialAuth.objects.filter(user=request.user, provider='google-oauth2').exists()
     orders = Order.objects.filter(user=user).order_by('-created_at')[:5]  
-
+    social_accounts = UserSocialAuth.objects.filter(user=request.user)
     return render(request, 'profile.html', {
         'user': user,
+        'social_accounts': social_accounts,
+        'is_google_connected': is_google_connected,
         'orders': orders
     })
