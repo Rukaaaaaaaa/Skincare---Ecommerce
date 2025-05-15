@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <title>Beautya - Blog Detail</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    /* Main Content */
+    .main-content {
+      max-width: 1440px;
+      margin: auto 40px;
+      padding: 0 108px;
+      display: flex;
+      gap: 24px;
+    }
+
+    .article {
+      flex: 3;
+      margin-bottom: 50px;
+    }
+
+    .article-image {
+      width: 100%;
+      height: 513px;
+      object-fit: cover;
+    }
+
+    .article-content {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .article-title {
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: capitalize;
+      line-height: 44.8px;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .meta-item {
+      color: #606060;
+      font-size: 16px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 28.8px;
+    }
+
+    .meta-divider {
+      width: 24px;
+      height: 1px;
+      background-color: #606060;
+      transform: rotate(90deg);
+    }
+
+    .article-intro {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .drop-cap {
+      font-size: 96px;
+      font-weight: 700;
+      line-height: 96px;
+    }
+
+    .intro-text {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+    }
+
+    .article-body {
+      font-size: 18px;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 32.4px;
+    }
+
+    .article-section-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      margin: 16px 0 8px;
+    }
+
+    /* ==== Sidebar Container ==== */
+    .sidebar {
+      padding: 20px;
+      background-color: #fff;
+      border-left: 1px solid #eee;
+    }
+
+    /* ==== Sidebar Title ==== */
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    /* ==== Danh sách bài viết ==== */
+    .latest-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* ==== Mỗi bài viết nhỏ ==== */
+    .latest-post {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background-color: #fafafa;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .latest-post:hover {
+      background-color: #f2f2f2;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* ==== Ảnh bài viết ==== */
+    .latest-post img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+
+    /* ==== Tiêu đề bài viết ==== */
+    .latest-post-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.4;
+      transition: color 0.2s ease;
+    }
+
+    .latest-post-title:hover {
+      color: #d63384;
+      /* Đổi theo brand nếu muốn */
+      text-decoration: underline;
+    }
+
+    /* ==== Responsive ==== */
+    @media (max-width: 992px) {
+      .sidebar {
+        padding-top: 30px;
+        border-left: none;
+        border-top: 1px solid #ddd;
+        margin-top: 40px;
+      }
+
+      .latest-post {
+        gap: 10px;
+        padding: 6px;
+      }
+
+      .latest-post-title {
+        font-size: 13px;
+      }
+
+      .latest-post img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar-title {
+        font-size: 16px;
+      }
+
+      .latest-post-title {
+        font-size: 12.5px;
+      }
+
+      .latest-post img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    
+  </style>
+</head>
+
+<body>
+
+  <body>
+      <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+    <script>
+      function goToCart() {
+        window.location.href = "{% url 'cart' %}";
+      }
+
+      function toggleSearchBar() {
+        const wrapper = document.getElementById('search-bar-wrapper');
+        wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+      }
+    </script>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Article -->
+      <div class="article">
+        <img class="article-image" src="{{ blog.image.url }}" alt="{{ blog.title }}" />
+        <div class="article-content">
+          <h1 class="article-title">{{ blog.title }}</h1>
+          <div class="article-meta">
+            <span class="meta-item">{{ blog.date|date:"M d, Y" }}</span>
+            <div class="meta-divider"></div>
+            <span class="meta-item">{{ blog.author }}</span>
+            <div class="meta-divider"></div>
+            <span class="meta-item">{{ blog.category }}</span>
+          </div>
+          <div class="article-intro">
+            <span class="drop-cap">{{ blog.content|slice:":1" }}</span>
+            <p class="intro-text">{{ blog.content|slice:"1:300" }}...</p>
+          </div>
+          <p class="article-body">{{ blog.content }}</p>
+        </div>
+      </div>
+
+
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2 class="sidebar-title">Latest</h2>
+        <div class="latest-posts">
+          {% for post in related_posts %}
+          <div class="latest-post">
+            <a href="{% url 'blog_detail' post.id %}">
+              <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            </a>
+            <a href="{% url 'blog_detail' post.id %}">
+              <div class="latest-post-title">{{ post.title }}</div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div> <!-- End of .main-content -->
+
+
+
+    <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <title>Beautya - Blog</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Blog Section */
+    .blog-section {
+      max-width: 1200px;
+      margin: auto;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    .blog-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #c80064;
+      margin-bottom: 30px;
+    }
+
+    .blog-posts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+
+    .blog-posts-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .blog-post {
+      background: #ffffff;
+      border: 1px solid #dfdfdf;
+      border-radius: 8px;
+      width: calc(33.33% - 16px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .blog-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-post-image {
+      width: 100%;
+      height: 294px;
+      object-fit: cover;
+    }
+
+    .blog-post-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+      min-height: 250px;
+      /* Đảm bảo chiều cao tối thiểu để các thẻ đồng đều */
+    }
+
+    .blog-post-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: #606060;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta-divider {
+      width: 16px;
+      height: 1px;
+      background-color: #606060;
+      transform: rotate(90deg);
+    }
+
+    .blog-post-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0c0c0c;
+      line-height: 140%;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .blog-post-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .blog-post-title a:hover {
+      color: #c80064;
+    }
+
+    .blog-post-excerpt {
+      font-size: 16px;
+      line-height: 180%;
+      /* ~28.8px mỗi dòng */
+      color: #0c0c0c;
+      height: 57.6px;
+      /* 2 dòng x 28.8px, làm tròn để chính xác */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* Giới hạn 2 dòng */
+      line-clamp: 2;
+      /* Standard property for compatibility */
+      -webkit-box-orient: vertical;
+      margin: 0;
+    }
+
+    .read-more {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #c80064;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+      align-self: center;
+      margin-top: 16px;
+    }
+
+    .read-more:hover {
+      background-color: #a60053;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .blog-post {
+        width: calc(33.33% - 16px);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .blog-post {
+        width: calc(50% - 12px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .blog-section {
+        margin: 100px auto 20px;
+        padding: 0 10px;
+      }
+
+      .blog-title {
+        font-size: 24px;
+      }
+
+      .blog-post {
+        width: 100%;
+      }
+
+      .blog-post-image {
+        height: 200px;
+      }
+
+      .blog-post-title {
+        font-size: 18px;
+      }
+
+      .blog-post-excerpt {
+        font-size: 14px;
+        height: 50.4px;
+        /* 2 dòng x 25.2px (14px * 1.8) */
+      }
+
+      .blog-post-content {
+        min-height: 220px;
+        /* Giảm chiều cao tối thiểu cho màn hình nhỏ */
+      }
+    }
+    
+  </style>
+</head>
+
+<body>
+ <body>
+    <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+
+  <!-- Blog Section -->
+  <div class="blog-section">
+    <h1 class="blog-title">Blog</h1>
+
+    <div class="blog-posts-container">
+      {% for blog in blogs %}
+      {% if forloop.counter0|divisibleby:3 %}
+      <div class="blog-posts-row">
+        {% endif %}
+
+        <div class="blog-post">
+          <img class="blog-post-image" src="{{ blog.image.url }}" alt="Blog Image" />
+          <div class="blog-post-content">
+            <h2 class="blog-post-title">
+              <a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a>
+            </h2>
+            <div class="blog-post-meta">
+              <span>{{ blog.category }}</span>
+              <div class="meta-divider"></div>
+              <span>{{ blog.author }}</span>
+              <div class="meta-divider"></div>
+              <span>{{ blog.date|date:"d F, Y" }}</span>
+            </div>
+            <p class="blog-post-excerpt">{{ blog.excerpt }}</p>
+            <a href="{% url 'blog_detail' blog.id %}" class="read-more">Đọc Thêm</a>
+          </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+      </div> <!-- end .blog-posts-row -->
+      {% endif %}
+      {% empty %}
+      <p>Không có bài viết nào.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      {% if blogs.has_previous %}
+      <a href="?page={{ blogs.previous_page_number }}">&laquo; Trước</a>
+      {% endif %}
+
+      <span class="current-page">Trang {{ blogs.number }} / {{ blogs.paginator.num_pages }}</span>
+
+      {% if blogs.has_next %}
+      <a href="?page={{ blogs.next_page_number }}">Tiếp &raquo;</a>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

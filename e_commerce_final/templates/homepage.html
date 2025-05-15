@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{% load humanize %}
+
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+        <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+    }
+
+  </script>
+
+
+  <!-- Hero Slider -->
+  <section class="hero-slider">
+    <div class="slideshow-wrapper">
+      {% for slide in hero_slides %}
+      <div class="slide">
+        <img src="{{ slide.image.url }}" alt="{{ slide.name }}">
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="hero-content">
+      <h1 class="hero-title">Mở khóa vẻ rạng rỡ tự nhiên của bạn</h1>
+      <a href="{% url 'product_list' %}" class="button button-outline">Xem Thêm</a>
+    </div>
+
+    <!-- Navigation arrows -->
+    <div class="slider-arrow" style="left: 20px; top: 50%" onclick="moveSlide(-1)">
+      <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="slider-arrow" style="right: 20px; top: 50%" onclick="moveSlide(1)">
+      <i class="fas fa-chevron-right"></i>
+    </div>
+  </section>
+
+  <!-- Dots navigation -->
+  <div class="slider-dots-outside">
+    {% for slide in hero_slides %}
+    <span class="dot {% if forloop.first %}active{% endif %}" onclick="currentSlide('{{ forloop.counter0 }}')"></span>
+    {% endfor %}
+  </div>
+
+
+
+  <!-- Categories -->
+  <section>
+    <h2 class="section-header">Danh Mục Sản Phẩm</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+      {% for category in categories %}
+      <a href="{% url 'product_by_category' category.id %}" class="category-card"
+        style="text-align: center; text-decoration: none; color: inherit;">
+        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+        <div class="category-name">{{ category.name }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if analysis %}
+  <section class="virtual-analysis-section" style="display: flex; gap: 40px; padding: 40px;">
+    <!-- Phần nội dung -->
+    <div class="analysis-content" style="flex: 1;">
+      <h3>{{ analysis.title }}</h3>
+      <p>{{ analysis.description|linebreaksbr }}</p>
+
+      <div class="scan-options" style="margin: 20px 0;">
+      </div>
+
+      <!-- Nút mở popup -->
+      <a href="javascript:void(0);" onclick="openQuizModal()" class="button button-outline">
+        Tìm hiểu ngay về da của bạn
+      </a>
+
+      <div style="margin-top: 20px;">
+        <img src="{{ analysis.qr_code.url }}" alt="QR Code" class="qr-code" style="width: 150px;">
+      </div>
+    </div>
+
+    <!-- Phần hình ảnh -->
+    <div class="analysis-image-wrapper" style="flex: 1;">
+      <img src="{{ analysis.image.url }}" alt="Virtual Skincare" class="main-image"
+        style="width: 100%; border-radius: 10px;">
+    </div>
+  </section>
+  {% endif %}
+
+
+  <!-- Best Sellers -->
+  <section class="product-section">
+    <h2 class="section-header">Best Sellers</h2>
+
+    <div class="product-slider-container">
+      <!-- Left Arrow -->
+      <button class="product-slider-nav left" onclick="scrollProducts(-1)">
+        <span class="nav-arrow-icon"></span>
+      </button>
+
+      <!-- Product Slider -->
+      <div class="product-slider" id="productSlider">
+        <div class="product-grid">
+          {% for product in new_products %}
+          <a href="{% url 'product_detail' product.id %}" class="product-card">
+            <img data-src="{{ product.image.url }}" alt="{{ product.name }}" class="lazy-image" />
+            <div class="product-info">
+              <div class="product-title">{{ product.name }}</div>
+              <div class="product-description">{{ product.description|truncatewords:10 }}</div>
+              <div class="product-price">
+                <span class="price-number">
+                  {{ product.price|floatformat:0|intcomma }}<span class="currency">đ</span>
+                </span>
+                {% if product.original_price and product.original_price > product.price %}
+                <span class="original-price">
+                  {{ product.original_price|floatformat:0|intcomma }}<span class="currency">đ</span>
+                </span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Right Arrow -->
+      <button class="product-slider-nav right" onclick="scrollProducts(1)">
+        <span class="nav-arrow-icon"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- New In -->
+  <section class="product-section dark-bg">
+    <h2 class="section-header" style="color: white">New In</h2>
+
+    <div class="product-slider-container">
+      <button class="product-slider-nav left" onclick="scrollNewProducts(-1)">
+        <span class="nav-arrow-icon"></span>
+      </button>
+
+      <div class="product-slider" id="newProductSlider">
+        <div class="product-grid">
+          {% for product in new_products %}
+          <a href="{% url 'product_detail' product.id %}" class="product-card">
+            <img data-src="{{ product.image.url }}" alt="{{ product.name }}" class="lazy-image" />
+            <div class="product-info">
+              <div class="product-title">{{ product.name }}</div>
+              <div class="product-description">{{ product.description|truncatewords:15 }}</div>
+              <div class="product-price">₫{{ product.price|floatformat:0|intcomma}}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="product-slider-nav right" onclick="scrollNewProducts(1)">
+        <span class="nav-arrow-icon"></span>
+      </button>
+    </div>
+  </section>
+
+
+
+  <!-- Special Offers -->
+  {% if special_offer %}
+  <section class="special-offers-section">
+    <div class="special-offers-container">
+      <!-- Right: Image -->
+      <div class="special-offers-image">
+        <img src="{{ special_offer.image.url }}" alt="Special Offer" />
+      </div>
+
+      <!-- Left: Text -->
+      <div class="special-offers-content">
+        <h3 class="special-offers-subtitle">{{ special_offer.subtitle }}</h3>
+        <h2 class="special-offers-title">{{ special_offer.title }}</h2>
+
+        <p class="special-offers-text">
+          {{ special_offer.description|linebreaksbr }}
+        </p>
+
+        <p class="special-offers-highlight">
+          {{ special_offer.highlight }}
+        </p>
+        <br />
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+
+
+  <section class="blog-section">
+    <div class="blog-header">
+      <h2 class="section-header">Blog Làm Đẹp</h2>
+      <a href="{% url 'blog_list' %}" class="button">Xem thêm</a>
+    </div>
+
+    <div class="blog-grid">
+      {% for post in latest_posts %}
+      <div class="blog-card-wrapper">
+        <a href="{% url 'blog_detail' post.id %}" class="blog-card-link"></a>
+        <div class="blog-card">
+          {% if post.image %}
+          <img src="{{ post.image.url }}" alt="{{ post.title }}">
+          {% else %}
+          <img src="{% static 'images/default-blog.jpg' %}" alt="No image">
+          {% endif %}
+
+          <div class="blog-content">
+            <div class="blog-meta">
+              {% if post.category %}<span>{{ post.category }}</span>{% endif %}
+              <span>•</span>
+              <span>{{ post.author }}</span>
+              <span>•</span>
+              <span>{{ post.date|date:"d/m/Y" }}</span>
+            </div>
+            <h3 class="blog-title">{{ post.title }}</h3>
+            <p class="blog-excerpt">
+              {{ post.content|truncatechars:120 }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+      <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+      <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+        <label class="consent-text" style="display: block; margin-top: 12px;">
+          <input type="checkbox" name="consent" required />
+          Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+        </label>
+
+        <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+      </form>
+    </div>
+
+  </div>
+  </div>
+
+  <div class="footer-contact-row">
+    <div class="footer-contact-group">
+      <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+      <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+      <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+    </div>
+    <div class="footer-social-group">
+      <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+
+      <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+      </a>
+
+      <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+  </div>
+  </footer>
+
+  <!-- Modal HTML -->
+  <div id="quizModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeQuizModal()">&times;</span>
+      <h2>Skincare Quiz</h2>
+      <form id="quizForm" method="post">
+        {% csrf_token %}
+
+        <!-- Câu 1 -->
+        <label for="skin_type">Your Skin Type:</label>
+        <select name="q1_skin_type" id="skin_type" required>
+          <option value="">--Select--</option>
+          <option value="normal">Normal</option>
+          <option value="oily">Oily</option>
+          <option value="dry">Dry</option>
+          <option value="combination">Combination</option>
+          <option value="sensitive">Sensitive</option>
+        </select>
+
+        <!-- Câu 2 -->
+        <label for="concern">Main Skin Concern:</label>
+        <select name="q2_concern" id="concern" required>
+          <option value="">--Select--</option>
+          <option value="acne">Acne</option>
+          <option value="dark spots">Dark Spots</option>
+          <option value="aging">Aging</option>
+          <option value="redness">Redness/Irritation</option>
+          <option value="dullness">Dull Skin</option>
+        </select>
+
+        <!-- Câu 3 -->
+        <label for="cleanse_frequency">How often do you cleanse your face daily?</label>
+        <select name="q3_cleanse_frequency" id="cleanse_frequency" required>
+          <option value="">--Select--</option>
+          <option value="once">Once</option>
+          <option value="twice">Twice</option>
+          <option value="more">More than twice</option>
+          <option value="rarely">Rarely</option>
+        </select>
+
+        <!-- Câu 4 -->
+        <label for="sunscreen">Do you wear sunscreen daily?</label>
+        <select name="q4_sunscreen" id="sunscreen" required>
+          <option value="">--Select--</option>
+          <option value="yes">Yes</option>
+          <option value="sometimes">Sometimes</option>
+          <option value="no">No</option>
+        </select>
+
+        <!-- Câu 5 -->
+        <label for="fragrance_free">Do you prefer fragrance-free products?</label>
+        <select name="q5_fragrance_free" id="fragrance_free" required>
+          <option value="">--Select--</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="no_preference">No Preference</option>
+        </select>
+
+        <!-- Câu 6 -->
+        <label for="active_ingredients">Do you currently use any active ingredients?</label>
+        <select name="q6_active_ingredients" id="active_ingredients" required>
+          <option value="">--Select--</option>
+          <option value="retinol">Retinol</option>
+          <option value="aha_bha">AHA/BHA</option>
+          <option value="vitamin_c">Vitamin C</option>
+          <option value="niacinamide">Niacinamide</option>
+          <option value="none">None</option>
+        </select>
+
+        <!-- Câu 7 -->
+        <label for="routine_level">How would you describe your current skincare routine?</label>
+        <select name="q7_routine_level" id="routine_level" required>
+          <option value="">--Select--</option>
+          <option value="beginner">Beginner</option>
+          <option value="basic">Basic (Cleanser + Moisturizer)</option>
+          <option value="intermediate">Intermediate (Includes actives)</option>
+          <option value="advanced">Advanced (Full multi-step routine)</option>
+        </select>
+
+        <button type="submit">Get My AI Recommendation</button>
+      </form>
+
+      <!-- AI output -->
+      <div id="quizResult"></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("quizForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+
+      const answers = [
+        form.q1_skin_type.value,
+        form.q2_concern.value,
+        form.q3_cleanse_frequency.value,
+        form.q4_sunscreen.value,
+        form.q5_fragrance_free.value,
+        form.q6_active_ingredients.value,
+        form.q7_routine_level.value
+      ];
+
+      // Kiểm tra nếu thiếu câu trả lời nào
+      if (answers.includes("")) {
+        document.getElementById("quizResult").innerHTML = "<p style='color:red;'>Please answer all questions before submitting.</p>";
+        return;
+      }
+
+      fetch("{% url 'virtual_quiz_ajax' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({ answers: answers })
+      })
+        .then(response => response.json())
+        .then(data => {
+          const resultDiv = document.getElementById("quizResult");
+
+          if (data.error) {
+            resultDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+            return;
+          }
+
+          // Hiển thị phản hồi từ AI
+          let html = `<h3>AI Recommendation</h3><p>${data.recommendation}</p>`;
+
+          if (data.products && data.products.length > 0) {
+            html += `<h4>Recommended Products:</h4><div class="product-list" style="display: flex; gap: 1rem; flex-wrap: wrap;">`;
+
+            data.products.forEach(p => {
+              html += `
+          <div class="product-card" style="border: 1px solid #ccc; padding: 10px; width: 160px; text-align: center;">
+            <img src="${p.image}" alt="${p.name}" style="width: 100px; height: 100px; object-fit: cover;">
+            <p><strong>${p.name}</strong></p>
+            <p>${p.price} VND</p>
+          </div>
+        `;
+            });
+
+            html += `</div>`;
+          }
+
+          resultDiv.innerHTML = html;
+        })
+        .catch(error => {
+          document.getElementById("quizResult").innerHTML = `<p style="color:red;">An error occurred: ${error}</p>`;
+        });
+    });
+  </script>
+
+
+
+  <script src="include.js"></script>
+  <script>
+
+    // Hero Slider functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+    const wrapper = document.querySelector(".slideshow-wrapper");
+
+    function showSlide(n) {
+      if (n >= slides.length) slideIndex = 0;
+      if (n < 0) slideIndex = slides.length - 1;
+
+      wrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === slideIndex);
+      });
+    }
+
+    function moveSlide(n) {
+      showSlide((slideIndex += n));
+    }
+
+    function currentSlide(n) {
+      showSlide((slideIndex = n));
+    }
+
+    // Auto slide
+    let slideInterval = setInterval(() => moveSlide(1), 3000);
+
+    // Pause on hover
+    const slideshow = document.querySelector(".hero-slider");
+    slideshow.addEventListener("mouseenter", () =>
+      clearInterval(slideInterval)
+    );
+    slideshow.addEventListener("mouseleave", () => {
+      slideInterval = setInterval(() => moveSlide(1), 3000);
+    });
+
+    // Initialize
+    showSlide(slideIndex);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Lazy-load hình ảnh
+      const lazyImages = document.querySelectorAll('img.lazy-image');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy-image');
+            observer.unobserve(img);
+          }
+        });
+      });
+      lazyImages.forEach(img => imageObserver.observe(img));
+
+      // Slider logic dùng transform
+      function setupSlider(sliderId, visibleCards = 4, autoSlide = true, interval = 4000) {
+        const slider = document.getElementById(sliderId);
+        const productGrid = slider.querySelector('.product-grid');
+        const cards = productGrid.querySelectorAll('.product-card');
+
+        let cardWidth = 0;
+        let currentIndex = 0;
+
+        function calculateCardWidth() {
+          if (cards.length > 0) {
+            const style = window.getComputedStyle(cards[0]);
+            const gap = parseInt(style.marginRight) || 24;
+            cardWidth = cards[0].offsetWidth + gap;
+          }
+        }
+
+        calculateCardWidth();
+
+        function scrollSlider(direction) {
+          const totalCards = cards.length;
+          currentIndex += direction;
+
+          if (currentIndex > totalCards - visibleCards) {
+            currentIndex = 0;
+          } else if (currentIndex < 0) {
+            currentIndex = totalCards - visibleCards;
+          }
+
+          productGrid.style.transition = 'transform 0.5s ease';
+          productGrid.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        // Recalculate on resize
+        window.addEventListener('resize', () => {
+          calculateCardWidth();
+          currentIndex = 0;
+          productGrid.style.transition = 'none';
+          productGrid.style.transform = 'translateX(0)';
+          void productGrid.offsetWidth; // force reflow
+          productGrid.style.transition = 'transform 0.5s ease';
+        });
+
+        // Auto slide
+        let timer;
+        if (autoSlide) {
+          timer = setInterval(() => scrollSlider(1), interval);
+
+          // Pause on hover
+          slider.addEventListener('mouseenter', () => clearInterval(timer));
+          slider.addEventListener('mouseleave', () => {
+            timer = setInterval(() => scrollSlider(1), interval);
+          });
+        }
+
+        return scrollSlider;
+      }
+
+      // Gắn scroll cho từng slider
+      window.scrollProducts = setupSlider('productSlider');
+      window.scrollNewProducts = setupSlider('newProductSlider');
+    });
+
+    // Newsletter form submission
+    newsletterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const emailInput = this.querySelector('input[type="email"]');
+      fetch("{% url 'subscribe_newsletter' %}", {
+        method: "POST",
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `email=${encodeURIComponent(emailInput.value)}`
+      })
+        .then(response => response.json())
+        .then(data => alert(data.message))
+        .catch(err => alert("Error subscribing."));
+    });
+
+
+
+    // include.js
+    function includeHTML() {
+      const elements = document.querySelectorAll('[data-include]');
+      elements.forEach(el => {
+        const file = el.getAttribute('data-include');
+        fetch(file)
+          .then(response => {
+            if (response.ok) return response.text();
+            throw new Error('Page not found');
+          })
+          .then(data => el.innerHTML = data)
+          .catch(err => console.error('Error including HTML:', err));
+      });
+    }
+    document.addEventListener('DOMContentLoaded', includeHTML);
+
+    function openQuizModal() {
+      document.getElementById("quizModal").style.display = "block";
+    }
+    function closeQuizModal() {
+      document.getElementById("quizModal").style.display = "none";
+    }
+
+    // Gửi form qua AJAX
+    document.getElementById('quizForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      fetch("{% url 'virtual_quiz_ajax' %}", {
+        method: "POST",
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: data
+      })
+        .then(response => response.json())
+        .then(data => {
+          const resultDiv = document.getElementById('quizResult');
+          if (data.recommended && data.recommended.length > 0) {
+            resultDiv.innerHTML = "<h4>Recommended Products:</h4><ul>" +
+              data.recommended.map(p => `<li><a href="/product/${p.id}/">${p.name}</a></li>`).join('') +
+              "</ul>";
+          } else {
+            resultDiv.innerHTML = "<p>No matching products found.</p>";
+          }
+        });
+    });
+
+
+  </script>
+  {% if best_seller_popup %}
+  <div id="popup" class="popup-overlay" style="display: none" onclick="closePopup(event)">
+    <div class="popup-content">
+      <button class="close-btn" onclick="closePopup(event)">×</button>
+      <h2>{{ best_seller_popup.name }}</h2>
+      <img src="{{ best_seller_popup.image.url }}" alt="{{ best_seller_popup.name }}" style="max-width: 120px;">
+      <p>Giá: {{ best_seller_popup.price|floatformat:0|intcomma }}đ</p>
+      {% if special_offer %}
+      <p style="color: red;">{{ special_offer.title }}</p>
+      {% endif %}
+      <a href="{% url 'product_detail' best_seller_popup.id %}" class="btn">Xem ngay</a>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const popup = document.querySelector('.popup-overlay');
+      if (popup) {
+        popup.style.display = 'flex';
+      }
+    };
+
+    function closePopup(event) {
+      const popup = document.querySelector('.popup-overlay');
+      if (
+        event.target.classList.contains('popup-overlay') ||
+        event.target.classList.contains('close-btn')
+      ) {
+        popup.style.display = 'none';
+      }
+    }
+  </script>
+  {% endif %}
+
+
+
+  <style>
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: popupFadeIn 0.3s ease-out;
+    }
+
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .popup-content h2 {
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .popup-content p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .popup-content img {
+      width: 140px;
+      height: auto;
+      border-radius: 8px;
+      margin: 10px 0;
+      object-fit: cover;
+    }
+
+    .popup-content .btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 24px;
+      background-color: #c80064;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .popup-content .btn:hover {
+      background-color: #a00050;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      background: #eee;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #666;
+      padding: 5px 10px;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background-color: #ddd;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-left: 8px;
+      font-size: 13px;
+    }
+  </style>
+
+
+</body>
+
+</html>

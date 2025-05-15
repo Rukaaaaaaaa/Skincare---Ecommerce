@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+
+<head>
+  <title>Beautya - Skincare & Makeup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .container {
+      display: flex;
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 50px;
+    }
+
+    .sidebar {
+      width: 200px;
+      border-right: 1px solid #ccc;
+      background: #f5f5f5;
+
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      padding: 15px 20px;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+    }
+
+    .sidebar li.active {
+      border-left: 4px solid #d9006c;
+      background: #fff;
+      font-weight: bold;
+      color: #d9006c;
+    }
+
+    .faq-section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .faq-section h2 {
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+    }
+
+    .faq-item .question {
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .faq-item .question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .faq-item.open .question::after {
+      content: '–';
+    }
+
+    .faq-item .answer {
+      display: none;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .faq-item.open .answer {
+      display: block;
+    }
+
+    .faq-item .question.active {
+      color: #d9006c;
+    }
+  </style>
+</head>
+
+<body>
+
+<body>
+    <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+  {% if faqs %}
+<div class="faq-section">
+  <h2 class="section-title">Frequently Asked Questions</h2>
+
+  {% for item in faqs %}
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      {{ item.question }}
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="faq-answer" style="display: none;">
+      {{ item.answer }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+  .faq-section {
+    margin-top: 40px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+  }
+
+  .faq-question {
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .toggle-icon {
+    float: right;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-question.open .toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    margin-top: 10px;
+    color: #555;
+  }
+</style>
+
+<script>
+  function toggleFaq(element) {
+    const answer = element.nextElementSibling;
+    const icon = element.querySelector('.toggle-icon');
+    const isOpen = answer.style.display === 'block';
+
+    // Đóng tất cả câu hỏi
+    document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.faq-question').forEach(el => el.classList.remove('open'));
+
+    if (!isOpen) {
+      answer.style.display = 'block';
+      element.classList.add('open');
+    }
+  }
+</script>
+{% endif %}
+
+
+  <script>
+    const sidebarItems = document.querySelectorAll('.sidebar li');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const faqSection = document.querySelector('.faq-section h2');
+
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // Đổi tab active
+        sidebarItems.forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+
+        const category = item.getAttribute('data-category');
+        faqSection.textContent = `FAQs - ${item.textContent}`;
+
+        // Ẩn tất cả câu hỏi
+        faqItems.forEach(faq => {
+          if (faq.getAttribute('data-category') === category) {
+            faq.style.display = 'block';
+          } else {
+            faq.style.display = 'none';
+            faq.classList.remove('open'); // đóng câu hỏi khi ẩn
+            faq.querySelector('.question')?.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Xử lý mở/đóng câu hỏi
+    const questions = document.querySelectorAll('.question');
+    questions.forEach(q => {
+      q.addEventListener('click', () => {
+        const parent = q.parentElement;
+        parent.classList.toggle('open');
+        q.classList.toggle('active');
+      });
+    });
+
+    // Mặc định chỉ hiển thị Product
+    window.addEventListener('DOMContentLoaded', () => {
+      faqItems.forEach(faq => {
+        if (faq.getAttribute('data-category') !== 'product') {
+          faq.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+  <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

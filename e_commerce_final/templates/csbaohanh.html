@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{% load humanize %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chính sách bảo hành | Beautya</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .container h1, h2 {
+      color: #a10550;
+      padding: 20px;
+    }
+
+    .container ul{
+      padding-left: 20px;
+    }
+
+    .contact {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+    .contact p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+          <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+  
+  <div class="container">
+    <h1>Chính sách bảo hành sản phẩm</h1>
+    <p><strong>Cập nhật lần cuối:</strong> [10/05/2025]</p>
+
+    <h2>1. Mục đích</h2>
+    <p>Chính sách bảo hành tại <strong>Beautya</strong> được xây dựng nhằm bảo vệ quyền lợi người tiêu dùng, đảm bảo sự hài lòng và tin tưởng khi mua sắm các sản phẩm chăm sóc da tại website của chúng tôi.</p>
+
+    <h2>2. Phạm vi áp dụng</h2>
+    <ul>
+      <li>Áp dụng cho khách hàng mua hàng tại: <strong>Beautya</strong></li>
+      <li>Áp dụng cho các sản phẩm chính hãng được phân phối bởi Beautya</li>
+    </ul>
+
+    <h2>3. Điều kiện bảo hành</h2>
+    <ul>
+      <li>Sản phẩm còn hạn sử dụng và chưa dùng quá 10%</li>
+      <li>Bị dị ứng nghiêm trọng, hư hỏng do nhà sản xuất, rò rỉ, vỡ, biến chất</li>
+      <li>Có video/ảnh chứng minh lỗi sản phẩm khi mở hàng</li>
+      <li>Thông báo trong vòng 3 ngày kể từ ngày nhận hàng</li>
+      <li>Tem mác, hóa đơn, hộp sản phẩm còn nguyên vẹn</li>
+    </ul>
+
+    <h2>4. Trường hợp không áp dụng</h2>
+    <ul>
+      <li>Đã sử dụng quá 10% sản phẩm</li>
+      <li>Dị ứng không có bằng chứng rõ ràng</li>
+      <li>Không có hóa đơn từ Beautya</li>
+      <li>Bảo quản sai cách</li>
+    </ul>
+
+    <h2>5. Quy trình bảo hành / đổi trả</h2>
+    <ul>
+      <li>Gửi yêu cầu kèm ảnh/video qua email hoặc hotline</li>
+      <li>Chờ phản hồi từ bộ phận CSKH trong vòng 48h</li>
+      <li>Đổi hàng hoặc hoàn tiền nếu hợp lệ</li>
+      <li>Gửi trả sản phẩm theo hướng dẫn</li>
+    </ul>
+
+    <h2>6. Thời gian xử lý</h2>
+    <p>Từ 3 - 7 ngày làm việc kể từ khi nhận được sản phẩm hoàn trả. Hoàn tiền qua hình thức thanh toán ban đầu.</p>
+
+    <h2>7. Lưu ý quan trọng</h2>
+    <ul>
+      <li>Quay video mở hàng là căn cứ giải quyết</li>
+      <li>Chúng tôi có quyền từ chối xử lý nếu phát hiện gian lận</li>
+    </ul>
+  </div>
+
+          <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

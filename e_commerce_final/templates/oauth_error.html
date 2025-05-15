@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>OAuth Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #ff7eb9;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        p {
+            text-align: left;
+            font-size: 18px;
+            margin-left: 100px;
+        }
+
+        a {
+            max-width: fit-content;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            margin-left: 350px;
+            font-size: 18px;
+            color: #ff7eb9;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #ff7eb9;
+            border-radius: 5px;
+            background-color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <h2>Lỗi liên kết</h2>
+    <p>Tài khoản Google này đã được liên kết với một người dùng khác.</p>
+    <p>Vui lòng sử dụng tài khoản Google khác để đăng nhập.</p>
+    <p>Vui lòng liên hệ với quản trị viên nếu bạn cần hỗ trợ.</p>
+    <p>Xin lỗi vì sự bất tiện này.</p>
+    <p>Trân trọng,</p>
+    <p>Đội ngũ hỗ trợ của chúng tôi</p>
+    <p>BEAUTYA</p>
+    <a href="{% url 'profile' %}">Quay lại hồ sơ</a>
+</body>
+
+</html>

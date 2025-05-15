@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Prestige Lip Glow Treatment</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Tổng container */
+        .product-container {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+
+        /* Hình ảnh sản phẩm */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .main-image {
+            width: 100%;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 10px;
+            justify-content: start;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail-list img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: border 0.3s;
+        }
+
+        .thumbnail-list img:hover,
+        .thumbnail-list img.active {
+            border: 2px solid #ee4d2d;
+        }
+
+        /* Chi tiết sản phẩm */
+        .product-details {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .product-subtitle {
+            font-size: 16px;
+            color: #888;
+            margin: 20px 0 20px 0;
+        }
+
+        /* Đánh giá */
+        .product-rating .stars {
+            font-size: 16px;
+            color: #ffce3d;
+            margin-bottom: 8px;
+        }
+
+        .rating-count,
+        .sold-count {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Giá */
+        .price-container {
+            background-color: #fff0e9;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .current-price {
+            font-size: 28px;
+            color: #ee4d2d;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        /* Mô tả */
+        .product-description p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* Tính năng nổi bật */
+        .product-features {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .product-features li {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .product-features li::before {
+            content: "✓";
+            color: green;
+            position: absolute;
+            left: 0;
+        }
+
+        .voucher-section,
+        .combo-section,
+        .shipping-section,
+        .quantity-section {
+            font-size: 14px;
+            margin-top: 12px;
+            color: #333;
+        }
+
+        .voucher-label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .voucher-code {
+            background-color: #fff0e9;
+            color: #ee4d2d;
+            padding: 4px 8px;
+            margin-right: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .quantity-section input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .combo-section strong,
+        .shipping-section strong {
+            color: #555;
+        }
+
+        /* Nút mua hàng */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart,
+        .buy-now {
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            min-width: 160px;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .add-to-cart:hover {
+            background-color: #ff55be;
+        }
+
+        .buy-now {
+            background-color: #be339c;
+            color: white;
+        }
+
+        .buy-now:hover {
+            background-color: #ff00d4;
+        }
+
+        .add-to-cart:active,
+        .buy-now:active {
+            transform: scale(0.97);
+        }
+
+        /* Tabs Section */
+        .tabs-container {
+            margin-top: 40px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .tablinks {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .tablinks:hover {
+            background-color: #f8f8f8;
+        }
+
+        .tablinks.active {
+            border-bottom: 3px solid #d8127d;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+            border-top: none;
+        }
+
+        .tab-content-wrapper {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .tab-content-wrapper p,
+        .tab-content-wrapper ul,
+        .tab-content-wrapper ol {
+            margin-bottom: 15px;
+        }
+
+        .tab-content-wrapper ul,
+        .tab-content-wrapper ol {
+            padding-left: 25px;
+        }
+
+        /* Review Items */
+        .review-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-item h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .review-stars {
+            color: #ffb100;
+            margin-left: 5px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: auto;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            color: #d8127d;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            margin-top: 10px;
+            color: #666;
+            display: none;
+        }
+
+        /* Recommended Skincare Routine và You May Also Like Section */
+        .related-products,
+        .you-may-also-like {
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .product-grid-wrapper {
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .product-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .product-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            min-width: 250px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 0 0 auto;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #f5f5f5;
+        }
+
+        .product-card-details {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .product-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d8127d;
+            margin-bottom: 5px;
+        }
+
+        .product-card-description {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-card-price {
+            font-size: 16px;
+            color: #d8127d;
+            font-weight: 600;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            font-size: 24px;
+            color: #c80064;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            z-index: 10;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .nav-arrow:hover {
+            background: wheat;
+        }
+
+        .nav-arrow.left {
+            left: 0;
+        }
+
+        .nav-arrow.right {
+            right: 0;
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+
+            .product-images,
+            .product-details {
+                width: 100%;
+            }
+
+            .tab {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .tablinks {
+                flex: none;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .product-grid {
+                justify-content: flex-start;
+            }
+
+            .product-card {
+                flex: 0 0 45%;
+            }
+
+            .nav-arrow {
+                display: block;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-title {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .product-card {
+                flex: 0 0 80%;
+            }
+
+            .faq-section {
+                padding: 20px 15px;
+            }
+
+            .tab {
+                overflow-x: auto;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+
+            .product-grid-wrapper {
+                padding: 0 20px;
+            }
+
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qty-btn {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .qty-btn:hover {
+            background-color: #ddd;
+        }
+
+        .cart-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* dark gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .cart-popup-content {
+            background: white;
+            color: #28a745;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .login-prompt {
+            background: linear-gradient(135deg, #ffe0e6, #fff0f5);
+            border: 2px dashed #ff69b4;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(255, 105, 180, 0.2);
+            max-width: 400px;
+            margin: 40px auto;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-prompt p {
+            font-size: 18px;
+            color: #d6336c;
+            margin-bottom: 15px;
+        }
+
+        .login-prompt .login-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff69b4;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-prompt .login-button:hover {
+            background-color: #e055a2;
+        }
+    </style>
+</head>
+{% load static %}
+
+<body>
+
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="logo">
+                    <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+                    <span class="shop-name">BEAUTYA</span>
+                </a>
+            </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+            <div class="header-actions">
+                <div class="cart-wrapper">
+                    <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+                    <span class="cart-count">{{ cart_item_count }}</span>
+                </div>
+                <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="user-name">
+                    <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+                </a>
+                {% endif %}
+            </div>
+        </header>
+
+
+        <!-- Search Bar dính cố định ngay dưới header -->
+        <div id="search-bar-wrapper" class="search-bar-wrapper">
+            <form method="get" action="{% url 'search' %}">
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+                <button type="submit">Tìm</button>
+            </form>
+        </div>
+        <!-- Header end-->
+
+        <script>
+            function goToCart() {
+                window.location.href = "{% url 'cart' %}";
+            }
+
+            function toggleSearchBar() {
+                const wrapper = document.getElementById('search-bar-wrapper');
+                wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+
+
+        {% load static %}
+        {% load humanize %}
+
+        <main class="main-container">
+            <div class="product-container">
+
+                <!-- Ảnh sản phẩm -->
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="{{ product.image.url }}" id="currentImage" alt="{{ product.name }}">
+                    </div>
+                    <div class="thumbnail-list">
+                        <img src="{{ product.image.url }}" class="thumbnail active" alt="{{ product.name }}">
+                    </div>
+                </div>
+
+                <!-- Chi tiết sản phẩm -->
+                <div class="product-details">
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <p class="description" onclick="toggleFullDescription(this)">
+                        <span class="short">{{ product.description|truncatechars:60 }}</span>
+                        <span class="full" style="display: none;">{{ product.description }}</span>
+                        <span class="more-indicator">... thêm</span>
+                    </p>
+
+
+                    <!-- Đánh giá -->
+                    <div class="product-rating">
+                        <div class="stars">
+                            ⭐⭐⭐⭐⭐
+                            <span class="rating-count">({{ product.rating }} | {{ product.review_count }} Đánh
+                                giá)</span>
+                            <span class="sold-count"> | Đã bán {{ product.sold_count }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Giá -->
+                    <div class="price-container">
+                        <span class="current-price">₫{{ product.price|floatformat:0|intcomma }}</span>
+                        {% if product.original_price %}
+                        <span class="original-price">₫{{ product.original_price|floatformat:0|intcomma }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if vouchers %}
+                    <div class="voucher-section">
+                        <span class="voucher-label">Mã giảm giá:</span>
+                        {% for v in vouchers %}
+                        <span class="voucher-code">{{ v }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Combo khuyến mãi -->
+                    {% if product.combo %}
+                    <div class="combo-section">
+                        <strong>Combo:</strong> {{ product.combo }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Vận chuyển -->
+                    {% if product.shipping %}
+                    <div class="shipping-section">
+                        <strong>Vận chuyển:</strong> {{ product.shipping }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Số lượng -->
+                    <div class="quantity-section">
+                        <label for="quantity">Số lượng:</label>
+                        <div class="quantity-controls">
+                            <button type="button" class="qty-btn" onclick="updateQuantity(-1)">–</button>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1">
+                            <button type="button" class="qty-btn" onclick="updateQuantity(1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Popup xác nhận -->
+                    <div id="cart-popup-overlay" class="cart-popup-overlay" style="display: none;"
+                        onclick="hideCartPopup()">
+                        <div class="cart-popup-content">
+                            ✔️ Đã thêm vào giỏ hàng!
+                        </div>
+                    </div>
+
+                    <!-- Tính năng nổi bật -->
+                    {% if product.features %}
+                    <ul class="product-features">
+                        {% for feature in product.features.splitlines %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if not request.user.is_authenticated %}
+                    <div class="login-prompt">
+                        <p>Đăng nhập để nhận thêm ưu đãi!</p>
+                        <a href="{% url 'login' %}" class="login-button">Đăng nhập</a>
+                    </div>
+                    {% else %}
+                    <!-- Nút mua -->
+                    <div class="action-buttons">
+                        <button class="add-to-cart" data-product-id="{{ product.id }}" onclick="addToCart(this)">Thêm
+                            vào
+                            giỏ hàng</button>
+                        <button class="buy-now" data-product-id="{{ product.id }}" onclick="buyNow(this)">Mua
+                            ngay</button>
+
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tabs chi tiết -->
+            <div class="tabs-container">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'Description')">Mô tả</button>
+                    <button class="tablinks" onclick="openTab(event, 'Ingredients')">Thành phần</button>
+                    <button class="tablinks" onclick="openTab(event, 'HowToUse')">Cách sử dụng</button>
+                    <button class="tablinks" onclick="openTab(event, 'Reviews')">Đánh giá</button>
+                </div>
+
+                <div id="Description" class="tabcontent" style="display: block;">
+                    <div class="tab-content-wrapper">
+                        {% if product.detail %}
+                        <p>{{ product.detail|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có mô tả chi tiết.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="Ingredients" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.ingredients %}
+                        <p>{{ product.ingredients|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa cập nhật thành phần sản phẩm.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="HowToUse" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.how_to_use %}
+                        <p>{{ product.how_to_use|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có hướng dẫn sử dụng.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div id="Reviews" class="tabcontent">
+                    <div class="tab-content-wrapper">
+                        {% if product.reviews %}
+                        <p>{{ product.reviews|linebreaks }}</p>
+                        {% else %}
+                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if product.faqs %}
+            <div class="faq-section">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                {% for item in product.faqs %}
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        {{ item.question }}
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        {{ item.answer }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Recommendations section -->
+            <section class="recommendations">
+                {% if product.recommendations.all|length > 0 %}
+                <div class="related-products">
+                    <h2 class="section-title">Recommended Skincare Routine</h2>
+                    <div class="product-grid-wrapper">
+                        <button class="nav-arrow left" onclick="scrollGrid('recommendedGrid', -1)">❮</button>
+                        <div class="product-grid" id="recommendedGrid">
+                            {% for p in product.recommendations.all %}
+                            <div class="product-card">
+                                <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                                <div class="product-card-details">
+                                    <h3 class="product-card-title">{{ p.name }}</h3>
+                                    <p class="description" onclick="toggleFullDescription(this)">
+                                        <span class="short">{{ product.description|truncatechars:60 }}</span>
+                                        <span class="full" style="display: none;">{{ product.description }}</span>
+                                        <span class="more-indicator">... thêm</span>
+                                    </p>
+                                    <div class="product-card-price">₫{{ p.price }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="nav-arrow right" onclick="scrollGrid('recommendedGrid', 1)">❯</button>
+                    </div>
+                </div>
+                {% endif %}
+            </section>
+
+            <!-- You may also like section -->
+            <section class="you-may-also-like-section">
+                {% if product.related_products.all|length > 0 %}
+                <div class="you-may-also-like">
+                    <h2 class="section-title">You May Also Like</h2>
+                    <div class="product-grid-wrapper">
+                        <button class="nav-arrow left" onclick="scrollGrid('alsoLikeGrid', -1)">❮</button>
+                        <div class="product-grid" id="alsoLikeGrid">
+                            {% for p in product.related_products.all %}
+                            <div class="product-card">
+                                <img class="product-card-image" src="{{ p.image.url }}" alt="{{ p.name }}">
+                                <div class="product-card-details">
+                                    <h3 class="product-card-title">{{ p.name }}</h3>
+                                    <p class="description" onclick="toggleFullDescription(this)">
+                                        <span class="short">{{ product.description|truncatechars:60 }}</span>
+                                        <span class="full" style="display: none;">{{ product.description }}</span>
+                                        <span class="more-indicator">... thêm</span>
+                                    </p>
+                                    <div class="product-card-price">₫{{ p.price }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="nav-arrow right" onclick="scrollGrid('alsoLikeGrid', 1)">❯</button>
+                    </div>
+                </div>
+                {% endif %}
+            </section>
+        </main>
+
+        <script>
+
+            function toggleFullDescription(elem) {
+                const shortSpan = elem.querySelector('.short');
+                const fullSpan = elem.querySelector('.full');
+                const moreIndicator = elem.querySelector('.more-indicator');
+
+                const isExpanded = fullSpan.style.display === 'inline';
+
+                shortSpan.style.display = isExpanded ? 'inline' : 'none';
+                fullSpan.style.display = isExpanded ? 'none' : 'inline';
+                moreIndicator.innerText = isExpanded ? '... thêm' : ' thu gọn';
+            }
+
+
+            function toggleAnswer(element) {
+                const answer = element.nextElementSibling;
+                const icon = element.querySelector('.toggle-icon');
+                const isOpen = answer.style.display === "block";
+
+                answer.style.display = isOpen ? "none" : "block";
+                icon.innerText = isOpen ? "+" : "-";
+            }
+
+            function openTab(evt, tabName) {
+                document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
+                document.querySelectorAll(".tablinks").forEach(btn => btn.classList.remove("active"));
+
+                const target = document.getElementById(tabName);
+                if (target) {
+                    target.style.display = "block";
+                    evt.currentTarget.classList.add("active");
+                }
+            }
+
+            function initThumbnails() {
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                const mainImage = document.querySelector('.main-image img');
+
+                thumbnails.forEach(thumbnail => {
+                    thumbnail.addEventListener('click', function () {
+                        if (mainImage) {
+                            mainImage.src = this.src;
+                            thumbnails.forEach(t => t.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            function scrollGrid(gridId, direction) {
+                const grid = document.getElementById(gridId);
+                if (!grid) return;
+
+                const scrollAmount = 270;
+                grid.scrollLeft += direction * scrollAmount;
+
+                const leftArrow = grid.parentElement.querySelector('.nav-arrow.left');
+                const rightArrow = grid.parentElement.querySelector('.nav-arrow.right');
+
+                if (leftArrow && rightArrow) {
+                    leftArrow.disabled = grid.scrollLeft <= 0;
+                    rightArrow.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+                }
+            }
+
+            function showCartPopup() {
+                const popup = document.getElementById('cart-popup-overlay');
+                if (!popup) return;
+                popup.style.display = 'flex';
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, 2000);
+            }
+
+            function hideCartPopup() {
+                const popup = document.getElementById('cart-popup-overlay');
+                if (popup) popup.style.display = 'none';
+            }
+
+            function updateQuantity(change) {
+                const input = document.getElementById('quantity');
+                let qty = parseInt(input.value) || 1;
+                qty += change;
+                if (qty < 1) qty = 1;
+                input.value = qty;
+            }
+
+            function validateQuantity() {
+                const input = document.getElementById('quantity');
+                if (input && input.value < 1) input.value = 1;
+            }
+
+            function addToCart(button) {
+                const productId = button.dataset.productId;
+                const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+                fetch(`/orders/cart/add/${productId}/?qty=${quantity}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showCartPopup();
+
+                            // ✅ Update cart count dynamically
+                            const cartCountEl = document.querySelector('.cart-count');
+                            if (cartCountEl) {
+                                cartCountEl.textContent = data.cart_count;
+                            }
+                        } else {
+                            alert('Thêm vào giỏ hàng thất bại.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm vào giỏ:', error);
+                        alert('Đã có lỗi xảy ra.');
+                    });
+            }
+
+
+
+            function buyNow(button) {
+                const productId = button.dataset.productId;
+                const quantity = parseInt(document.getElementById('quantity').value) || 1;
+                window.location.href = `/orders/cart/add/${productId}/?qty=${quantity}&next=/orders/checkout`;
+            }
+
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const firstTab = document.querySelector('.tablinks');
+                if (firstTab) firstTab.click();
+
+                initThumbnails();
+
+                if (typeof initFAQToggles === 'function') initFAQToggles();
+
+                const buyButton = document.querySelector('.buy-button');
+                if (buyButton) {
+                    buyButton.addEventListener('mouseover', () => buyButton.style.backgroundColor = '#b50e69');
+                    buyButton.addEventListener('mouseout', () => buyButton.style.backgroundColor = '#d8127d');
+                }
+
+                const qtyInput = document.getElementById('quantity');
+                if (qtyInput) qtyInput.addEventListener('input', validateQuantity);
+
+                document.querySelectorAll('.product-grid').forEach(grid => {
+                    const left = grid.parentElement.querySelector('.nav-arrow.left');
+                    const right = grid.parentElement.querySelector('.nav-arrow.right');
+
+                    if (left && right) {
+                        left.disabled = grid.scrollLeft <= 0;
+                        right.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 1;
+                    }
+                });
+            });
+        </script>
+
+
+
+
+  <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+                <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+                    <label class="consent-text" style="display: block; margin-top: 12px;">
+                        <input type="checkbox" name="consent" required />
+                        Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+                    </label>
+
+                    <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+                </form>
+            </div>
+
+        </div>
+        </div>
+
+        <div class="footer-contact-row">
+            <div class="footer-contact-group">
+                <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+                <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+                <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+            </div>
+            <div class="footer-social-group">
+                <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+                <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+        </div>
+        </footer>
+
+    </body>
+
+</html>

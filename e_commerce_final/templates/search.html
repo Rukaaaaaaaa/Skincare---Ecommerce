@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{%load humanize %}
+
+<head>
+  <meta charset="UTF-8">
+  <title>Kết quả tìm kiếm</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .results {
+      margin-top: 120px;
+      text-align: center;
+    }
+
+    .results h2 {
+      margin-bottom: 20px;
+    }
+
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 24px;
+      padding: 30px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-card {
+      display: block;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 16px;
+    }
+
+    .product-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .product-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+      min-height: 38px;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #a0004f;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-price .original-price {
+      font-size: 14px;
+      text-decoration: line-through;
+      color: #999;
+      font-weight: normal;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 8px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .badge-new {
+      background-color: #ff7eb9;
+      color: white;
+    }
+
+    .badge-best {
+      background-color: #ff9900;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .product-card img {
+        height: 180px;
+      }
+
+      .product-info {
+        padding: 12px;
+      }
+
+      .product-title {
+        font-size: 14px;
+      }
+
+      .product-description {
+        font-size: 13px;
+      }
+
+      .product-price {
+        font-size: 14px;
+      }
+
+      .badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+    } 
+  </style>
+
+</head>
+
+<body>
+
+  <body>
+      <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+    <script>
+      function goToCart() {
+        window.location.href = "{% url 'cart' %}";
+      }
+
+      function toggleSearchBar() {
+        const wrapper = document.getElementById('search-bar-wrapper');
+        wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+      }
+    </script>
+
+    <!-- Kết quả tìm kiếm -->
+    <div class="results">
+      {% if query %}
+      <h2 style="text-align: center; margin-bottom: 24px;">Kết quả tìm kiếm cho "{{ query }}"</h2>
+
+      {% if results %}
+      <div class="products-grid">
+        {% for product in results %}
+        <a href="{% url 'product_detail' product.id %}" class="product-card">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+
+          <div class="product-info">
+            <div class="product-title">
+              {{ product.name|truncatechars:60 }}
+              {% if product.label == 'new' %}
+              <span class="badge badge-new">Mới</span>
+              {% elif product.label == 'best_seller' %}
+              <span class="badge badge-best">Bán chạy</span>
+              {% endif %}
+            </div>
+
+            <div class="product-description">
+              {{ product.description|truncatewords:10 }}
+            </div>
+
+            <div class="product-price">
+              <span class="price-number">{{ product.price|floatformat:0|intcomma }}</span><span
+                class="currency">đ</span>
+              {% if product.original_price and product.original_price > product.price %}
+              <span class="original-price">{{ product.original_price|floatformat:0|intcomma }}đ</span>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p style="text-align: center;">Không tìm thấy kết quả nào cho "{{ query }}".</p>
+      {% endif %}
+      {% else %}
+      <p style="text-align: center;">Vui lòng nhập từ khóa tìm kiếm.</p>
+      {% endif %}
+    </div>
+
+  <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  </body>
+
+</html>
