@@ -22,8 +22,8 @@ def home(request):
     context = {
         'hero_slides': Product.objects.filter(label='models')[:3],
         'categories': Category.objects.all(),
-        'best_sellers': Product.objects.filter(label='best_seller')[:8],
-        'new_products': Product.objects.filter(label='new')[:6],
+        'best_sellers': Product.objects.filter(label='best_seller')[:5],
+        'new_products': Product.objects.filter(label='new')[:5],
         'special_offer': SpecialOffer.objects.first(),
         'latest_posts': Blog.objects.order_by('-date')[:3],
         'analysis': VirtualAnalysis.objects.filter(is_active=True).first()
@@ -96,6 +96,18 @@ def category_detail(request, category_id):
     products = category.products.all()
     return render(request, 'category_products.html', {'category': category, 'products': products})
 
+#footer
+def warranty_policy(request):
+    return render(request, 'csbaohanh.html')
+
+def privacy_policy(request):
+    return render(request, 'csbaomat.html')
+
+def refund_policy(request):
+    return render(request, 'trahanghoantien.html')
+
+def faq(request):
+    return render(request, 'faq.html')
 
 # Lấy API key từ biến môi trường
 

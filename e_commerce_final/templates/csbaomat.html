@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+{% load static %}
+{% load humanize %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chính Sách Bảo Mật - Beautya</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<style>
+  .baohanh {
+    max-width: 960px;
+    margin: auto;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .baohanh h1,
+  .baohanh h2 {
+    color: #a10550;
+    padding: 10px 0;
+  }
+
+  .baohanh h3 {
+    color: #333;
+    margin-top: 20px;
+  }
+
+  .baohanh section {
+    margin-bottom: 30px;
+  }
+
+  .baohanh ul {
+    padding-left: 20px;
+  }
+
+  .baohanh li {
+    margin-bottom: 10px;
+  }
+
+  .baohanh p {
+    line-height: 1.6;
+  }
+</style>
+
+</head>
+<body>
+
+      <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
+      <a href="{% url 'about' %}" class="nav-link">About Us</a>
+      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      {% else %}
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      {% endif %}
+    </nav>
+
+    <div class="header-actions">
+      <div class="cart-wrapper">
+        <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
+        <span class="cart-count">{{ cart_item_count }}</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
+
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' %}" class="user-name">
+        <i class="fas fa-user"></i> {{ request.user.get_full_name|default:request.user.username }}
+      </a>
+      {% endif %}
+    </div>
+  </header>
+
+
+  <!-- Search Bar dính cố định ngay dưới header -->
+  <div id="search-bar-wrapper" class="search-bar-wrapper">
+    <form method="get" action="{% url 'search' %}">
+      <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
+      <button type="submit">Tìm</button>
+    </form>
+  </div>
+  <!-- Header end-->
+
+  <script>
+    function goToCart() {
+      window.location.href = "{% url 'cart' %}";
+    }
+
+    function toggleSearchBar() {
+      const wrapper = document.getElementById('search-bar-wrapper');
+      wrapper.style.display = wrapper.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+
+<main>
+    <div class="baohanh">
+    <h1>Chính sách bảo mật</h1>
+  <section>
+    <h2>1. Mục đích</h2>
+    <p>
+      Hiện nay, vấn đề bảo mật thông tin đã trở thành vấn đề nóng trên tất cả các diễn đàn, điều này không chỉ gây khó khăn cho các tổ chức, cá nhân tham gia truy cập và giao dịch mà còn gây nên những phiền toái vượt ra ngoài tầm kiểm soát của hệ thống.
+    </p>
+    <p>
+      Chính sách bảo mật và chia sẻ thông tin khách hàng của Beautya như một lời cam kết với mong muốn nâng cao chất lượng dịch vụ, bảo đảm an toàn thông tin của các cá nhân, tổ chức khi tham gia truy cập hoặc giao dịch trực tiếp trên website Beautya.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Các điều khoản áp dụng</h2>
+
+    <h3>2.1. Cập nhật thông tin khách hàng</h3>
+    <ul>
+      <li>Khi tham gia mở tài khoản hoặc giao dịch trực tiếp trên Beautya, khách hàng cần phải cung cấp đầy đủ các thông tin bắt buộc bao gồm tên, địa chỉ, số điện thoại... cụ thể để có thể đáp ứng các điều kiện giao dịch cần thiết.</li>
+      <li>Các thông tin cá nhân quý khách cung cấp cho Beautya cần đảm bảo độ chính xác và đầy đủ để phòng tránh trường hợp nhầm lẫn hoặc giả mạo. Mọi sự sai sót hoặc không chính xác trong thông tin được cung cấp sẽ ảnh hưởng trực tiếp đến quyền lợi của quý khách hàng. Do đó, Beautya sẽ không chịu trách nhiệm đối với những tranh chấp phát sinh có liên quan trong trường hợp này.</li>
+    </ul>
+
+    <h3>2.2. Lưu giữ và bảo mật thông tin khách hàng</h3>
+    <ul>
+      <li>Tất cả các thông tin khách hàng cung cấp và nội dung giao dịch đều được Beautya lưu giữ bảo mật tuyệt đối trên hệ thống. Beautya cam đoan sẽ không bán hoặc chia sẻ dẫn đến làm lộ thông tin cá nhân của bạn, không vì những mục đích thương mại mà vi phạm cam kết của chúng tôi ghi trong chính sách bảo mật này</li>
+      <li>Beautya luôn sẵn sàng về đội ngũ kĩ thuật và an ninh để có những biện pháp đối phó với những trường hợp cố tình xâm nhập và sử dụng trái phép thông tin của khách hàng. Khi thu thập dữ liệu, Beautya thực hiện lưu giữ và bảo mật thông tin khách hàng tại hệ thống máy chủ và các thông tin khách hàng này được bảo đảm an toàn bằng các hệ thống bảo vệ tốt nhất hiện nay, cùng các biện pháp kiểm soát truy cập và mã hóa dữ liệu.</li>
+      <li>Khách hàng không được phép sử dụng bất kì chương trình hay công cụ nào nhằm mục đích khai thác, thay đổi dữ liệu bất hợp pháp trên hệ thống Beautya. Mọi hành vi cố tình xâm phạm, tùy theo tính chất sự việc, chúng tôi có quyền khởi tố với các cơ quan có thẩm quyền theo quy định pháp luật hiện hành.</li>
+      <li>Khách hàng nên tự bảo vệ thông tin bảo mật của mình bằng cách không chia sẻ các thông tin cá nhân cũng như các thông tin giao dịch với bên thứ ba, cẩn thận trong việc đăng nhập/đăng xuất tài khoản để loại trừ những sự cố rò rỉ thông tin không đáng có.</li>
+    </ul>
+
+    <h3>2.3. Sử dụng thông tin</h3>
+    <ul>
+      <li>Thông báo chương trình khuyến mãi, dịch vụ mới phù hợp thói quen truy cập.</li>
+      <li>Liên hệ, hỗ trợ khách hàng khi cần thiết.</li>
+      <li>Ngăn chặn hành vi phá hoại tài khoản khách hàng.</li>
+    </ul>
+
+    <h3>2.4. Chia sẻ thông tin</h3>
+    <ul>
+      <li>Theo yêu cầu từ cơ quan chức năng hợp pháp.</li>
+      <li>Để cung cấp dịch vụ/tiện ích cần thiết.</li>
+      <li>Phục vụ nghiên cứu thị trường, phân tích dịch vụ.</li>
+      <li>Chỉ chia sẻ thông tin với sự đồng thuận của khách hàng.</li>
+    </ul>
+  </section>
+  </div>
+</main>
+
+  <!-- Footer Main -->
+    <div class="footer-main">
+      <div class="footer-column">
+        <h3>Chúng tôi có thể giúp gì?</h3>
+        <ul>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          <li><a href="{% url 'faq' %}">FAQ</a></li>
+          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Giữ liên lạc với Beautya</h3>
+        <p style="color: white; margin-bottom: 24px">
+          Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
+        </p>
+
+        <form method="post" action="{% url 'subscribe_newsletter' %}" class="newsletter-form">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email" class="newsletter-input" required />
+
+          <label class="consent-text" style="display: block; margin-top: 12px;">
+            <input type="checkbox" name="consent" required />
+            Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
+          </label>
+
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="footer-contact-row">
+      <div class="footer-contact-group">
+        <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
+      </div>
+      <div class="footer-social-group">
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

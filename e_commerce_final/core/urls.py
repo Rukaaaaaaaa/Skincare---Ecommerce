@@ -25,4 +25,10 @@ urlpatterns = [
     # (Nếu dùng hiển thị chi tiết sản phẩm theo danh mục)
     path('category/<int:category_id>/', views.category_detail, name='category_detail'),
     path('logout/', views.user_logout, name='logout'),
+
+    # footer
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('warranty-policy/', views.warranty_policy, name='warranty_policy'),
+    path('refund-policy/', views.refund_policy, name='refund_policy'),
+    path('faq/', views.faq, name='faq'),
 ]
