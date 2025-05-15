@@ -96,6 +96,18 @@ def category_detail(request, category_id):
     products = category.products.all()
     return render(request, 'category_products.html', {'category': category, 'products': products})
 
+#footer
+def warranty_policy(request):
+    return render(request, 'csbaohanh.html')
+
+def privacy_policy(request):
+    return render(request, 'csbaomat.html')
+
+def refund_policy(request):
+    return render(request, 'trahanghoantien.html')
+
+def faq(request):
+    return render(request, 'faq.html')
 
 # Lấy API key từ biến môi trường
 

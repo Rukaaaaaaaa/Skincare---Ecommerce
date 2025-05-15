@@ -166,44 +166,7 @@
             padding: 8px;
         }
     }
-    .search-bar-wrapper {
-      display: none;
-      position: fixed;
-      top: 80px;
-      /* Giả sử header cao 80px – chỉnh theo thực tế */
-      width: 100%;
-      z-index: 9999;
-      background-color: #f3f3f3;
-      padding: 12px 20px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .search-bar-wrapper form {
-      display: inline-flex;
-      gap: 10px;
-    }
-
-    .search-bar-wrapper input[type="text"] {
-      padding: 8px 12px;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .search-bar-wrapper button {
-      padding: 8px 16px;
-      background-color: #8B4513;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .search-bar-wrapper button:hover {
-      background-color: #a05a2c;
-    }
+    
 </style>
 
 </head>
@@ -214,8 +177,10 @@
   <!-- Header -->
   <header class="header">
     <div class="logo">
-      <img src="{% static 'img/unsplash_HvkDYluePqw.png' %}" alt="LOGO">
-      <span class="shop-name">BEAUTYA</span>
+      <a href="{% url 'home' %}" class="logo">
+  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+  <span class="shop-name">BEAUTYA</span>
+</a>
     </div>
 
     <nav class="nav-menu">
@@ -234,7 +199,7 @@
     <div class="header-actions">
       <div class="cart-wrapper">
         <i class="fas fa-shopping-cart cart-icon" onclick="goToCart()"></i>
-        <span class="cart-count">0</span>
+        <span class="cart-count">{{ cart_item_count }}</span>
       </div>
       <i class="fa-solid fa-magnifying-glass search-icon" onclick="toggleSearchBar()"></i>
 
@@ -254,6 +219,7 @@
       <button type="submit">Tìm</button>
     </form>
   </div>
+  <!-- Header end-->
 
   <script>
     function goToCart() {
@@ -315,46 +281,23 @@
     </div>
 </main>
 
-  <!-- Footer -->
-  <footer>
-    <!-- Footer Top -->
-    <div class="footer-top">
-      <div class="benefit-item">
-        <i class="fas fa-paw benefit-icon"></i>
-        <span class="benefit-text">Không thử nghiệm trên động vật</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-leaf benefit-icon"></i>
-        <span class="benefit-text">Không có thành phần từ động vật</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-bread-slice benefit-icon"></i>
-        <span class="benefit-text">Không có gluten, hoặc sản phẩm phụ từ gluten</span>
-      </div>
-      <div class="benefit-item">
-        <i class="fas fa-recycle benefit-icon"></i>
-        <span class="benefit-text">Bao bì có thể tái chế</span>
-      </div>
-    </div>
-
-    <!-- Footer Main -->
+  <!-- Footer Main -->
     <div class="footer-main">
       <div class="footer-column">
         <h3>Chúng tôi có thể giúp gì?</h3>
         <ul>
-          <li><a href="#">Beautya branches</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="FAQ.html">FAQ</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Blog</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          <li><a href="{% url 'faq' %}">FAQ</a></li>
+          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'blog_list' %}">Blog</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h3>Products</h3>
         <ul>
-          <li><a href="#">Chính Sách Bảo Mật</a></li>
-          <li><a href="#">Chính Sách Bảo Hành</a></li>
-          <li><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+          <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
+          <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
+          <li><a href="{% url 'refund_policy' %}">Trả Hàng/Hoàn Tiền</a></li>
         </ul>
       </div>
       <div class="footer-column">
@@ -382,25 +325,27 @@
     <div class="footer-contact-row">
       <div class="footer-contact-group">
         <span><i class="fas fa-map-marker-alt"></i>Hà Nội, Việt Nam</span>
-        <span><i class="fas fa-phone-alt"></i>0-123-456-789</span>
+        <span><i class="fas fa-phone-alt"></i>0981 535 016</span>
+        <span><i class="fas fa-envelope"></i>beatyasupport@gmail.com</span>
       </div>
       <div class="footer-social-group">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-pinterest"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61576399075671" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <a href="https://www.youtube.com/channel/UCL0lyOryJjG0eJ_pzQOlUcw" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+        </a>
+
+        <a href="https://www.tiktok.com/@beautya_vn?lang=en" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-tiktok"></i>
+        </a>
       </div>
     </div>
 
     <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <div class="copyright">© 2025 Beautya. All Rights Reserved.</div>
-      <div class="legal-links">
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Privacy Policy</a>
-      </div>
+      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
     </div>
   </footer>
 
