@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ALLOWED_HOSTS = ['beautya.io.vn', '103.142.26.45']
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-fyrk4bhfj9r2*8^706005h4zo*e1=*t!$3dsx@@_ey4&$-6s%f"
@@ -16,7 +17,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
 OPENAI_API_KEY = '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' 
 
-ALLOWED_HOSTS = []
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 
 # Application definition
 INSTALLED_APPS = [
