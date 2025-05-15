@@ -25,14 +25,14 @@
 
     <nav class="nav-menu">
       <a href="{% url 'home' %}" class="nav-link">Home</a>
-      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-      <a href="{% url 'about' %}" class="nav-link">About Us</a>
-      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Lạc</a>
 
       {% if not request.user.is_authenticated %}
-      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
       {% else %}
-      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
       {% endif %}
     </nav>
 
@@ -293,9 +293,8 @@
       <div class="footer-column">
         <h3>Chúng tôi có thể giúp gì?</h3>
         <ul>
-          <li><a href="{% url 'contact' %}">Contact Us</a></li>
-          <li><a href="{% url 'faq' %}">FAQ</a></li>
-          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'contact' %}">Liên Lạc Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
           <li><a href="{% url 'blog_list' %}">Blog</a></li>
         </ul>
       </div>

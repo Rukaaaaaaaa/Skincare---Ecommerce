@@ -5,7 +5,7 @@
 {% load socialaccount %}
 
 <head>
-  <title>Beautya - Skincare & Makeup</title>
+  <title>Beautya - Chăm Sóc Da & Trang Điểm</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Contact Page */
+    /* Trang Liên Hệ */
     .contact-container {
       max-width: 1000px;
       margin: auto;
@@ -104,7 +104,7 @@
       transition: background 0.3s ease;
     }
 
-    /* Center the Send button */
+    /* Căn giữa nút Gửi */
     .contact-form .contact-submit-btn-container {
       display: flex;
       justify-content: center;
@@ -115,7 +115,7 @@
       background-color: #c80064;
     }
 
-    /* Cards (Chat, Call, Message) */
+    /* Thẻ (Chat, Gọi, Tin nhắn) */
     .contact-cards {
       display: flex;
       justify-content: space-between;
@@ -142,33 +142,31 @@
     .contact-card p {
       margin-bottom: 16px;
     }
-    
+
   </style>
 
 </head>
 
 <body>
 
-  <body>
-  <!-- Header -->
   <header class="header">
     <div class="logo">
       <a href="{% url 'home' %}" class="logo">
-  <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
-  <span class="shop-name">BEAUTYA</span>
-</a>
+        <img src="{% static 'img/beautya logo.svg' %}" alt="LOGO" />
+        <span class="shop-name">BEAUTYA</span>
+      </a>
     </div>
 
     <nav class="nav-menu">
-      <a href="{% url 'home' %}" class="nav-link">Home</a>
-      <a href="{% url 'product_list' %}" class="nav-link">Products</a>
-      <a href="{% url 'about' %}" class="nav-link">About Us</a>
-      <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+      <a href="{% url 'home' %}" class="nav-link">Trang Chủ</a>
+      <a href="{% url 'product_list' %}" class="nav-link">Sản Phẩm</a>
+      <a href="{% url 'about' %}" class="nav-link">Về Chúng Tôi</a>
+      <a href="{% url 'contact' %}" class="nav-link">Liên Hệ</a>
 
       {% if not request.user.is_authenticated %}
-      <a href="{% url 'login' %}" class="nav-link">Sign in</a>
+      <a href="{% url 'login' %}" class="nav-link">Đăng Nhập</a>
       {% else %}
-      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+      <a href="{% url 'logout' %}" class="nav-link">Đăng Xuất</a>
       {% endif %}
     </nav>
 
@@ -187,15 +185,12 @@
     </div>
   </header>
 
-
-  <!-- Search Bar dính cố định ngay dưới header -->
   <div id="search-bar-wrapper" class="search-bar-wrapper">
     <form method="get" action="{% url 'search' %}">
       <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." required>
       <button type="submit">Tìm</button>
     </form>
   </div>
-  <!-- Header end-->
 
     <script>
       function goToCart() {
@@ -208,83 +203,78 @@
       }
     </script>
 
-
     <div class="contact-container">
-      <h2>Contact Us</h2>
-      <p>Beautya Client Service Center Is Happy to Help You With Any Questions You May Have Regarding Our Products And
-        Corporate Information. <br><br>
-        Contact Us by Phone: 0-123-456-789 Monday to Friday, 9am to 9pm, and Saturday-Sunday, 9am to 6pm Or <br>
-        Fill in The Form Below to Send Us An Email. <br>
+      <h2>Liên Hệ Với Chúng Tôi</h2>
+      <p>Trung Tâm Dịch Vụ Khách Hàng Beautya Rất Vui Được Giúp Bạn Với Bất Kỳ Câu Hỏi Nào Về Sản Phẩm Và Thông Tin Công Ty. <br><br>
+        Liên Hệ Với Chúng Tôi Qua Điện Thoại: 0-123-456-789 Thứ Hai Đến Thứ Sáu, 9am Đến 9pm, và Thứ Bảy-Chủ Nhật, 9am Đến 6pm Hoặc <br>
+        Điền Thông Tin Dưới Đây Để Gửi Email Cho Chúng Tôi. <br>
         <br>
-        <small class="contact-small">Please fill in this form to send us your inquiry. We'll be more than happy to help
-          and will reply to you as soon as possible.</small>
+        <small class="contact-small">Vui lòng điền vào mẫu này để gửi cho chúng tôi yêu cầu của bạn. Chúng tôi sẽ rất vui được giúp đỡ và sẽ trả lời bạn sớm nhất có thể.</small>
       </p>
 
       <div class="contact-form-section">
-        <h3> Write Us</h3><br>
+        <h3>Viết Cho Chúng Tôi</h3><br>
         <form class="contact-form">
           <div class="contact-row">
             <div>
-              <label class="contact-label">First Name</label>
+              <label class="contact-label">Họ</label>
               <input type="text" name="firstName">
             </div>
             <div>
-              <label class="contact-label">Last Name</label>
+              <label class="contact-label">Tên</label>
               <input type="text" name="lastName">
             </div>
           </div>
           <div class="contact-row">
             <div>
-              <label class="contact-label">Email Address</label>
+              <label class="contact-label">Địa Chỉ Email</label>
               <input type="email" name="email">
             </div>
             <div>
-              <label class="contact-label">Phone Number</label>
+              <label class="contact-label">Số Điện Thoại</label>
               <input type="tel" name="phone">
             </div>
           </div>
           <div>
-            <label for="message" class="contact-label">Your Text</label>
-            <textarea id="message" rows="4" placeholder="Type your message here..."></textarea>
+            <label for="message" class="contact-label">Nội Dung Của Bạn</label>
+            <textarea id="message" rows="4" placeholder="Nhập tin nhắn của bạn ở đây..."></textarea>
           </div>
           <div class="contact-checkbox">
-            <input type="checkbox"> <span>I have read and understood the contact us privacy and policy.</span>
+            <input type="checkbox"> <span>Tôi đã đọc và hiểu chính sách bảo mật liên hệ của chúng tôi.</span>
           </div>
           <div class="contact-submit-btn-container">
-            <button type="submit" class="contact-submit-btn">Send</button>
+            <button type="submit" class="contact-submit-btn">Gửi</button>
           </div>
         </form>
       </div>
 
       <div class="contact-cards">
         <div class="contact-card">
-          <h3>💬 Chat Online</h3>
-          <p>Looking for personalized advice?</p>
+          <h3>💬 Chat Trực Tuyến</h3>
+          <p>Bạn đang tìm kiếm lời khuyên?</p>
         </div>
         <div class="contact-card">
-          <h3>📞 Call Us</h3>
-          <p>Our advisors are here for you: 0124-542-9876</p>
+          <h3>📞 Gọi Cho Chúng Tôi</h3>
+          <p>Các chuyên viên của chúng tôi luôn sẵn sàng giúp đỡ bạn: <br> 0981 535 016</p>
         </div>
         <div class="contact-card">
-          <h3>📢 Instant Message</h3>
-          <p>Would you like to contact us on WhatsApp or Telegram?</p>
+          <h3>📢 Tin Nhắn Ngay</h3>
+          <p>Bạn muốn liên hệ với chúng tôi qua Zalo?</p>
         </div>
       </div>
     </div>
 
-    <!-- Footer Main -->
     <div class="footer-main">
       <div class="footer-column">
-        <h3>Chúng tôi có thể giúp gì?</h3>
+        <h3>Chúng Tôi Có Thể Giúp Gì?</h3>
         <ul>
-          <li><a href="{% url 'contact' %}">Contact Us</a></li>
-          <li><a href="{% url 'faq' %}">FAQ</a></li>
-          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'contact' %}">Liên Hệ Với Chúng Tôi</a></li>
+          <li><a href="{% url 'about' %}">Về Chúng Tôi</a></li>
           <li><a href="{% url 'blog_list' %}">Blog</a></li>
         </ul>
       </div>
       <div class="footer-column">
-        <h3>Products</h3>
+        <h3>Sản Phẩm</h3>
         <ul>
           <li><a href="{% url 'privacy_policy' %}">Chính Sách Bảo Mật</a></li>
           <li><a href="{% url 'warranty_policy' %}">Chính Sách Bảo Hành</a></li>
@@ -292,7 +282,7 @@
         </ul>
       </div>
       <div class="footer-column">
-        <h3>Giữ liên lạc với Beautya</h3>
+        <h3>Giữ Liên Lạc Với Beautya</h3>
         <p style="color: white; margin-bottom: 24px">
           Hãy tham gia nhận bản tin của Beautya để là người đầu tiên biết về tin tức, ưu đãi và lời khuyên chăm sóc da.
         </p>
@@ -306,11 +296,9 @@
             Bằng cách gửi email của bạn, bạn đồng ý nhận các email quảng cáo từ Beautya.
           </label>
 
-          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Subscribe</button>
+          <button type="submit" class="newsletter-submit" style="margin-top: 12px;">Đăng Ký</button>
         </form>
       </div>
-
-    </div>
     </div>
 
     <div class="footer-contact-row">
@@ -334,12 +322,11 @@
       </div>
     </div>
 
-    <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <div class="copyright">© 2015 Beautya. All Rights Reserved.</div>
+      <div class="copyright">© 2015 Beautya. Bảo Lưu Tất Cả Quyền.</div>
     </div>
   </footer>
 
-  </body>
+</body>
 
 </html>
